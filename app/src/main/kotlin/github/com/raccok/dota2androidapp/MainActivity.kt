@@ -48,4 +48,9 @@ class MainActivity : Activity() {
     // Display loaded favorite Dota 2 hero or ask for it if not defined yet
     mFrontend.displayWelcome()
   }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    mBackend.activityDestroyed()
+  }
 }

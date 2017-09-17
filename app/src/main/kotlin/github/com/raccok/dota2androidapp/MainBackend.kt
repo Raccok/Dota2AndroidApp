@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.net.ConnectivityManager
-import android.util.Log
 import android.widget.Toast
-import com.loopj.android.http.AsyncHttpClient
-import com.loopj.android.http.JsonHttpResponseHandler
-import cz.msebera.android.httpclient.Header
-import org.json.JSONObject
+import github.com.raccok.dota2androidapp.Utilities.Dota2ApiService
+import github.com.raccok.dota2androidapp.Utilities.appIsMissingPermissions
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 class MainBackend {
   private lateinit var mMainFrontend: MainFrontend
@@ -17,7 +17,9 @@ class MainBackend {
   private lateinit var mAppContext: Context
   private lateinit var mAppPrefsGeneral: SharedPreferences
   private var mAppConnectivityMgr: ConnectivityManager? = null
-  private var mHeroNames: MutableList<String> = mutableListOf()
+  private val dota2ApiService by lazy { Dota2ApiService.create() }
+  private var disposable: Disposable? = null
+  private var mHeroNames: List<String> = listOf()
 
   fun init(mainFrontend: MainFrontend, resources: Resources, context: Context,
            prefsGeneral: SharedPreferences, connectivityMgr: ConnectivityManager?) : Boolean {
@@ -46,69 +48,29 @@ class MainBackend {
     if (mHeroNames.isEmpty())
       // If the available hero names are not yet loaded from the Dota 2 API, load them first
       // and then validate the user input
-      queryHeroNames(userInput)
+      loadHeroNames(userInput)
     else
       // If the available hero names are loaded, jump straight to validating the user input
       validateUserInput(userInput)
   }
 
-  private fun queryHeroNames(userInput: String) {
+  private fun loadHeroNames(userInput: String) {
     // Check if the device is connected to the internet
     if (!deviceIsOnline()) {
-      Toast.makeText(mAppContext,
-                     "Querying heroes from the Dota 2 API failed (no internet connection)",
+      Toast.makeText(mAppContext, HERO_QUERY_FAIL + "no internet connection",
                      Toast.LENGTH_LONG).show()
       return
     }
 
-    // Create a client to perform networking
-    val client = AsyncHttpClient()
-
-    // Additional parameters needed to query the Dota 2 API for currently available heroes
-    // (TODO: The Steam Web API key must be manually provided in res/values/strings.xml temporarily,
-    // until we have Steam user authentication)
-    val params = "IEconDOTA2_570/GetHeroes/v1?key=" + mAppResources.getString(R.string.api_key) +
-                 "&language=en_us"
-
-    // Have the client get a JSONObject of data and define how to respond
-    client.get(STEAM_API_URL + params, object : JsonHttpResponseHandler() {
-      override fun onSuccess(status: Int, headers: Array<out Header>?, response: JSONObject?) {
-        val resultData = response?.optJSONObject("result")
-        if (resultData == null) {
-          Toast.makeText(mAppContext,
-                         "Querying heroes from the Dota 2 API failed (no 'result' data)",
-                         Toast.LENGTH_LONG).show()
-          return
-        }
-
-        val heroesData = resultData.optJSONArray("heroes")
-        if (heroesData == null) {
-          Toast.makeText(mAppContext,
-                         "Querying heroes from the Dota 2 API failed (no 'heroes' data)",
-                         Toast.LENGTH_LONG).show()
-          return
-        }
-
-        // Parse and save names of currently available Dota 2 heroes to memory
-        var i = 0
-        while (i < heroesData.length()) {
-          val heroEntry = heroesData.getJSONObject(i)
-          if (heroEntry.has("localized_name"))
-            mHeroNames.add(heroEntry.optString("localized_name"))
-          ++i
-        }
-
-        // Now validate the user input
-        validateUserInput(userInput)
-      }
-
-      override fun onFailure(status: Int, headers: Array<out Header>?,
-        throwable: Throwable, error: JSONObject) {
-        Toast.makeText(mAppContext, "Error: " + status + " " + throwable.message,
-                       Toast.LENGTH_LONG).show()
-        Log.e("Dota 2 Android App", status.toString() + " " + throwable.message)
-      }
-    })
+    disposable =
+      dota2ApiService.getLocalizedHeroNames(mAppResources.getString(R.string.api_key), "en_us")
+                     .subscribeOn(Schedulers.io())
+                     .observeOn(AndroidSchedulers.mainThread())
+                     .subscribe( { result -> mHeroNames = result.result.heroNamesLocalized()
+                                             validateUserInput(userInput)},
+                                 { error -> Toast.makeText(mAppContext,
+                                                           HERO_QUERY_FAIL + error.message,
+                                                           Toast.LENGTH_LONG).show() })
   }
 
   private fun deviceIsOnline(): Boolean {
@@ -117,6 +79,12 @@ class MainBackend {
   }
 
   private fun validateUserInput(userInput: String) {
+    // Check if hero names were loaded
+    if (mHeroNames.isEmpty()) {
+      Toast.makeText(mAppContext, "Error: Dota 2 hero names not loaded", Toast.LENGTH_LONG).show()
+      return
+    }
+
     // Check if user input is a valid (currently available) Dota 2 hero
     if (mHeroNames.contains(userInput)) {
       // Put it into memory (don't forget to commit!)
@@ -135,8 +103,12 @@ class MainBackend {
     }
   }
 
+  fun activityDestroyed() {
+    disposable?.dispose()
+  }
+
   companion object {
-    private val PREF_FAV_HERO = "fav_hero"
-    private val STEAM_API_URL = "http://api.steampowered.com/"
+    private const val PREF_FAV_HERO = "fav_hero"
+    private const val HERO_QUERY_FAIL = "Querying heroes from the Dota 2 API failed: "
   }
 }

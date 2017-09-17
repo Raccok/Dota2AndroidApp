@@ -1,4 +1,4 @@
-package github.com.raccok.dota2androidapp
+package github.com.raccok.dota2androidapp.Utilities
 
 import android.content.Context
 import android.content.pm.PackageManager
