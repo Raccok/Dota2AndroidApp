@@ -8,7 +8,7 @@
             android:minSdkVersion="14"
             android:targetSdkVersion="18"/>
 
-    <!-- NEED TO ADD TO BE ABLE TO GO ONLINE AND GET DATA -->
+    <!-- All Android permissions that the app makes use of -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 

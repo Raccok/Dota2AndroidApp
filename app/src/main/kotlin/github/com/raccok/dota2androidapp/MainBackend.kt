@@ -63,10 +63,11 @@ class MainBackend {
     }
 
     disposable =
-      dota2ApiService.getLocalizedHeroNames(mAppResources.getString(R.string.api_key), "en_us")
+      dota2ApiService.fetchLocalizedHeroData(mAppResources.getString(R.string.api_key), "en_us")
                      .subscribeOn(Schedulers.io())
                      .observeOn(AndroidSchedulers.mainThread())
                      .subscribe( { result -> mHeroNames = result.result.heroNamesLocalized()
+                                             // Now validate the user input
                                              validateUserInput(userInput)},
                                  { error -> Toast.makeText(mAppContext,
                                                            HERO_QUERY_FAIL + error.message,

@@ -8,13 +8,12 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 interface Dota2ApiService {
-  @GET(HEROES_URL)
-  fun getLocalizedHeroNames(@Query("key") steamApiKey: String,
-                            @Query("language") language: String) : Observable<HeroDataModel.Result>
+  @GET("IEconDOTA2_570/GetHeroes/v1")
+  fun fetchLocalizedHeroData(@Query("key") steamApiKey: String,
+                             @Query("language") language: String) : Observable<HeroDataModel.Result>
 
   companion object {
     private const val STEAM_API_URL = "http://api.steampowered.com/"
-    private const val HEROES_URL = "IEconDOTA2_570/GetHeroes/v1"
 
     fun create() : Dota2ApiService {
       val retrofit = Retrofit.Builder().addCallAdapterFactory(RxJava2CallAdapterFactory.create())
