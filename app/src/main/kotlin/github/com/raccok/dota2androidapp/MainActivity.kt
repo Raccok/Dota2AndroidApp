@@ -44,9 +44,6 @@ class MainActivity : Activity() {
     setContentView(R.layout.activity_main)
 
     mFrontend.init(mBackend, applicationContext, textView, AlertDialog.Builder(this))
-
-    // Display loaded favorite Dota 2 hero or ask for it if not defined yet
-    mFrontend.displayWelcome()
   }
 
   override fun onDestroy() {

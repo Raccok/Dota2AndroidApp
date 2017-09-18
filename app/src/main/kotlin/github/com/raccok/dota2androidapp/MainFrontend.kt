@@ -18,38 +18,29 @@ class MainFrontend {
     mAppContext = appContext
     mMainTextView = mainTextView
     mMainAlert = mainAlert
+
+    initialDisplay()
   }
 
-  fun displayWelcome() {
-    // Initially displayed text
+  fun initialDisplay() {
     mMainTextView.text = "Your favorite Dota 2 hero has not been defined yet."
 
-    // Read the user's favorite Dota 2 hero, or an empty string if not found
+    // Load the user's favorite Dota 2 hero from device storage or ask for it if not yet defined
     val favoriteHero = mMainBackend.loadFavoriteHero()
-
     if (favoriteHero != null && favoriteHero.isNotEmpty()) {
       Toast.makeText(mAppContext,
                      "Loaded your favorite Dota 2 hero '$favoriteHero' from device storage",
                      Toast.LENGTH_LONG).show()
       setFavoriteHeroText(favoriteHero)
     } else {
-      // Show a dialog to ask for the user's favorite hero
       mMainAlert.setTitle("Hello!")
       mMainAlert.setMessage("What is your favorite Dota 2 hero?")
-
-      // Create EditText for entry
-      val input = EditText(mAppContext)
-      mMainAlert.setView(input)
-
-      // Make an "OK" button to save the favorite hero (if it's a valid Dota 2 hero)
+      val inputField = EditText(mAppContext)
+      mMainAlert.setView(inputField)
       mMainAlert.setPositiveButton("OK") { _, _ ->
-        // Grab the EditText's input and pass it on to the back-end
-        mMainBackend.saveFavoriteHero(input.text.toString())
+        mMainBackend.saveFavoriteHero(inputField.text.toString())
       }
-
-      // Make a "Cancel" button that simply dismisses the alert
       mMainAlert.setNegativeButton("Cancel") { _, _ -> }
-
       mMainAlert.show()
     }
   }
