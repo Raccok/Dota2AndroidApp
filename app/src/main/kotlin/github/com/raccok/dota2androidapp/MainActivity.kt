@@ -24,81 +24,30 @@ package github.com.raccok.dota2androidapp
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.SharedPreferences
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : Activity() {
-  private var mMainTextView: TextView? = null
-  private var mSharedPreferences: SharedPreferences? = null
+  private var mBackend: MainBackend = MainBackend()
+  private var mFrontend: MainFrontend = MainFrontend()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
+    if (!mBackend.init(mFrontend, resources, applicationContext,
+                       getSharedPreferences("general", Context.MODE_PRIVATE),
+                       getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?))
+      return
+
     setContentView(R.layout.activity_main)
 
-    // Get a handle to the TextView defined in res/layout/activity_main.xml
-    mMainTextView = findViewById(R.id.main_textview)
-
-    // Get a handle to the device's key-value storage
-    mSharedPreferences = getSharedPreferences(PREFS, MODE_PRIVATE)
-
-    // Display loaded favorite Dota 2 hero or ask for the user's favorite hero if not defined yet
-    displayWelcome()
+    mFrontend.init(mBackend, applicationContext, textView, AlertDialog.Builder(this))
   }
 
-  private fun displayWelcome() {
-    // Initially displayed text
-    mMainTextView?.text = "Your favorite Dota 2 hero has not been defined yet."
-
-    // Read the user's favorite hero, or an empty string if nothing found
-    val name = mSharedPreferences?.getString(PREF_NAME, "")
-
-    if (name != null && name.isNotEmpty()) {
-      // If the name is valid, display it
-      Toast.makeText(this, "Loaded your favorite Dota 2 hero '$name' from device storage", Toast.LENGTH_LONG).show()
-      setFavoriteHeroText(name)
-    } else {
-      // otherwise, show a dialog to ask for the hero's name
-      val alert = AlertDialog.Builder(this)
-      alert.setTitle("Hello!")
-      alert.setMessage("What is your favorite Dota 2 hero?")
-
-      // Create EditText for entry
-      val input = EditText(this)
-      alert.setView(input)
-
-      // Make an "OK" button to save the name
-      alert.setPositiveButton("OK") { _, _ ->
-        // Grab the EditText's input
-        val inputName = input.text.toString()
-
-        // Put it into memory (don't forget to commit!)
-        val e = mSharedPreferences?.edit()
-        e?.putString(PREF_NAME, inputName)
-        e?.commit()
-
-        // Let the user know the hero name was saved
-        Toast.makeText(applicationContext, "Saved your favorite hero '$inputName' to device storage", Toast.LENGTH_LONG).show()
-
-        setFavoriteHeroText(inputName)
-      }
-
-      // Make a "Cancel" button that simply dismisses the alert
-      alert.setNegativeButton("Cancel") { _, _ -> }
-
-      alert.show()
-    }
-  }
-
-  private fun setFavoriteHeroText(name: String) {
-    mMainTextView?.text = "Your favorite Dota 2 hero is:\n\n$name\n\nWhat a fine choice!"
-  }
-
-  companion object {
-    private val PREFS = "prefs"
-    private val PREF_NAME = "name"
+  override fun onDestroy() {
+    super.onDestroy()
+    mBackend.activityDestroyed()
   }
 }
