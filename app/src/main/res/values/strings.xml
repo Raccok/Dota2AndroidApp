@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Dota 2 Android App</string>
+
+    <string name="loading_hero">Loaded your favorite Dota 2 hero %1$s from device storage</string>
+    <string name="welcome_dialog_title">Hello!</string>
+    <string name="welcome_dialog_message">What is your favorite Dota 2 hero?</string>
+    <string name="load_pref_hero_success_title">Loaded your favorite Dota 2 hero %1$s from device storage</string>
+    <string name="load_pref_hero_success_message">Your favorite Dota 2 hero is:\n\n%1$s\n\nWhat a fine choice!</string>
+    <string name="init_screen_hero_message">Your favorite Dota 2 hero has not been defined yet</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel BYAT, CANNNNNCELLLLLLLLLL</string>
+    <!-- Information strings -->
+    <string name="error_no_api_key">Need to provide a valid Steam Web API key in res/values/strings.xml!</string>
+    <string name="error_no_hero_list">Error: Dota 2 hero names not loaded</string>
+    <string name="error_invalid_hero">%1$s is not a valid Dota 2 hero!</string>
+    <string name="success_pref_hero_commit">Saved your favorite hero %1$s to device storage</string>
+
+
+
     <!-- A valid Steam Web API key. Get yours at https://steamcommunity.com/dev/apikey -->
     <string name="api_key"></string>
 </resources>
