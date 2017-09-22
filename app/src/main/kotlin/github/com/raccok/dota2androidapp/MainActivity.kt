@@ -30,24 +30,24 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : Activity() {
-  private var mBackend: MainBackend = MainBackend()
-  private var mFrontend: MainFrontend = MainFrontend()
+    private var mBackend: MainBackend = MainBackend()
+    private var mFrontend: MainFrontend = MainFrontend()
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    if (!mBackend.init(mFrontend, resources, applicationContext,
-                       getSharedPreferences("general", Context.MODE_PRIVATE),
-                       getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?))
-      return
+        if (!mBackend.init(mFrontend, resources, applicationContext,
+                getSharedPreferences("general", Context.MODE_PRIVATE),
+                getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?))
+            return
 
-    setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
-    mFrontend.init(mBackend, applicationContext, textView, AlertDialog.Builder(this))
-  }
+        mFrontend.init(mBackend, applicationContext, textView, AlertDialog.Builder(this))
+    }
 
-  override fun onDestroy() {
-    super.onDestroy()
-    mBackend.activityDestroyed()
-  }
+    override fun onDestroy() {
+        super.onDestroy()
+        mBackend.activityDestroyed()
+    }
 }
