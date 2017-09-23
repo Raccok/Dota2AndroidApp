@@ -5,9 +5,6 @@ import github.com.raccok.dota2androidapp.entities.HeroEntity
 object HeroDataModelResponse {
     data class Result(val result: Heroes)
     data class Heroes(private val heroes: List<HeroEntity>) {
-        fun herosList(): List<HeroEntity> {
-            return heroes
-        }
+        fun heroesList(): List<HeroEntity> = heroes
     }
-    data class HeroData(val name: String, val id: Int, val localized_name: String)
 }

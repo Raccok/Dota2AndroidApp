@@ -13,11 +13,8 @@ import java.util.concurrent.atomic.AtomicBoolean
  * Creates the [AppDatabase] asynchronously, exposing a LiveData object to notify of creation.
  */
 object DatabaseCreator {
-
-    val isDatabaseCreated = MutableLiveData<Boolean>()
-
-    lateinit var database: AppDatabase
-
+    private val mIsDatabaseCreated = MutableLiveData<Boolean>()
+    lateinit var mDatabase: AppDatabase
     private val mInitializing = AtomicBoolean(true)
 
     fun createDb(context: Context) {
@@ -25,14 +22,13 @@ object DatabaseCreator {
             return
         }
 
-        isDatabaseCreated.value = false
+        mIsDatabaseCreated.value = false
 
         Completable.fromAction {
-            database = Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).build()
+            mDatabase = Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).build()
         }
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ isDatabaseCreated.value = true }, {it.printStackTrace()})
+                .subscribe({ mIsDatabaseCreated.value = true }, { it.printStackTrace() })
     }
-
 }
