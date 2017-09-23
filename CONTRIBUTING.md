@@ -26,7 +26,7 @@ git clone https://github.com/YourUsername/Dota2AndroidApp.git
 ```
 git checkout -b <new branch>
 ```
-where `<new branch>` must be named following the pattern `<task>/<description>-<issue number>`, where
+where `<new branch>` must be named following the pattern `<task>/<description>-#<issue number>`, where
 ```
 <task>: feature/refactoring/issue/organization, whichever of those fits best
 <description>: about 1-3 words describing very briefly what is added/changed/fixed
