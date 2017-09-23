@@ -20,13 +20,13 @@ git clone https://github.com/YourUsername/Dota2AndroidApp.git
 
 ## Implementing code changes
 
-- (1) Whenever you add/change something (feature, refactoring or bug fix) there must be a corresponding open issue describing what should be done. If this isn't the case, simply open the issue yourself
+- (1) Whenever you add/change something (feature, refactoring or bug fix) there should be a corresponding open issue describing what should be done. If this isn't the case, simply open the issue yourself
 - Typically you want to implement changes for the official `master` branch. However, in specific situations, use `git checkout <branch>` to use the corresponding branch as the basis for your changes
 - Start a new branch with
 ```
 git checkout -b <new branch>
 ```
-The branch must be named following this pattern: `<task>/<description>-<issue number>`, where
+where `<new branch>` must be named following the pattern `<task>/<description>-<issue number>`, where
 ```
 <task>: feature/refactoring/issue/organization, whichever of those fits best
 <description>: about 1-3 words describing very briefly what is added/changed/fixed
@@ -34,6 +34,7 @@ The branch must be named following this pattern: `<task>/<description>-<issue nu
 ```
 - Push the new branch to your fork with `git push -u origin <new branch>`
 - When coding, follow the code style provided with the project for Android Studio. File > Settings > Editor > Code Style > Scheme should be set to Project after loading/opening the project
+- Member variables must be named like `m<variable name>` and `<variable name>` must be written in camel case (like `mMemberVariable`)
 - Avoid unnecessary whitespace. There must be no whitespace at the end of a line. There should be no unneeded whitespace between lines unless it improves readability significantly
 - Lines should not be longer than 100 characters. In rare cases, it may be useful to exceed this limit **slightly** for better readability
 - On your system, inside your fork cloned before, add new/changed files with `git add <file or entire directory>`
