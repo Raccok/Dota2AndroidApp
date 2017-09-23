@@ -3,7 +3,7 @@
     <string name="app_name">Dota 2 Android App</string>
 
     <!-- A valid Steam Web API key. Get yours at https://steamcommunity.com/dev/apikey -->
-    <string name="api_key">F91362B45F381CDA4261A8C22751C441</string>
+    <string name="api_key"></string>
 
     <string name="welcome_dialog_title">Hello!</string>
     <string name="welcome_dialog_message">What is your favorite Dota 2 hero?</string>
