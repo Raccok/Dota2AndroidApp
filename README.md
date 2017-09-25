@@ -2,7 +2,7 @@
 
 A community project aiming to provide new features and content to the Dota 2 community.
 
-The very first state of the app was developed by completing [this](https://www.raywenderlich.com/132381/kotlin-for-android-an-introduction) tutorial and modifying the example app provided by the tutorial.
+The first states of the app were developed using [this](https://www.raywenderlich.com/132381/kotlin-for-android-an-introduction) tutorial and modifying the example app provided by the tutorial.
 
 ## Building and running the app on a virtual Android device
 
@@ -10,7 +10,7 @@ Tested on Windows 10 and Windows 8.1.
 
 ### Recommended setup
 
-Clone this repository with the Git tool of your choice. On (most) Unix systems, `git` is preinstalled. To get a simple terminal with common Unix commands and the `git` command for Windows, use [this](https://git-for-windows.github.io/).
+Clone this repository with the Git tool of your choice. On (most) \*nix systems, `git` is preinstalled. To get a simple terminal with basic Unix commands and the `git` command for Windows, use [this](https://git-for-windows.github.io/).
 
 Download Android Studio from [here](https://developer.android.com/studio/index.html). Click on `Download Options` or scroll all the way down to download it for Mac or Linux.
 
