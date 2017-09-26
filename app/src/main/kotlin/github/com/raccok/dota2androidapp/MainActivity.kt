@@ -31,10 +31,11 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
-import com.ik.exploringviewmodel.flow.repos.ReposViewModel
 import github.com.raccok.dota2androidapp.base.BaseLifecycleActivity
 import github.com.raccok.dota2androidapp.entities.HeroEntity
 import github.com.raccok.dota2androidapp.utilities.appIsMissingPermissions
+import github.com.raccok.dota2androidapp.utilities.deviceIsOnline
+import github.com.raccok.dota2androidapp.viewmodel.ReposViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseLifecycleActivity<ReposViewModel>() {
@@ -66,7 +67,7 @@ class MainActivity : BaseLifecycleActivity<ReposViewModel>() {
     private fun initialDisplay() {
         textView.text = resources.getString(R.string.init_screen_hero_message)
 
-        val favoriteHero = appPrefsGeneral().getString(PreferenceStrings.PREF_FAV_HERO, "")
+        val favoriteHero = appPrefsGeneral().getString(PreferenceStrings.FAV_HERO, "")
 
         if (favoriteHero != null && favoriteHero.isNotEmpty()) {
             Toast.makeText(this,
@@ -93,7 +94,7 @@ class MainActivity : BaseLifecycleActivity<ReposViewModel>() {
         if (listOfHeroes.isNotEmpty()) {
             //TODO: move all operations pertaining to preferences to another class
             val e = appPrefsGeneral().edit()
-            e?.putString(PreferenceStrings.PREF_FAV_HERO, userInput)
+            e?.putString(PreferenceStrings.FAV_HERO, userInput)
             e?.apply()
 
             Toast.makeText(this, resources.getString(R.string.success_pref_hero_commit, userInput),
@@ -108,10 +109,9 @@ class MainActivity : BaseLifecycleActivity<ReposViewModel>() {
 
     // Try to fetch currently available Dota 2 heroes from the official Dota 2 API.
     private fun observeLiveData() {
-        // TODO: TEST
-        if (!deviceIsOnline()) {
+        if (!deviceIsOnline(getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?)) {
             Toast.makeText(applicationContext,
-                    resources.getString(R.string.error_querying_dota2api_failed) + "no internet connection",
+                    resources.getString(R.string.error_querying_dota2api_failed) + " no internet connection",
                     Toast.LENGTH_LONG).show()
             return
         }
@@ -125,11 +125,5 @@ class MainActivity : BaseLifecycleActivity<ReposViewModel>() {
         mViewModel.throwableLiveData.observe(this, Observer<Throwable> {
             it?.let { _ -> }
         })
-    }
-
-    private fun deviceIsOnline(): Boolean {
-        val connectivityMgr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
-        val netInfo = connectivityMgr?.activeNetworkInfo
-        return netInfo != null && netInfo.isConnectedOrConnecting
     }
 }

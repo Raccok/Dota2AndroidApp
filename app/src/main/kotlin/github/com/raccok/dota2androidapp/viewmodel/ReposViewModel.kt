@@ -1,4 +1,4 @@
-package com.ik.exploringviewmodel.flow.repos
+package github.com.raccok.dota2androidapp.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel

@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity
 @Suppress("LeakingThis")
 abstract class BaseLifecycleActivity<T : AndroidViewModel> : AppCompatActivity(), LifecycleRegistryOwner {
     abstract val mViewModelClass: Class<T>
-    // TODO(Rhacco): mViewModel seems to be unused - remove it or is it useful for later?
     protected val mViewModel: T by lazy { ViewModelProviders.of(this).get(mViewModelClass) }
     private val mRegistry = LifecycleRegistry(this)
 
