@@ -1,4 +1,4 @@
-package com.ik.exploringviewmodel.base
+package github.com.raccok.dota2androidapp.base
 
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LifecycleRegistry
@@ -8,12 +8,9 @@ import android.support.v7.app.AppCompatActivity
 
 @Suppress("LeakingThis")
 abstract class BaseLifecycleActivity<T : AndroidViewModel> : AppCompatActivity(), LifecycleRegistryOwner {
+    abstract val mViewModelClass: Class<T>
+    protected val mViewModel: T by lazy { ViewModelProviders.of(this).get(mViewModelClass) }
+    private val mRegistry = LifecycleRegistry(this)
 
-    abstract val viewModelClass: Class<T>
-
-    protected val viewModel: T by lazy { ViewModelProviders.of(this).get(viewModelClass) }
-
-    private val registry = LifecycleRegistry(this)
-
-    override fun getLifecycle(): LifecycleRegistry = registry
+    override fun getLifecycle(): LifecycleRegistry = mRegistry
 }

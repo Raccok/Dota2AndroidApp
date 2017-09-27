@@ -8,15 +8,13 @@ import github.com.raccok.dota2androidapp.entities.HeroEntity
 import io.reactivex.Flowable
 
 @Dao
-interface HerosDao {
+interface HeroesDao {
+    @Query("SELECT * FROM heroes")
+    fun loadAllHeroes(): Flowable<List<HeroEntity>>
 
-    @Query("SELECT * FROM heros")
-    fun loadAllHeros(): Flowable<List<HeroEntity>>
-
-    @Query("SELECT * FROM heros WHERE localized_name = :heroLocalName LIMIT 1")
+    @Query("SELECT * FROM heroes WHERE localized_name = :heroLocalName LIMIT 1")
     fun getHeroByLocalName(heroLocalName: String): Flowable<List<HeroEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(products: MutableList<HeroEntity>): Unit
-
+    fun insertAll(products: MutableList<HeroEntity>)
 }
