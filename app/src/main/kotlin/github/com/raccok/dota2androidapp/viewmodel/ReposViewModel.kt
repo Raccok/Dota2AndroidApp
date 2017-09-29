@@ -8,7 +8,7 @@ import github.com.raccok.dota2androidapp.sources.repos.HeroesRepository
 import io.reactivex.disposables.CompositeDisposable
 
 open class ReposViewModel(application: Application?) : AndroidViewModel(application) {
-    //TODO: maybe organize the states this into a base mViewModel? This stateful observation seems pretty useful for any given
+    //TODO: maybe organize the states of this into a base mViewModel? This stateful observation seems pretty useful for any given
     //API call we're going to make.
     val isLoadingLiveData = MediatorLiveData<Boolean>()
     val throwableLiveData = MediatorLiveData<Throwable>()
