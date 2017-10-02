@@ -1,4 +1,4 @@
-package github.com.raccok.dota2androidapp.utilities
+package github.com.rhacco.dota2androidapp.utilities
 
 class URLStrings {
     companion object {

@@ -1,6 +1,6 @@
-package github.com.raccok.dota2androidapp.api
+package github.com.rhacco.dota2androidapp.api
 
-import github.com.raccok.dota2androidapp.entities.HeroEntity
+import github.com.rhacco.dota2androidapp.entities.HeroEntity
 
 object HeroDataModelResponse {
     data class Result(val result: Heroes)

@@ -1,9 +1,9 @@
-package github.com.raccok.dota2androidapp.sources.repos
+package github.com.rhacco.dota2androidapp.sources.repos
 
-import github.com.raccok.dota2androidapp.App
-import github.com.raccok.dota2androidapp.R
-import github.com.raccok.dota2androidapp.entities.HeroEntity
-import github.com.raccok.dota2androidapp.sources.remote.sDota2OfficialAPIService
+import github.com.rhacco.dota2androidapp.App
+import github.com.rhacco.dota2androidapp.R
+import github.com.rhacco.dota2androidapp.entities.HeroEntity
+import github.com.rhacco.dota2androidapp.sources.remote.sDota2OfficialAPIService
 import io.reactivex.Single
 
 object HeroesRemoteDataSource : HeroesDataSource {

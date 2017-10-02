@@ -1,4 +1,4 @@
-package github.com.raccok.dota2androidapp.base
+package github.com.rhacco.dota2androidapp.base
 
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LifecycleRegistry

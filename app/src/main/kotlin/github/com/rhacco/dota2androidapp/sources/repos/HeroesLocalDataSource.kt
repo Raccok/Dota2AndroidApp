@@ -1,7 +1,7 @@
-package github.com.raccok.dota2androidapp.sources.repos
+package github.com.rhacco.dota2androidapp.sources.repos
 
-import github.com.raccok.dota2androidapp.entities.HeroEntity
-import github.com.raccok.dota2androidapp.sources.db.DatabaseCreator
+import github.com.rhacco.dota2androidapp.entities.HeroEntity
+import github.com.rhacco.dota2androidapp.sources.db.DatabaseCreator
 import io.reactivex.Single
 
 object HeroesLocalDataSource : HeroesDataSource {

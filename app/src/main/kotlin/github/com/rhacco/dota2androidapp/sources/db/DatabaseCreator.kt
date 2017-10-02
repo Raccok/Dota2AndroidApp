@@ -1,9 +1,9 @@
-package github.com.raccok.dota2androidapp.sources.db
+package github.com.rhacco.dota2androidapp.sources.db
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.persistence.room.Room
 import android.content.Context
-import github.com.raccok.dota2androidapp.sources.db.AppDatabase.Companion.DATABASE_NAME
+import github.com.rhacco.dota2androidapp.sources.db.AppDatabase.Companion.DATABASE_NAME
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

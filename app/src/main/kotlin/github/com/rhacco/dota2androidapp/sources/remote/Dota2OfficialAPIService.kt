@@ -1,7 +1,7 @@
-package github.com.raccok.dota2androidapp.sources.remote
+package github.com.rhacco.dota2androidapp.sources.remote
 
-import github.com.raccok.dota2androidapp.api.HeroDataModelResponse
-import github.com.raccok.dota2androidapp.utilities.URLStrings
+import github.com.rhacco.dota2androidapp.api.HeroDataModelResponse
+import github.com.rhacco.dota2androidapp.utilities.URLStrings
 import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

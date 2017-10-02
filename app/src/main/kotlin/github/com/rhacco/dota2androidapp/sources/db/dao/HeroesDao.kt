@@ -1,10 +1,10 @@
-package github.com.raccok.dota2androidapp.sources.db.dao
+package github.com.rhacco.dota2androidapp.sources.db.dao
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import github.com.raccok.dota2androidapp.entities.HeroEntity
+import github.com.rhacco.dota2androidapp.entities.HeroEntity
 import io.reactivex.Flowable
 
 @Dao

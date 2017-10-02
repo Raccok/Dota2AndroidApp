@@ -1,6 +1,6 @@
-package github.com.raccok.dota2androidapp.sources.repos
+package github.com.rhacco.dota2androidapp.sources.repos
 
-import github.com.raccok.dota2androidapp.entities.HeroEntity
+import github.com.rhacco.dota2androidapp.entities.HeroEntity
 import io.reactivex.Single
 
 interface HeroesDataSource {

@@ -1,7 +1,7 @@
-package github.com.raccok.dota2androidapp
+package github.com.rhacco.dota2androidapp
 
 import android.app.Application
-import github.com.raccok.dota2androidapp.sources.db.DatabaseCreator
+import github.com.rhacco.dota2androidapp.sources.db.DatabaseCreator
 
 class App : Application() {
     override fun onCreate() {

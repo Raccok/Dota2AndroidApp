@@ -7,7 +7,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
     defaultConfig {
-        applicationId "github.com.raccok.dota2androidapp"
+        applicationId "github.com.rhacco.dota2androidapp"
         minSdkVersion 14
         targetSdkVersion 26
         versionCode 1
