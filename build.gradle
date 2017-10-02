@@ -17,9 +17,16 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://maven.google.com" }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    supportLibVersion = "26.0.0-beta2"
+    archLifecycleVersion = "1.0.0-alpha5"
+    archRoomVersion = "1.0.0-alpha5"
 }
