@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Dota 2 Android App</string>
+    <string name="activity_live_matches">Live Matches</string>
 
     <!-- A valid Steam Web API key. Get yours at https://steamcommunity.com/dev/apikey -->
     <string name="api_key"></string>
 
-    <string name="welcome_dialog_title">Hello!</string>
-    <string name="welcome_dialog_message">What is your favorite Dota 2 hero?</string>
-    <string name="success_pref_hero_load">Loaded your favorite Dota 2 hero \'%1$s\' from device
-        storage
+    <string name="init_fav_hero_display">Your favorite Dota 2 hero has not been defined yet.
     </string>
-    <string name="favorite_hero_message">Your favorite Dota 2 hero is:\n\n%1$s\n\nWhat a fine
+    <string name="loaded_fav_hero_display">Your favorite Dota 2 hero is:\n\n%1$s\n\nWhat a fine
         choice!
     </string>
-    <string name="init_screen_hero_message">Your favorite Dota 2 hero has not been defined yet
+    <string name="button_set_fav_hero">Set Favorite Hero</string>
+    <string name="ask_fav_hero">What is your favorite Dota 2 hero?</string>
+    <string name="saved_fav_hero">Saved your favorite hero \'%1$s\' to device storage
+    </string>
+    <string name="loaded_fav_hero">Loaded your favorite Dota 2 hero \'%1$s\' from device storage
     </string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
@@ -23,6 +25,4 @@
     <string name="error_querying_dota2api_failed">Querying heroes from the Dota 2 API failed:
     </string>
     <string name="error_invalid_hero">\'%1$s\' is not a valid Dota 2 hero!</string>
-    <string name="success_pref_hero_commit">Saved your favorite hero \'%1$s\' to device storage
-    </string>
 </resources>

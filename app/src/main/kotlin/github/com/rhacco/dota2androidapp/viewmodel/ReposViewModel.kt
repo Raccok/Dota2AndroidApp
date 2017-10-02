@@ -10,27 +10,25 @@ import io.reactivex.disposables.CompositeDisposable
 open class ReposViewModel(application: Application?) : AndroidViewModel(application) {
     // TODO: maybe organize the states of this into a base mViewModel?
     // This stateful observation seems pretty useful for any given API call we're going to make.
-    val isLoadingLiveData = MediatorLiveData<Boolean>()
-    val throwableLiveData = MediatorLiveData<Throwable>()
+    private val mIsLoadingLiveData = MediatorLiveData<Boolean>()
+    private val mThrowableLiveData = MediatorLiveData<Throwable>()
+    private val mDisposables = CompositeDisposable()
+    val mHeroListSearchQueryLiveData = MediatorLiveData<Pair<String, List<HeroEntity>>>()
 
-    val heroListSearchQueryLiveData = MediatorLiveData<Pair<String, List<HeroEntity>>>()
-
-    private val disposables = CompositeDisposable()
-
-    override fun onCleared() = disposables.clear()
+    override fun onCleared() = mDisposables.clear()
 
     fun getHero(hero: String) {
-        isLoadingLiveData.value = true
-        disposables.add(HeroesRepository
+        mIsLoadingLiveData.value = true
+        mDisposables.add(HeroesRepository
                 .getHeroByLocalName(hero)
                 .subscribe(
                         { result ->
-                            isLoadingLiveData.value = false
-                            heroListSearchQueryLiveData.value = Pair(hero, result)
+                            mIsLoadingLiveData.value = false
+                            mHeroListSearchQueryLiveData.value = Pair(hero, result)
                         },
                         { error ->
-                            isLoadingLiveData.value = false
-                            throwableLiveData.value = error
+                            mIsLoadingLiveData.value = false
+                            mThrowableLiveData.value = error
                         })
         )
     }
