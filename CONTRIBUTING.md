@@ -35,7 +35,7 @@ where `<new branch>` must be named following the pattern `<task>/<description>-#
 (e.g. `feature/AwesomeNewFeature-#100`)
 - Push the new branch to your fork with `git push -u origin <new branch>`
 - When coding, follow the code style provided with the project for Android Studio. File > Settings > Editor > Code Style > Scheme should be set to Project after loading/opening the project
-- Member variables must be named like `m<variable name>` and `<variable name>` must be written in camel case (e.g. `mMemberVariable`)
+- Member variables must be named like `m<variable name>` and `<variable name>` must be written in camel case (e.g. `mMemberVariable`). The same goes for static variables and the `s<variable name>` convention (e.g. `sStaticVariable`).
 - Avoid unnecessary whitespace. There must be no whitespace at the end of a line. There should be no unneeded whitespace between lines unless it improves readability significantly
 - Lines should not be longer than 100 characters. In rare cases, it may be useful to exceed this limit **slightly** for better readability
 - On your system, inside your fork cloned before, add new/changed files with `git add <file or entire directory>`
