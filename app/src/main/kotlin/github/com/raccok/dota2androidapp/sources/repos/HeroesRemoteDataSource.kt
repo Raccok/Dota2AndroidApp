@@ -7,10 +7,8 @@ import github.com.raccok.dota2androidapp.sources.remote.sDota2OfficialAPIService
 import io.reactivex.Single
 
 object HeroesRemoteDataSource : HeroesDataSource {
-    override fun getHeroByLocalName(hero: String): Single<List<HeroEntity>> {
-        //DONT IMPLEMENT THIS HERE UNLESS THEY OPEN UP AN API CALL SPECIFICALLY ON THE DOTA2APISERVICE
-        TODO("not implemented")
-    }
+    // Don't implement this here unless they open up a specific API call on the official Dota 2 API
+    override fun getHeroByLocalName(hero: String): Single<List<HeroEntity>> = TODO("not implemented")
 
     override fun getRepositories(): Single<List<HeroEntity>> =
             Single.create(

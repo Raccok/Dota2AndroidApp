@@ -22,17 +22,16 @@
 
 package github.com.raccok.dota2androidapp
 
-import PreferenceStrings
 import android.app.AlertDialog
 import android.arch.lifecycle.Observer
 import android.content.Context
-import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
 import github.com.raccok.dota2androidapp.base.BaseLifecycleActivity
 import github.com.raccok.dota2androidapp.entities.HeroEntity
+import github.com.raccok.dota2androidapp.utilities.SharedPreferencesHelper
 import github.com.raccok.dota2androidapp.utilities.appIsMissingPermissions
 import github.com.raccok.dota2androidapp.utilities.deviceIsOnline
 import github.com.raccok.dota2androidapp.viewmodel.ReposViewModel
@@ -60,16 +59,12 @@ class MainActivity : BaseLifecycleActivity<ReposViewModel>() {
         observeLiveData()
     }
 
-    //TODO: move all operations pertaining to preferences to another class
-    private fun appPrefsGeneral(): SharedPreferences =
-            getSharedPreferences("general", Context.MODE_PRIVATE)
-
     private fun initialDisplay() {
         textView.text = resources.getString(R.string.init_screen_hero_message)
 
-        val favoriteHero = appPrefsGeneral().getString(PreferenceStrings.FAV_HERO, "")
+        val favoriteHero = SharedPreferencesHelper(applicationContext).getFavoriteHero()
 
-        if (favoriteHero != null && favoriteHero.isNotEmpty()) {
+        if (favoriteHero.isNotEmpty()) {
             Toast.makeText(this,
                     resources.getString(R.string.success_pref_hero_load, favoriteHero),
                     Toast.LENGTH_LONG).show()
@@ -90,22 +85,18 @@ class MainActivity : BaseLifecycleActivity<ReposViewModel>() {
 
     // Check if userInput is a valid (currently available) Dota 2 hero.
     // If it is, save it to device storage. If it isn't, return to the input dialog.
-    private fun validateUserInput(userInput: String, listOfHeroes: List<HeroEntity>) {
-        if (listOfHeroes.isNotEmpty()) {
-            //TODO: move all operations pertaining to preferences to another class
-            val e = appPrefsGeneral().edit()
-            e?.putString(PreferenceStrings.FAV_HERO, userInput)
-            e?.apply()
+    private fun validateUserInput(userInput: String, listOfHeroes: List<HeroEntity>) =
+            if (listOfHeroes.isNotEmpty()) {
+                SharedPreferencesHelper(applicationContext).setFavoriteHero(userInput)
 
-            Toast.makeText(this, resources.getString(R.string.success_pref_hero_commit, userInput),
-                    Toast.LENGTH_LONG).show()
-            textView.text = resources.getString(R.string.favorite_hero_message, userInput)
-        } else {
-            Toast.makeText(this, resources.getString(R.string.error_invalid_hero, userInput),
-                    Toast.LENGTH_LONG).show()
-            initialDisplay()
-        }
-    }
+                Toast.makeText(this, resources.getString(R.string.success_pref_hero_commit, userInput),
+                        Toast.LENGTH_LONG).show()
+                textView.text = resources.getString(R.string.favorite_hero_message, userInput)
+            } else {
+                Toast.makeText(this, resources.getString(R.string.error_invalid_hero, userInput),
+                        Toast.LENGTH_LONG).show()
+                initialDisplay()
+            }
 
     // Try to fetch currently available Dota 2 heroes from the official Dota 2 API.
     private fun observeLiveData() {
