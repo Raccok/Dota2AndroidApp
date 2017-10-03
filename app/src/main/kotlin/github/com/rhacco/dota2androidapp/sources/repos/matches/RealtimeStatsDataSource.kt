@@ -4,6 +4,6 @@ import github.com.rhacco.dota2androidapp.entities.RealtimeStatsEntity
 import io.reactivex.Single
 
 interface RealtimeStatsDataSource {
-    fun getRealtimeStats(serverSteamId: Long): Single<RealtimeStatsEntity>
-    fun updateRealtimeStats(entry: RealtimeStatsEntity) = Unit
+    fun getRealtimeStats(serverSteamId: Long): Single<List<RealtimeStatsEntity>>
+    fun updateRealtimeStats(entry: List<RealtimeStatsEntity>) = Unit
 }
