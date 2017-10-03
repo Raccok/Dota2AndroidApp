@@ -7,8 +7,8 @@ import io.reactivex.Single
 object RealtimeStatsLocalDataSource : RealtimeStatsDataSource {
     private val mRealtimeStatsDao = DatabaseCreator.mDatabase.realtimeStatsDao()
 
-    override fun getRealtimeStats(serverSteamId: Long): Single<RealtimeStatsEntity> =
-            mRealtimeStatsDao.loadRealtimeStats(serverSteamId).singleOrError()
+    override fun getRealtimeStats(serverSteamId: Long): Single<List<RealtimeStatsEntity>> =
+            mRealtimeStatsDao.loadRealtimeStats(serverSteamId).firstOrError().doOnSuccess { if (it.isEmpty()) throw Exception() }
 
-    override fun updateRealtimeStats(entry: RealtimeStatsEntity) = mRealtimeStatsDao.insert(entry)
+    override fun updateRealtimeStats(entry: List<RealtimeStatsEntity>) = mRealtimeStatsDao.insert(entry)
 }

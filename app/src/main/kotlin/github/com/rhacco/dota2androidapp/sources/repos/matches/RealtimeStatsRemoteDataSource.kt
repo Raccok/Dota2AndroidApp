@@ -8,7 +8,7 @@ import github.com.rhacco.dota2androidapp.sources.remote.sDota2OfficialAPIService
 import io.reactivex.Single
 
 object RealtimeStatsRemoteDataSource : RealtimeStatsDataSource {
-    override fun getRealtimeStats(serverSteamId: Long): Single<RealtimeStatsEntity> =
+    override fun getRealtimeStats(serverSteamId: Long): Single<List<RealtimeStatsEntity>> =
             Single.create(
                     { subscriber ->
                         Log.d("QUERY_INIT", "remote data source")
@@ -17,7 +17,7 @@ object RealtimeStatsRemoteDataSource : RealtimeStatsDataSource {
                                 .subscribe(
                                         { result ->
                                             Log.d("QUERY_SUCCESS", "remote data source")
-                                            subscriber.onSuccess(result.match)
+                                           subscriber.onSuccess(listOf(result.match))
                                         },
                                         { _ ->
                                             Log.d("QUERY_ERROR", "remote data source")

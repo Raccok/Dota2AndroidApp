@@ -20,7 +20,7 @@ open class ReposViewModel(application: Application?) : AndroidViewModel(applicat
     private val mDisposables = CompositeDisposable()
     val mHeroesQueryLiveData = MediatorLiveData<Pair<String, List<HeroEntity>>>()
     val mTopLiveGamesQueryLiveData = MediatorLiveData<List<TopLiveGameEntity>>()
-    val mRealtimeStatsQueryLiveData = MediatorLiveData<RealtimeStatsEntity>()
+    val mRealtimeStatsQueryLiveData = MediatorLiveData<List<RealtimeStatsEntity>>()
 
     override fun onCleared() = mDisposables.clear()
 

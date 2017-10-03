@@ -10,8 +10,8 @@ import io.reactivex.Flowable
 @Dao
 interface RealtimeStatsDao {
     @Query("SELECT * FROM realtime_stats WHERE server_steam_id = :serverSteamId")
-    fun loadRealtimeStats(serverSteamId: Long): Flowable<RealtimeStatsEntity>
+    fun loadRealtimeStats(serverSteamId: Long): Flowable<List<RealtimeStatsEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(entry: RealtimeStatsEntity)
+    fun insert(entry: List<RealtimeStatsEntity>)
 }

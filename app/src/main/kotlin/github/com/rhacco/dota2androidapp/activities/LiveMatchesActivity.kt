@@ -2,6 +2,7 @@ package github.com.rhacco.dota2androidapp.activities
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.util.Log
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.base.BaseLifecycleActivity
 import github.com.rhacco.dota2androidapp.entities.RealtimeStatsEntity
@@ -23,7 +24,7 @@ class LiveMatchesActivity : BaseLifecycleActivity<ReposViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        mViewModel.updateTopLiveGames()
+      //  mViewModel.updateTopLiveGames()
     }
 
     override fun observeLiveData() {
@@ -31,7 +32,7 @@ class LiveMatchesActivity : BaseLifecycleActivity<ReposViewModel>() {
         mViewModel.mTopLiveGamesQueryLiveData.observe(this, Observer<List<TopLiveGameEntity>> {
             it?.let { list -> updateTopLiveGamesDisplay(list) }
         })
-        mViewModel.mRealtimeStatsQueryLiveData.observe(this, Observer<RealtimeStatsEntity> {
+        mViewModel.mRealtimeStatsQueryLiveData.observe(this, Observer<List<RealtimeStatsEntity>> {
             it?.let { entry -> updateMatchIdsDisplay(entry) }
         })
     }
@@ -43,7 +44,9 @@ class LiveMatchesActivity : BaseLifecycleActivity<ReposViewModel>() {
                 mViewModel.updateRealtimeStats(topLiveGame.server_steam_id)
     }
 
-    private fun updateMatchIdsDisplay(entry: RealtimeStatsEntity) {
-        testText.text = testText.text as String + "\n" + entry.match_id
+    private fun updateMatchIdsDisplay(entry: List<RealtimeStatsEntity>) {
+        var s = entry.get(0).matchid.toString()
+        Log.e("HI", s);
+        //testText.text = testText.text as String + "\n" + entry.match_id
     }
 }
