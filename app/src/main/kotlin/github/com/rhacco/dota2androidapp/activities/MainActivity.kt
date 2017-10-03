@@ -102,16 +102,10 @@ class MainActivity : BaseLifecycleActivity<ReposViewModel>() {
                 setNewFavoriteHero()
             }
 
-    // Observe actions on data fetched from the official Dota 2 API and react accordingly.
-    private fun observeLiveData() {
-        if (!deviceIsOnline(getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?)) {
-            Toast.makeText(applicationContext,
-                    resources.getString(R.string.error_querying_dota2api_failed) + " no internet connection",
-                    Toast.LENGTH_LONG).show()
-            return
-        }
+    override fun observeLiveData() {
+        super.observeLiveData()
 
-        mViewModel.mHeroListSearchQueryLiveData.observe(this, Observer<Pair<String, List<HeroEntity>>> {
+        mViewModel.mHeroesQueryLiveData.observe(this, Observer<Pair<String, List<HeroEntity>>> {
             it?.let { (first, second) -> validateUserInput(first, second) }
         })
     }

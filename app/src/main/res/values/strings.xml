@@ -13,8 +13,7 @@
     </string>
     <string name="button_set_fav_hero">Set Favorite Hero</string>
     <string name="ask_fav_hero">What is your favorite Dota 2 hero?</string>
-    <string name="saved_fav_hero">Saved your favorite hero \'%1$s\' to device storage
-    </string>
+    <string name="saved_fav_hero">Saved your favorite hero \'%1$s\' to device storage</string>
     <string name="loaded_fav_hero">Loaded your favorite Dota 2 hero \'%1$s\' from device storage
     </string>
     <string name="dialog_ok">OK</string>
@@ -22,7 +21,6 @@
     <string name="error_no_api_key">Need to provide a valid Steam Web API key in
         res/values/strings.xml!
     </string>
-    <string name="error_querying_dota2api_failed">Querying heroes from the Dota 2 API failed:
-    </string>
+    <string name="error_querying_api_failed">Querying data from an API failed:</string>
     <string name="error_invalid_hero">\'%1$s\' is not a valid Dota 2 hero!</string>
 </resources>

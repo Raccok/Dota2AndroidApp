@@ -5,16 +5,16 @@ import github.com.rhacco.dota2androidapp.sources.db.DatabaseCreator
 import io.reactivex.Single
 
 object HeroesLocalDataSource : HeroesDataSource {
-    private val mReposDao = DatabaseCreator.mDatabase.reposDao()
+    private val mHeroesDao = DatabaseCreator.mDatabase.heroesDao()
 
-    override fun getRepositories(): Single<List<HeroEntity>> =
-            mReposDao.loadAllHeroes()
+    override fun getHeroes(): Single<List<HeroEntity>> =
+            mHeroesDao.loadAllHeroes()
                     .firstOrError()
                     .doOnSuccess { if (it.isEmpty()) throw Exception() }
 
-    override fun saveRepositories(list: List<HeroEntity>) = mReposDao.insertAll(list.toMutableList())
+    override fun saveHeroes(list: List<HeroEntity>) = mHeroesDao.insertAll(list.toMutableList())
 
-    override fun getHeroByLocalName(hero: String): Single<List<HeroEntity>> =
-            mReposDao.getHeroByLocalName(hero).firstOrError()
+    override fun getHeroByLocalizedName(hero: String): Single<List<HeroEntity>> =
+            mHeroesDao.getHeroByLocalName(hero).firstOrError()
                     .doOnSuccess { if (it.isEmpty()) throw Exception() }
 }
