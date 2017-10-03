@@ -1,4 +1,4 @@
-package github.com.rhacco.dota2androidapp.sources.repos
+package github.com.rhacco.dota2androidapp.sources.repos.heroes
 
 import github.com.rhacco.dota2androidapp.entities.HeroEntity
 import io.reactivex.Single

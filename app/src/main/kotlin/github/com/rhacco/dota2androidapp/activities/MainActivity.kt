@@ -24,9 +24,7 @@ package github.com.rhacco.dota2androidapp.activities
 
 import android.app.AlertDialog
 import android.arch.lifecycle.Observer
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
@@ -35,7 +33,6 @@ import github.com.rhacco.dota2androidapp.base.BaseLifecycleActivity
 import github.com.rhacco.dota2androidapp.entities.HeroEntity
 import github.com.rhacco.dota2androidapp.utilities.SharedPreferencesHelper
 import github.com.rhacco.dota2androidapp.utilities.appIsMissingPermissions
-import github.com.rhacco.dota2androidapp.utilities.deviceIsOnline
 import github.com.rhacco.dota2androidapp.viewmodel.ReposViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 

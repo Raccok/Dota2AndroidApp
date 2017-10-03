@@ -3,5 +3,5 @@ package github.com.rhacco.dota2androidapp.entities
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
-@Entity(tableName = "top_live_games")
-data class TopLiveGameEntity(@PrimaryKey val server_steam_id: Long?)
+@Entity(tableName = "realtime_stats")
+data class RealtimeStatsEntity(@PrimaryKey val server_steam_id: Long?, val match_id: Long?)

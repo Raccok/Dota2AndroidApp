@@ -3,10 +3,13 @@ package github.com.rhacco.dota2androidapp.viewmodel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MediatorLiveData
+import android.util.Log
 import github.com.rhacco.dota2androidapp.entities.HeroEntity
+import github.com.rhacco.dota2androidapp.entities.RealtimeStatsEntity
 import github.com.rhacco.dota2androidapp.entities.TopLiveGameEntity
-import github.com.rhacco.dota2androidapp.sources.repos.HeroesRepository
-import github.com.rhacco.dota2androidapp.sources.repos.TopLiveGamesRepository
+import github.com.rhacco.dota2androidapp.sources.repos.heroes.HeroesRepository
+import github.com.rhacco.dota2androidapp.sources.repos.matches.RealtimeStatsRepository
+import github.com.rhacco.dota2androidapp.sources.repos.matches.TopLiveGamesRepository
 import io.reactivex.disposables.CompositeDisposable
 
 open class ReposViewModel(application: Application?) : AndroidViewModel(application) {
@@ -17,6 +20,7 @@ open class ReposViewModel(application: Application?) : AndroidViewModel(applicat
     private val mDisposables = CompositeDisposable()
     val mHeroesQueryLiveData = MediatorLiveData<Pair<String, List<HeroEntity>>>()
     val mTopLiveGamesQueryLiveData = MediatorLiveData<List<TopLiveGameEntity>>()
+    val mRealtimeStatsQueryLiveData = MediatorLiveData<RealtimeStatsEntity>()
 
     override fun onCleared() = mDisposables.clear()
 
@@ -46,6 +50,25 @@ open class ReposViewModel(application: Application?) : AndroidViewModel(applicat
                             mTopLiveGamesQueryLiveData.value = result
                         },
                         { error ->
+                            mIsLoadingLiveData.value = false
+                            mThrowableLiveData.value = error
+                        }
+                ))
+    }
+
+    fun updateRealtimeStats(serverSteamId: Long) {
+        mIsLoadingLiveData.value = true
+        Log.d("QUERY_INIT", "view model")
+        mDisposables.add(RealtimeStatsRepository
+                .getRealtimeStats(serverSteamId)
+                .subscribe(
+                        { result ->
+                            Log.d("QUERY_SUCCESS", "view model")
+                            mIsLoadingLiveData.value = false
+                            mRealtimeStatsQueryLiveData.value = result
+                        },
+                        { error ->
+                            Log.d("QUERY_ERROR", "view model")
                             mIsLoadingLiveData.value = false
                             mThrowableLiveData.value = error
                         }

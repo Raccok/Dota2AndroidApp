@@ -1,4 +1,4 @@
-package github.com.rhacco.dota2androidapp.sources.repos
+package github.com.rhacco.dota2androidapp.sources.repos.matches
 
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
@@ -12,14 +12,9 @@ object TopLiveGamesRemoteDataSource : TopLiveGamesDataSource {
                     { subscriber ->
                         sDota2OfficialAPIService
                                 .fetchTopLiveGames(App.instance.getString(R.string.api_key), 0)
-                                .map { it }
                                 .subscribe(
-                                        { result ->
-                                            subscriber.onSuccess(result.topLiveGamesList())
-                                        },
-                                        { _ ->
-                                            subscriber.onError(Exception())
-                                        })
+                                        { result -> subscriber.onSuccess(result.topLiveGamesList()) },
+                                        { _ -> subscriber.onError(Exception()) })
                     }
             )
 }

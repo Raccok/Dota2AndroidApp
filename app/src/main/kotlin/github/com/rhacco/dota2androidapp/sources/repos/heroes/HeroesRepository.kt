@@ -1,4 +1,4 @@
-package github.com.rhacco.dota2androidapp.sources.repos
+package github.com.rhacco.dota2androidapp.sources.repos.heroes
 
 import github.com.rhacco.dota2androidapp.entities.HeroEntity
 import io.reactivex.Single
@@ -20,9 +20,7 @@ object HeroesRepository : HeroesDataSource {
             HeroesLocalDataSource.getHeroByLocalizedName(hero)
                     .onErrorResumeNext {
                         HeroesRemoteDataSource.getHeroes()
-                                .doOnSuccess {
-                                    HeroesLocalDataSource.saveHeroes(it)
-                                }
+                                .doOnSuccess { HeroesLocalDataSource.saveHeroes(it) }
                                 .map(Function<List<HeroEntity>, List<HeroEntity>> { heroEntities ->
                                     return@Function heroEntities
                                             .firstOrNull { it.localized_name == hero }

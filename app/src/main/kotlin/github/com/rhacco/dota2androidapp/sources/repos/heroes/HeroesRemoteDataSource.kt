@@ -1,4 +1,4 @@
-package github.com.rhacco.dota2androidapp.sources.repos
+package github.com.rhacco.dota2androidapp.sources.repos.heroes
 
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
@@ -17,12 +17,8 @@ object HeroesRemoteDataSource : HeroesDataSource {
                                 .fetchHeroesLocalized(App.instance.getString(R.string.api_key), "en_us")
                                 .map { it.component1() }
                                 .subscribe(
-                                        { result ->
-                                            subscriber.onSuccess(result.heroesList())
-                                        },
-                                        { _ ->
-                                            subscriber.onError(Exception())
-                                        })
+                                        { result -> subscriber.onSuccess(result.heroesList()) },
+                                        { _ -> subscriber.onError(Exception()) })
                     }
             )
 }
