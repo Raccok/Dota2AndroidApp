@@ -8,7 +8,10 @@ object RealtimeStatsLocalDataSource : RealtimeStatsDataSource {
     private val mRealtimeStatsDao = DatabaseCreator.mDatabase.realtimeStatsDao()
 
     override fun getRealtimeStats(serverSteamId: Long): Single<List<RealtimeStatsEntity>> =
-            mRealtimeStatsDao.loadRealtimeStats(serverSteamId).firstOrError().doOnSuccess { if (it.isEmpty()) throw Exception() }
+            mRealtimeStatsDao.loadRealtimeStats(serverSteamId)
+                    .firstOrError()
+                    .doOnSuccess { if (it.isEmpty()) throw Exception() }
 
-    override fun updateRealtimeStats(entry: List<RealtimeStatsEntity>) = mRealtimeStatsDao.insert(entry)
+    override fun updateRealtimeStats(list: List<RealtimeStatsEntity>) =
+            mRealtimeStatsDao.updateRealtimeStats(list)
 }

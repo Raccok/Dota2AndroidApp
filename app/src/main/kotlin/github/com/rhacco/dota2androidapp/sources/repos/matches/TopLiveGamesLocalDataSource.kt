@@ -13,5 +13,5 @@ object TopLiveGamesLocalDataSource : TopLiveGamesDataSource {
                     .doOnSuccess { if (it.isEmpty()) throw Exception() }
 
     override fun updateTopLiveGames(list: List<TopLiveGameEntity>) =
-            mTopLiveGamesDao.updateTopLiveGames(list.toMutableList())
+            mTopLiveGamesDao.updateTopLiveGames(list)
 }

@@ -12,5 +12,5 @@ interface TopLiveGamesDao {
     fun loadAllTopLiveGames(): Flowable<List<TopLiveGameEntity>>
 
     @Update
-    fun updateTopLiveGames(products: MutableList<TopLiveGameEntity>)
+    fun updateTopLiveGames(list: List<TopLiveGameEntity>)
 }

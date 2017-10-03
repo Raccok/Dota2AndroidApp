@@ -5,5 +5,5 @@ import io.reactivex.Single
 
 interface RealtimeStatsDataSource {
     fun getRealtimeStats(serverSteamId: Long): Single<List<RealtimeStatsEntity>>
-    fun updateRealtimeStats(entry: List<RealtimeStatsEntity>) = Unit
+    fun updateRealtimeStats(list: List<RealtimeStatsEntity>) = Unit
 }
