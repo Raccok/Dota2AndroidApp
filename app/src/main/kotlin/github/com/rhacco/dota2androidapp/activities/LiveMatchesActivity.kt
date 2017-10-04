@@ -1,44 +1,52 @@
 package github.com.rhacco.dota2androidapp.activities
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import github.com.rhacco.dota2androidapp.R
-import github.com.rhacco.dota2androidapp.base.BaseLifecycleActivity
-import github.com.rhacco.dota2androidapp.entities.RealtimeStatsEntity
-import github.com.rhacco.dota2androidapp.entities.TopLiveGameEntity
-import github.com.rhacco.dota2androidapp.viewmodel.ReposViewModel
+import github.com.rhacco.dota2androidapp.sources.repos.matches.RealtimeStatsRepository
+import github.com.rhacco.dota2androidapp.sources.repos.matches.TopLiveGamesRepository
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_live_matches.*
 
-class LiveMatchesActivity : BaseLifecycleActivity<ReposViewModel>() {
-    override val mViewModelClass = ReposViewModel::class.java
+class LiveMatchesActivity : AppCompatActivity() {
+    private val mDisposables = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_live_matches)
         actionBar?.setDisplayHomeAsUpEnabled(true)
-
-        observeLiveData()
-        mViewModel.updateTopLiveGames()
+        updateTopLiveGamesDisplay()
     }
 
-    override fun observeLiveData() {
-        super.observeLiveData()
-        mViewModel.mTopLiveGamesQueryLiveData.observe(this, Observer<List<TopLiveGameEntity>> {
-            it?.let { list -> updateTopLiveGamesDisplay(list) }
-        })
-        mViewModel.mRealtimeStatsQueryLiveData.observe(this, Observer<List<RealtimeStatsEntity>> {
-            it?.let { list -> updateMatchIdsDisplay(list) }
-        })
+    override fun onDestroy() {
+        super.onDestroy()
+        mDisposables.clear()
     }
 
-    private fun updateTopLiveGamesDisplay(list: List<TopLiveGameEntity>) {
+    private fun updateTopLiveGamesDisplay() {
         testText.text = "Match IDs of current top live games:"
-        for (topLiveGame in list)
-            if (topLiveGame.server_steam_id != null)
-                mViewModel.updateRealtimeStats(topLiveGame.server_steam_id)
+        mDisposables.add(TopLiveGamesRepository.getTopLiveGames()
+                .subscribe(
+                        { result ->
+                            for (entry in result)
+                                entry.server_steam_id?.let { updateMatchIdsDisplay(it) }
+                        },
+                        { error ->
+                            Log.d(getString(R.string.log_msg_debug),
+                                    "Failed to update top live games: " + error)
+                        }
+                ))
     }
 
-    private fun updateMatchIdsDisplay(list: List<RealtimeStatsEntity>) {
-        testText.text = testText.text as String + "\n" + list[0].matchid
+    private fun updateMatchIdsDisplay(serverSteamId: Long) {
+        mDisposables.add(RealtimeStatsRepository.getRealtimeStats(serverSteamId)
+                .subscribe(
+                        { result -> testText.text = testText.text as String + "\n" + result.matchid },
+                        { error ->
+                            Log.d(getString(R.string.log_msg_debug),
+                                    "Failed to update match IDs: " + error)
+                        }
+                ))
     }
 }

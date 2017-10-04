@@ -6,6 +6,8 @@
     <!-- A valid Steam Web API key. Get yours at https://steamcommunity.com/dev/apikey -->
     <string name="api_key"></string>
 
+    <string name="log_msg_debug">dota2androidapp.Debug</string>
+
     <string name="init_fav_hero_display">Your favorite Dota 2 hero has not been defined yet.
     </string>
     <string name="loaded_fav_hero_display">Your favorite Dota 2 hero is:\n\n%1$s\n\nWhat a fine

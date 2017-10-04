@@ -7,11 +7,7 @@ import io.reactivex.schedulers.Schedulers
 
 object TopLiveGamesRepository : TopLiveGamesDataSource {
     override fun getTopLiveGames(): Single<List<TopLiveGameEntity>> =
-            TopLiveGamesLocalDataSource.getTopLiveGames()
-                    .onErrorResumeNext {
-                        TopLiveGamesRemoteDataSource.getTopLiveGames()
-                                .doOnSuccess { TopLiveGamesLocalDataSource.updateTopLiveGames(it) }
-                    }
+            TopLiveGamesRemoteDataSource.getTopLiveGames()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
 }

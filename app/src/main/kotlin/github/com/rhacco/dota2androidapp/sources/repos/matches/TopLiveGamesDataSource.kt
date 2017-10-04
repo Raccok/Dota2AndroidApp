@@ -5,5 +5,4 @@ import io.reactivex.Single
 
 interface TopLiveGamesDataSource {
     fun getTopLiveGames(): Single<List<TopLiveGameEntity>>
-    fun updateTopLiveGames(list: List<TopLiveGameEntity>) = Unit
 }
