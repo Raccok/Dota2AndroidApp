@@ -41,6 +41,7 @@ class LiveMatchesActivity : AppCompatActivity() {
                 ))
     }
 
+    // TODO pass on display item to set attributes on
     private fun updateMatchIdsDisplay(serverSteamId: Long) {
         mDisposables.add(RealtimeStatsRepository.getRealtimeStats(serverSteamId)
                 .subscribe(

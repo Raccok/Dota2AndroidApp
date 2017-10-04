@@ -33,11 +33,11 @@ import github.com.rhacco.dota2androidapp.base.BaseLifecycleActivity
 import github.com.rhacco.dota2androidapp.entities.HeroEntity
 import github.com.rhacco.dota2androidapp.utilities.SharedPreferencesHelper
 import github.com.rhacco.dota2androidapp.utilities.appIsMissingPermissions
-import github.com.rhacco.dota2androidapp.viewmodel.ReposViewModel
+import github.com.rhacco.dota2androidapp.viewmodel.HeroesViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseLifecycleActivity<ReposViewModel>() {
-    override val mViewModelClass = ReposViewModel::class.java
+class MainActivity : BaseLifecycleActivity<HeroesViewModel>() {
+    override val mViewModelClass = HeroesViewModel::class.java
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

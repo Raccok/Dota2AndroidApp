@@ -7,7 +7,7 @@ import github.com.rhacco.dota2androidapp.entities.HeroEntity
 import github.com.rhacco.dota2androidapp.sources.repos.heroes.HeroesRepository
 import io.reactivex.disposables.CompositeDisposable
 
-open class ReposViewModel(application: Application?) : AndroidViewModel(application) {
+open class HeroesViewModel(application: Application?) : AndroidViewModel(application) {
     // TODO: maybe organize the states of this into a base mViewModel?
     // This stateful observation seems pretty useful for any given API call we're going to make.
     private val mIsLoadingLiveData = MediatorLiveData<Boolean>()
