@@ -1,7 +1,8 @@
 package github.com.rhacco.dota2androidapp.api
 
-import github.com.rhacco.dota2androidapp.entities.RealtimeStatsEntity
-
 object RealtimeStatsResponse {
-    data class Result(val match: RealtimeStatsEntity)
+    data class Result(val match: Match, val teams: List<Team>)
+    data class Match(val matchid: Long)
+    data class Team(val team_name: String, val players: List<Player>)
+    data class Player(val name: String, val heroid: Int)
 }

@@ -1,9 +1,6 @@
 package github.com.rhacco.dota2androidapp.api
 
-import github.com.rhacco.dota2androidapp.entities.TopLiveGameEntity
-
 object TopLiveGamesResponse {
-    data class Result(private val game_list: List<TopLiveGameEntity>) {
-        fun topLiveGamesList(): List<TopLiveGameEntity> = game_list
-    }
+    data class Result(val game_list: List<Game>)
+    data class Game(val server_steam_id: Long, val average_mmr: Int)
 }

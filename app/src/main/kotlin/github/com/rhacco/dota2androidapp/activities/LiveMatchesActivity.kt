@@ -29,8 +29,10 @@ class LiveMatchesActivity : AppCompatActivity() {
         mDisposables.add(TopLiveGamesRepository.getTopLiveGames()
                 .subscribe(
                         { result ->
-                            for (entry in result)
-                                entry.server_steam_id?.let { updateMatchIdsDisplay(it) }
+                            for (game in result.game_list) {
+                                updateMatchIdsDisplay(game.server_steam_id)
+                                testText.text = testText.text as String + "\n" + game.average_mmr
+                            }
                         },
                         { error ->
                             Log.d(getString(R.string.log_msg_debug),
@@ -42,7 +44,15 @@ class LiveMatchesActivity : AppCompatActivity() {
     private fun updateMatchIdsDisplay(serverSteamId: Long) {
         mDisposables.add(RealtimeStatsRepository.getRealtimeStats(serverSteamId)
                 .subscribe(
-                        { result -> testText.text = testText.text as String + "\n" + result.matchid },
+                        { result ->
+                            testText.text = testText.text as String + "\n" + result.match.matchid
+                            testText.text = testText.text as String + "\nRadiant\n"
+                            for (player in result.teams[0].players)
+                                testText.text = testText.text as String + player.name + " "
+                            testText.text = testText.text as String + "\nDire\n"
+                            for (player in result.teams[1].players)
+                                testText.text = testText.text as String + player.name + " "
+                        },
                         { error ->
                             Log.d(getString(R.string.log_msg_debug),
                                     "Failed to update match IDs: " + error)
