@@ -28,6 +28,7 @@ private fun appHasPermission(context: Context, permission: String): Boolean =
         ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
 
 fun deviceIsOnline(): Boolean {
-    val connectivityMgr = App.instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    return connectivityMgr.activeNetworkInfo.isConnectedOrConnecting
+    val connectivityMgr = App.instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+    val netInfo = connectivityMgr?.activeNetworkInfo
+    return netInfo != null && netInfo.isConnectedOrConnecting
 }
