@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.support.v4.content.ContextCompat
 import android.widget.Toast
+import github.com.rhacco.dota2androidapp.App
 
 fun appIsMissingPermissions(context: Context): Boolean {
     val prefix = "android.permission."
@@ -26,7 +27,7 @@ fun appIsMissingPermissions(context: Context): Boolean {
 private fun appHasPermission(context: Context, permission: String): Boolean =
         ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
 
-fun deviceIsOnline(connectivityMgr: ConnectivityManager?): Boolean {
-    val netInfo = connectivityMgr?.activeNetworkInfo
-    return netInfo != null && netInfo.isConnectedOrConnecting
+fun deviceIsOnline(): Boolean {
+    val connectivityMgr = App.instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    return connectivityMgr.activeNetworkInfo.isConnectedOrConnecting
 }

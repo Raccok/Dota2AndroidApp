@@ -42,9 +42,9 @@ class MainActivity : BaseLifecycleActivity<HeroesViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (resources.getString(R.string.api_key).isEmpty()) {
+        if (getString(R.string.api_key).isEmpty()) {
             Toast.makeText(applicationContext,
-                    resources.getString(R.string.error_no_api_key),
+                    getString(R.string.error_no_api_key),
                     Toast.LENGTH_LONG).show()
             return
         }
@@ -66,22 +66,22 @@ class MainActivity : BaseLifecycleActivity<HeroesViewModel>() {
         val favoriteHero = SharedPreferencesHelper(applicationContext).getFavoriteHero()
         if (favoriteHero.isNotEmpty()) {
             Toast.makeText(this,
-                    resources.getString(R.string.loaded_fav_hero, favoriteHero),
+                    getString(R.string.loaded_fav_hero, favoriteHero),
                     Toast.LENGTH_LONG).show()
-            favHeroText.text = resources.getString(R.string.loaded_fav_hero_display, favoriteHero)
+            favHeroText.text = getString(R.string.loaded_fav_hero_display, favoriteHero)
         } else
-            favHeroText.text = resources.getString(R.string.init_fav_hero_display)
+            favHeroText.text = getString(R.string.init_fav_hero_display)
     }
 
     private fun setNewFavoriteHero() {
         val alert = AlertDialog.Builder(this)
-        alert.setMessage(resources.getString(R.string.ask_fav_hero))
+        alert.setMessage(getString(R.string.ask_fav_hero))
         val inputField = EditText(this)
         alert.setView(inputField)
-        alert.setPositiveButton(resources.getString(R.string.dialog_ok)) { _, _ ->
+        alert.setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
             mViewModel.getHero(inputField.text.toString())
         }
-        alert.setNegativeButton(resources.getString(R.string.dialog_cancel)) { _, _ -> }
+        alert.setNegativeButton(getString(R.string.dialog_cancel)) { _, _ -> }
         alert.show()
     }
 
@@ -90,20 +90,17 @@ class MainActivity : BaseLifecycleActivity<HeroesViewModel>() {
     private fun validateUserInput(userInput: String, listOfHeroes: List<HeroEntity>) =
             if (listOfHeroes.isNotEmpty()) {
                 SharedPreferencesHelper(applicationContext).setFavoriteHero(userInput)
-                Toast.makeText(this, resources.getString(R.string.saved_fav_hero, userInput),
+                Toast.makeText(this, getString(R.string.saved_fav_hero, userInput),
                         Toast.LENGTH_LONG).show()
-                favHeroText.text = resources.getString(R.string.loaded_fav_hero_display, userInput)
+                favHeroText.text = getString(R.string.loaded_fav_hero_display, userInput)
             } else {
-                Toast.makeText(this, resources.getString(R.string.error_invalid_hero, userInput),
+                Toast.makeText(this, getString(R.string.error_invalid_hero, userInput),
                         Toast.LENGTH_LONG).show()
                 setNewFavoriteHero()
             }
 
-    override fun observeLiveData() {
-        super.observeLiveData()
-
-        mViewModel.mHeroesQueryLiveData.observe(this, Observer<Pair<String, List<HeroEntity>>> {
-            it?.let { (first, second) -> validateUserInput(first, second) }
-        })
-    }
+    override fun observeLiveData() =
+            mViewModel.mHeroesQueryLiveData.observe(this, Observer<Pair<String, List<HeroEntity>>> {
+                it?.let { (first, second) -> validateUserInput(first, second) }
+            })
 }

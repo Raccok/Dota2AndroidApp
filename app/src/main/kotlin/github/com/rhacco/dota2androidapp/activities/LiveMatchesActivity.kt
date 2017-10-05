@@ -3,11 +3,14 @@ package github.com.rhacco.dota2androidapp.activities
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesListAdapter
-import github.com.rhacco.dota2androidapp.sources.repos.matches.RealtimeStatsRepository
-import github.com.rhacco.dota2androidapp.sources.repos.matches.TopLiveGamesRepository
+import github.com.rhacco.dota2androidapp.sources.remote.sDota2OfficialAPIService
+import github.com.rhacco.dota2androidapp.utilities.deviceIsOnline
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_live_matches.*
 
 class LiveMatchesActivity : AppCompatActivity() {
@@ -29,7 +32,15 @@ class LiveMatchesActivity : AppCompatActivity() {
     }
 
     private fun updateLiveMatches() {
-        mDisposables.add(TopLiveGamesRepository.getTopLiveGames()
+        if (!deviceIsOnline()) {
+            Toast.makeText(applicationContext,
+                    getString(R.string.error_no_internet),
+                    Toast.LENGTH_LONG).show()
+            return
+        }
+        mDisposables.add(sDota2OfficialAPIService.fetchTopLiveGames(getString(R.string.api_key), 0)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { result ->
                             for (game in result.game_list)
@@ -43,11 +54,13 @@ class LiveMatchesActivity : AppCompatActivity() {
     }
 
     private fun updateListEntry(serverSteamId: Long, averageMMR: Int) {
-        mDisposables.add(RealtimeStatsRepository.getRealtimeStats(serverSteamId)
+        mDisposables.add(sDota2OfficialAPIService.fetchRealtimeStats(getString(R.string.api_key), serverSteamId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { result ->
                             if (averageMMR > 0)
-                                mListAdapter.mTitles.add("Pub Match (Average MMR " + averageMMR +
+                                mListAdapter.mTitles.add("Ranked Match (Average MMR " + averageMMR +
                                         ", Match ID " + result.match.matchid + ")")
                             else
                                 mListAdapter.mTitles.add("Tournament Match (Match ID " +

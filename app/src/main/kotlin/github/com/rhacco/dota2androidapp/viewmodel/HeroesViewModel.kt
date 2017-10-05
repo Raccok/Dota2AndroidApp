@@ -3,8 +3,12 @@ package github.com.rhacco.dota2androidapp.viewmodel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MediatorLiveData
+import android.widget.Toast
+import github.com.rhacco.dota2androidapp.App
+import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.entities.HeroEntity
 import github.com.rhacco.dota2androidapp.sources.repos.heroes.HeroesRepository
+import github.com.rhacco.dota2androidapp.utilities.deviceIsOnline
 import io.reactivex.disposables.CompositeDisposable
 
 open class HeroesViewModel(application: Application?) : AndroidViewModel(application) {
@@ -26,6 +30,11 @@ open class HeroesViewModel(application: Application?) : AndroidViewModel(applica
                             mHeroesQueryLiveData.value = Pair(hero, result)
                         },
                         { error ->
+                            if (!deviceIsOnline()) {
+                                Toast.makeText(App.instance.applicationContext,
+                                        App.instance.getString(R.string.error_no_internet),
+                                        Toast.LENGTH_LONG).show()
+                            }
                             mIsLoadingLiveData.value = false
                             mThrowableLiveData.value = error
                         })
