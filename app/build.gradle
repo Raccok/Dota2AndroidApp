@@ -41,6 +41,7 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava2:' + retrofitVersion
     compile 'com.squareup.retrofit2:converter-gson:' + retrofitVersion
     compile 'io.reactivex.rxjava2:rxandroid:' + reactiveXVersion
+    compile 'com.shamanland:xdroid-toaster:' + xdroidToasterVersion
 }
 
 repositories {

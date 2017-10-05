@@ -31,4 +31,5 @@ ext {
     archRoomVersion = "1.0.0-alpha5"
     retrofitVersion = "2.3.0"
     reactiveXVersion = "2.0.1"
+    xdroidToasterVersion = "0.3.0"
 }

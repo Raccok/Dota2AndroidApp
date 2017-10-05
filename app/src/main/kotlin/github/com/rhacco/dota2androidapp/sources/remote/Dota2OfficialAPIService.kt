@@ -4,12 +4,21 @@ import github.com.rhacco.dota2androidapp.api.HeroesResponse
 import github.com.rhacco.dota2androidapp.api.RealtimeStatsResponse
 import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
 import github.com.rhacco.dota2androidapp.utilities.URLStrings
+import github.com.rhacco.dota2androidapp.utilities.deviceIsOnline
 import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+
+private val sDota2OfficialAPIService by lazy { Dota2OfficialAPIService.create() }
+
+fun getDota2OfficialAPIService(): Dota2OfficialAPIService? =
+        if (deviceIsOnline())
+            sDota2OfficialAPIService
+        else
+            null
 
 interface Dota2OfficialAPIService {
     @GET("IEconDOTA2_570/GetHeroes/v1")
@@ -35,5 +44,3 @@ interface Dota2OfficialAPIService {
         }
     }
 }
-
-val sDota2OfficialAPIService by lazy { Dota2OfficialAPIService.create() }

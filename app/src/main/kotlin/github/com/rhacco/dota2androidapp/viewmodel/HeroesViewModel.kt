@@ -3,19 +3,17 @@ package github.com.rhacco.dota2androidapp.viewmodel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MediatorLiveData
-import android.widget.Toast
+import android.util.Log
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.entities.HeroEntity
 import github.com.rhacco.dota2androidapp.sources.repos.heroes.HeroesRepository
-import github.com.rhacco.dota2androidapp.utilities.deviceIsOnline
 import io.reactivex.disposables.CompositeDisposable
 
 open class HeroesViewModel(application: Application?) : AndroidViewModel(application) {
     // TODO: maybe organize the states of this into a base mViewModel?
     // This stateful observation seems pretty useful for any given API call we're going to make.
     private val mIsLoadingLiveData = MediatorLiveData<Boolean>()
-    private val mThrowableLiveData = MediatorLiveData<Throwable>()
     private val mDisposables = CompositeDisposable()
     val mHeroesQueryLiveData = MediatorLiveData<Pair<String, List<HeroEntity>>>()
 
@@ -30,13 +28,9 @@ open class HeroesViewModel(application: Application?) : AndroidViewModel(applica
                             mHeroesQueryLiveData.value = Pair(hero, result)
                         },
                         { error ->
-                            if (!deviceIsOnline()) {
-                                Toast.makeText(App.instance.applicationContext,
-                                        App.instance.getString(R.string.error_no_internet),
-                                        Toast.LENGTH_LONG).show()
-                            }
                             mIsLoadingLiveData.value = false
-                            mThrowableLiveData.value = error
+                            Log.d(App.instance.getString(R.string.log_msg_debug),
+                                    "Failed to update heroes: " + error)
                         })
         )
     }
