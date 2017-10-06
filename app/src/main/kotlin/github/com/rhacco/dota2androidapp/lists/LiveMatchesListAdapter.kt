@@ -16,31 +16,33 @@ class LiveMatchesListAdapter(context: Context) : BaseAdapter() {
 
     override fun getCount(): Int = mTitles.size
 
-    override fun getItem(position: Int): Any = mTitles[position]
-
-    override fun getItemId(position: Int): Long = position.toLong()
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
         val view: View?
-        val row: Row
+        val item: ListItem
         if (convertView == null) {
             view = mInflater.inflate(R.layout.list_live_matches, parent, false)
-            row = Row(view)
-            view.tag = row
+            item = ListItem(view)
+            view.tag = item
         } else {
             view = convertView
-            row = view.tag as Row
+            item = view.tag as ListItem
         }
 
-        row.title?.text = mTitles[position]
-        row.playersRadiant?.text = mPlayersRadiant[position]
-        row.playersDire?.text = mPlayersDire[position]
+        item.title?.text = mTitles[position]
+        item.playersRadiant?.text = mPlayersRadiant[position]
+        item.playersDire?.text = mPlayersDire[position]
         return view
     }
 
-    private class Row(view: View?) {
+    private class ListItem(view: View?) {
         val title: TextView? = view?.findViewById(R.id.title)
         val playersRadiant: TextView? = view?.findViewById(R.id.playersRadiant)
         val playersDire: TextView? = view?.findViewById(R.id.playersDire)
     }
+
+    // We need to override this method but it's never used so we just return anything
+    override fun getItem(dummy: Int): Any = -1
+
+    // We need to override this method but it's never used so we just return anything
+    override fun getItemId(dummy: Int): Long = -1
 }

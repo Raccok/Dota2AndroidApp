@@ -92,7 +92,7 @@ class LiveMatchesActivity : AppCompatActivity() {
                         },
                         { error ->
                             Log.d(getString(R.string.log_msg_debug),
-                                    "Failed to update match IDs: " + error)
+                                    "Failed to update realtime stats (one live match): " + error)
                         }
                 )
         if (disposable != null)
