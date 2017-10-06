@@ -27,7 +27,6 @@ import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
-import android.widget.Toast
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.base.BaseLifecycleActivity
 import github.com.rhacco.dota2androidapp.entities.HeroEntity
@@ -35,6 +34,7 @@ import github.com.rhacco.dota2androidapp.utilities.SharedPreferencesHelper
 import github.com.rhacco.dota2androidapp.utilities.appIsMissingPermissions
 import github.com.rhacco.dota2androidapp.viewmodel.HeroesViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import xdroid.toaster.Toaster
 
 class MainActivity : BaseLifecycleActivity<HeroesViewModel>() {
     override val mViewModelClass = HeroesViewModel::class.java
@@ -43,9 +43,7 @@ class MainActivity : BaseLifecycleActivity<HeroesViewModel>() {
         super.onCreate(savedInstanceState)
 
         if (getString(R.string.api_key).isEmpty()) {
-            Toast.makeText(applicationContext,
-                    getString(R.string.error_no_api_key),
-                    Toast.LENGTH_LONG).show()
+            Toaster.toastLong(R.string.error_no_api_key)
             return
         }
 
@@ -65,9 +63,7 @@ class MainActivity : BaseLifecycleActivity<HeroesViewModel>() {
     private fun initialDisplay() {
         val favoriteHero = SharedPreferencesHelper(applicationContext).getFavoriteHero()
         if (favoriteHero.isNotEmpty()) {
-            Toast.makeText(this,
-                    getString(R.string.loaded_fav_hero, favoriteHero),
-                    Toast.LENGTH_LONG).show()
+            Toaster.toastLong(R.string.loaded_fav_hero, favoriteHero)
             favHeroText.text = getString(R.string.loaded_fav_hero_display, favoriteHero)
         } else
             favHeroText.text = getString(R.string.init_fav_hero_display)
@@ -90,12 +86,10 @@ class MainActivity : BaseLifecycleActivity<HeroesViewModel>() {
     private fun validateUserInput(userInput: String, listOfHeroes: List<HeroEntity>) =
             if (listOfHeroes.isNotEmpty()) {
                 SharedPreferencesHelper(applicationContext).setFavoriteHero(userInput)
-                Toast.makeText(this, getString(R.string.saved_fav_hero, userInput),
-                        Toast.LENGTH_LONG).show()
+                Toaster.toastLong(R.string.saved_fav_hero, userInput)
                 favHeroText.text = getString(R.string.loaded_fav_hero_display, userInput)
             } else {
-                Toast.makeText(this, getString(R.string.error_invalid_hero, userInput),
-                        Toast.LENGTH_LONG).show()
+                Toaster.toastLong(R.string.error_invalid_hero, userInput)
                 setNewFavoriteHero()
             }
 

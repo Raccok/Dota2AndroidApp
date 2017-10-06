@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.support.v4.content.ContextCompat
-import android.widget.Toast
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
 import xdroid.toaster.Toaster
@@ -12,15 +11,11 @@ import xdroid.toaster.Toaster
 fun appIsMissingPermissions(context: Context): Boolean {
     val prefix = "android.permission."
     if (!appHasPermission(context, prefix + "ACCESS_NETWORK_STATE")) {
-        Toast.makeText(context,
-                "Application needs permission to access the current network state!",
-                Toast.LENGTH_LONG).show()
+        Toaster.toastLong(R.string.error_permission_network_state)
         return true
     }
     if (!appHasPermission(context, prefix + "INTERNET")) {
-        Toast.makeText(context,
-                "Application needs permission to connect to the internet!",
-                Toast.LENGTH_LONG).show()
+        Toaster.toastLong(R.string.error_permission_internet)
         return true
     }
     return false
