@@ -1,17 +1,21 @@
 package github.com.rhacco.dota2androidapp.activities
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import github.com.rhacco.dota2androidapp.R
+import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
+import github.com.rhacco.dota2androidapp.base.BaseLifecycleActivity
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesListAdapter
 import github.com.rhacco.dota2androidapp.sources.remote.getDota2OfficialAPIService
+import github.com.rhacco.dota2androidapp.viewmodel.TopLiveGamesViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_live_matches.*
 
-class LiveMatchesActivity : AppCompatActivity() {
+class LiveMatchesActivity : BaseLifecycleActivity<TopLiveGamesViewModel>() {
+    override val mViewModelClass = TopLiveGamesViewModel::class.java
     private lateinit var mListAdapter: LiveMatchesListAdapter
     private val mDisposables = CompositeDisposable()
 
@@ -21,31 +25,13 @@ class LiveMatchesActivity : AppCompatActivity() {
         actionBar?.setDisplayHomeAsUpEnabled(true)
         mListAdapter = LiveMatchesListAdapter(this)
         listView.adapter = mListAdapter
-        updateLiveMatches()
+        observeLiveData()
+        mViewModel.getTopLiveGames()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mDisposables.clear()
-    }
-
-    private fun updateLiveMatches() {
-        val disposable = getDota2OfficialAPIService()
-                ?.fetchTopLiveGames(getString(R.string.api_key), 0)
-                ?.subscribeOn(Schedulers.io())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe(
-                        { result ->
-                            for (game in result.game_list)
-                                updateListEntry(game.server_steam_id, game.average_mmr)
-                        },
-                        { error ->
-                            Log.d(getString(R.string.log_msg_debug),
-                                    "Failed to update top live games: " + error)
-                        }
-                )
-        if (disposable != null)
-            mDisposables.add(disposable)
+    private fun updateLiveMatches(list: List<TopLiveGamesResponse.Game>) {
+        for (game in list)
+            updateListEntry(game.server_steam_id, game.average_mmr)
     }
 
     private fun updateListEntry(serverSteamId: Long, averageMMR: Int) {
@@ -97,5 +83,11 @@ class LiveMatchesActivity : AppCompatActivity() {
                 )
         if (disposable != null)
             mDisposables.add(disposable)
+    }
+
+    override fun observeLiveData() {
+        mViewModel.mTopLiveGamesQueryLiveData.observe(this, Observer<List<TopLiveGamesResponse.Game>> {
+            it?.let { result -> updateLiveMatches(result) }
+        })
     }
 }

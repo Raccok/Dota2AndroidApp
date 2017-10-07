@@ -12,9 +12,9 @@ object HeroesLocalDataSource : HeroesDataSource {
                     .firstOrError()
                     .doOnSuccess { if (it.isEmpty()) throw Exception() }
 
-    override fun saveHeroes(list: List<HeroEntity>) = mHeroesDao.insertAll(list.toMutableList())
-
     override fun getHeroByLocalizedName(hero: String): Single<List<HeroEntity>> =
             mHeroesDao.getHeroByLocalName(hero).firstOrError()
                     .doOnSuccess { if (it.isEmpty()) throw Exception() }
+
+    override fun saveHeroes(list: List<HeroEntity>) = mHeroesDao.insertAll(list.toMutableList())
 }

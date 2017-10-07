@@ -7,9 +7,6 @@ import github.com.rhacco.dota2androidapp.sources.remote.getDota2OfficialAPIServi
 import io.reactivex.Single
 
 object HeroesRemoteDataSource : HeroesDataSource {
-    // Don't implement this here unless they open up a specific API call on the official Dota 2 API
-    override fun getHeroByLocalizedName(hero: String): Single<List<HeroEntity>> = TODO("not implemented")
-
     override fun getHeroes(): Single<List<HeroEntity>> =
             Single.create(
                     { subscriber ->
@@ -21,4 +18,7 @@ object HeroesRemoteDataSource : HeroesDataSource {
                                         { _ -> subscriber.onError(Exception()) })
                     }
             )
+
+    // Don't implement this here unless they open up a specific API call on the official Dota 2 API
+    override fun getHeroByLocalizedName(hero: String): Single<List<HeroEntity>> = TODO("not implemented")
 }
