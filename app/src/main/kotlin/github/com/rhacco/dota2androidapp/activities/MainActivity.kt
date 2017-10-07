@@ -83,8 +83,8 @@ class MainActivity : BaseLifecycleActivity<HeroesViewModel>() {
 
     // Check if userInput is a valid (currently available) Dota 2 hero.
     // If it is, save it to device storage. If it isn't, return to the input dialog.
-    private fun validateUserInput(userInput: String, listOfHeroes: List<HeroEntity>) =
-            if (listOfHeroes.isNotEmpty()) {
+    private fun validateUserInput(userInput: String, result: List<HeroEntity>) =
+            if (result.isNotEmpty()) {
                 SharedPreferencesHelper(applicationContext).setFavoriteHero(userInput)
                 Toaster.toastLong(R.string.saved_fav_hero, userInput)
                 favHeroText.text = getString(R.string.loaded_fav_hero_display, userInput)
@@ -95,6 +95,6 @@ class MainActivity : BaseLifecycleActivity<HeroesViewModel>() {
 
     override fun observeLiveData() =
             mViewModel.mHeroesQueryLiveData.observe(this, Observer<Pair<String, List<HeroEntity>>> {
-                it?.let { (first, second) -> validateUserInput(first, second) }
+                it?.let { (userInput, result) -> validateUserInput(userInput, result) }
             })
 }
