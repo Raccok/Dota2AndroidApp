@@ -9,12 +9,10 @@ import android.widget.TextView
 import github.com.rhacco.dota2androidapp.R
 
 class LiveMatchesListAdapter(context: Context) : BaseAdapter() {
-    val mTitles: MutableList<String> = mutableListOf()
-    val mPlayersRadiant: MutableList<String> = mutableListOf()
-    val mPlayersDire: MutableList<String> = mutableListOf()
+    val mListItemsData: MutableList<ListItemData> = mutableListOf()
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
 
-    override fun getCount(): Int = mTitles.size
+    override fun getCount(): Int = mListItemsData.size
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
         val view: View?
@@ -28,9 +26,9 @@ class LiveMatchesListAdapter(context: Context) : BaseAdapter() {
             item = view.tag as ListItem
         }
 
-        item.title?.text = mTitles[position]
-        item.playersRadiant?.text = mPlayersRadiant[position]
-        item.playersDire?.text = mPlayersDire[position]
+        item.title?.text = mListItemsData[position].mTitle
+        item.playersRadiant?.text = mListItemsData[position].mPlayersRadiant
+        item.playersDire?.text = mListItemsData[position].mPlayersDire
         return view
     }
 
@@ -38,6 +36,13 @@ class LiveMatchesListAdapter(context: Context) : BaseAdapter() {
         val title: TextView? = view?.findViewById(R.id.title)
         val playersRadiant: TextView? = view?.findViewById(R.id.playersRadiant)
         val playersDire: TextView? = view?.findViewById(R.id.playersDire)
+    }
+
+    class ListItemData {
+        var mAverageMMR = 0  // Used to sort list by average MMR
+        var mTitle: String = ""
+        var mPlayersRadiant: String = "Radiant players:"
+        var mPlayersDire: String = "Dire players:"
     }
 
     // We need to override this method but it's never used so we just return anything
