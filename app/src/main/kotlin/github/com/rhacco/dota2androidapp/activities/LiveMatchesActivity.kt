@@ -27,7 +27,8 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
             swipeRefreshLayout.isRefreshing = false
         }
         observeLiveData()
-        mViewModel.getLiveMatches()
+        if (savedInstanceState == null)
+            mViewModel.getLiveMatches()
     }
 
     private fun updateLiveMatches(list: List<TopLiveGamesResponse.Game>) {
