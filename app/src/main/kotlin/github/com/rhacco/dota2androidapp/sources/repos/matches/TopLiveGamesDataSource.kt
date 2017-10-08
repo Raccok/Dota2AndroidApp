@@ -6,4 +6,5 @@ import io.reactivex.Single
 interface TopLiveGamesDataSource {
     fun getTopLiveGames(): Single<List<TopLiveGamesResponse.Game>>
     fun saveTopLiveGames(list: List<TopLiveGamesResponse.Game>) = Unit
+    fun clearTopLiveGames() = Unit
 }

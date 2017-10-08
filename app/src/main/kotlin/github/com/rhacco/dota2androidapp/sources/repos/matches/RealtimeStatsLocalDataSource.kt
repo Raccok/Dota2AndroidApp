@@ -19,4 +19,6 @@ object RealtimeStatsLocalDataSource : RealtimeStatsDataSource {
     override fun saveRealtimeStats(serverSteamId: Long, result: RealtimeStatsResponse.Result) {
         mRealtimeStats[serverSteamId] = result
     }
+
+    override fun clearRealtimeStats() = mRealtimeStats.clear()
 }

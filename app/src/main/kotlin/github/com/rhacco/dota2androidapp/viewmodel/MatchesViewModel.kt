@@ -36,6 +36,8 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                 ))
     }
 
+    fun clearLiveMatches() = TopLiveGamesRepository.clearTopLiveGames()
+
     fun getLiveMatchListData(averageMMR: Int, serverSteamId: Long) {
         mIsLoadingLiveData.value = true
         mDisposables.add(RealtimeStatsRepository.getRealtimeStats(serverSteamId)
@@ -88,4 +90,6 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                         }
                 ))
     }
+
+    fun clearLiveMatchesListData() = RealtimeStatsRepository.clearRealtimeStats()
 }

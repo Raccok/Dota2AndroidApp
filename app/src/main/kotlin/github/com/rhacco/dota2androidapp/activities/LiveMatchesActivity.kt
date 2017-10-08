@@ -19,6 +19,13 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
         actionBar?.setDisplayHomeAsUpEnabled(true)
         mListAdapter = LiveMatchesListAdapter(this)
         listView.adapter = mListAdapter
+        swipeRefreshLayout.setOnRefreshListener {
+            mListAdapter.mListItemsData.clear()
+            mViewModel.clearLiveMatches()
+            mViewModel.clearLiveMatchesListData()
+            mViewModel.getLiveMatches()
+            swipeRefreshLayout.isRefreshing = false
+        }
         observeLiveData()
         mViewModel.getLiveMatches()
     }

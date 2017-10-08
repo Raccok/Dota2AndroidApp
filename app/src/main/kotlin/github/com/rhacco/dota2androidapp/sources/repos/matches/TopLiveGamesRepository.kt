@@ -14,4 +14,6 @@ object TopLiveGamesRepository : TopLiveGamesDataSource {
                     }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+
+    override fun clearTopLiveGames() = TopLiveGamesLocalDataSource.clearTopLiveGames()
 }

@@ -4,7 +4,7 @@ import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
 import io.reactivex.Single
 
 object TopLiveGamesLocalDataSource : TopLiveGamesDataSource {
-    private var mTopLiveGames: List<TopLiveGamesResponse.Game> = listOf()
+    private var mTopLiveGames: MutableList<TopLiveGamesResponse.Game> = mutableListOf()
 
     override fun getTopLiveGames(): Single<List<TopLiveGamesResponse.Game>> =
             Single.create(
@@ -17,6 +17,8 @@ object TopLiveGamesLocalDataSource : TopLiveGamesDataSource {
             )
 
     override fun saveTopLiveGames(list: List<TopLiveGamesResponse.Game>) {
-        mTopLiveGames = list
+        mTopLiveGames = list.toMutableList()
     }
+
+    override fun clearTopLiveGames() = mTopLiveGames.clear()
 }
