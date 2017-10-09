@@ -40,6 +40,7 @@ class LiveMatchesListAdapter(context: Context) : BaseAdapter() {
 
     class ListItemData {
         var mAverageMMR = 0  // Used to sort list by average MMR
+        var mMatchID = 0L  // Used to prevent duplicates
         var mTitle: String = ""
         var mPlayersRadiant: String = "Radiant players:"
         var mPlayersDire: String = "Dire players:"

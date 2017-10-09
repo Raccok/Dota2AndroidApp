@@ -27,6 +27,8 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
             swipeRefreshLayout.isRefreshing = false
         }
         observeLiveData()
+        // Only execute the last bit when the Activity is created fresh. Otherwise, e.g. when screen
+        // orientation changed, the SwipeRefreshLayout takes care of reinitializing the contents
         if (savedInstanceState == null)
             mViewModel.getLiveMatches()
     }
@@ -37,21 +39,26 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
     }
 
     // Add tournament matches first, then sort by average MMR (descending)
-    private fun updateLiveMatchesListData(listItemData: LiveMatchesListAdapter.ListItemData) {
-        if (listItemData.mAverageMMR < 1) {
-            mListAdapter.mListItemsData.add(0, listItemData)
+    private fun updateLiveMatchesListData(newItem: LiveMatchesListAdapter.ListItemData) {
+        // Strangely, sometimes the same match arrives here twice, so prevent creating duplicates
+        mListAdapter.mListItemsData
+                .filter { it.mMatchID == newItem.mMatchID }
+                .forEach { return }
+
+        if (newItem.mAverageMMR < 1) {
+            mListAdapter.mListItemsData.add(0, newItem)
             return
         }
         var index = 0
         for (item in mListAdapter.mListItemsData) {
-            if (item.mAverageMMR < 1 || item.mAverageMMR >= listItemData.mAverageMMR) {
+            if (item.mAverageMMR < 1 || item.mAverageMMR >= newItem.mAverageMMR) {
                 ++index
                 continue
             }
-            mListAdapter.mListItemsData.add(index, listItemData)
+            mListAdapter.mListItemsData.add(index, newItem)
             return
         }
-        mListAdapter.mListItemsData.add(listItemData)
+        mListAdapter.mListItemsData.add(newItem)
     }
 
     override fun observeLiveData() {
@@ -60,8 +67,8 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
         })
         mViewModel.mLiveMatchListDataQueryLiveData
                 .observe(this, Observer<LiveMatchesListAdapter.ListItemData> {
-                    it?.let { listItemData ->
-                        updateLiveMatchesListData(listItemData)
+                    it?.let { newItem ->
+                        updateLiveMatchesListData(newItem)
                         mListAdapter.notifyDataSetChanged()
                     }
         })

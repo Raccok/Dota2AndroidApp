@@ -44,14 +44,15 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                 .subscribe(
                         { result ->
                             mIsLoadingLiveData.value = false
-                            val listItemData: LiveMatchesListAdapter.ListItemData =
+                            val newItem: LiveMatchesListAdapter.ListItemData =
                                     LiveMatchesListAdapter.ListItemData()
-                            listItemData.mAverageMMR = averageMMR
+                            newItem.mAverageMMR = averageMMR
+                            newItem.mMatchID = result.match.matchid
                             if (averageMMR < 1)
-                                listItemData.mTitle = "Tournament Match (Match ID " +
+                                newItem.mTitle = "Tournament Match (Match ID " +
                                         result.match.matchid + ")"
                             else
-                                listItemData.mTitle = "Ranked Match (Average MMR " + averageMMR +
+                                newItem.mTitle = "Ranked Match (Average MMR " + averageMMR +
                                         ", Match ID " + result.match.matchid + ")"
                             if (result.teams.size == 2) {
                                 result.teams[0].players
@@ -63,8 +64,8 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                                 it.name
                                         }
                                         .forEach {
-                                            listItemData.mPlayersRadiant =
-                                                    listItemData.mPlayersRadiant + "\n" + it
+                                            newItem.mPlayersRadiant =
+                                                    newItem.mPlayersRadiant + "\n" + it
                                         }
                                 result.teams[1].players
                                         .asSequence()
@@ -75,10 +76,10 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                                 it.name
                                         }
                                         .forEach {
-                                            listItemData.mPlayersDire =
-                                                    listItemData.mPlayersDire + "\n" + it
+                                            newItem.mPlayersDire =
+                                                    newItem.mPlayersDire + "\n" + it
                                         }
-                                mLiveMatchListDataQueryLiveData.value = listItemData
+                                mLiveMatchListDataQueryLiveData.value = newItem
                             } else
                                 Log.d(App.instance.getString(R.string.log_msg_debug),
                                         "GetRealtimeStats returned " + result.teams.size + " teams")
