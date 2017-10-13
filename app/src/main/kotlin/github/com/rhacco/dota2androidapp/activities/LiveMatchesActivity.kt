@@ -2,6 +2,8 @@ package github.com.rhacco.dota2androidapp.activities
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
 import github.com.rhacco.dota2androidapp.base.BaseLifecycleActivity
@@ -19,6 +21,10 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
         actionBar?.setDisplayHomeAsUpEnabled(true)
         mListAdapter = LiveMatchesListAdapter(this)
         listView.adapter = mListAdapter
+        val layoutManager = LinearLayoutManager(this)
+        listView.layoutManager = layoutManager
+        val dividerItemDecoration = DividerItemDecoration(listView.context, layoutManager.orientation)
+        listView.addItemDecoration(dividerItemDecoration)
         observeLiveData()
         mViewModel.getLiveMatches()
     }
