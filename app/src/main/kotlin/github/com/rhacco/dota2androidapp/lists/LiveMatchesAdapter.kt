@@ -11,10 +11,10 @@ import kotlinx.android.synthetic.main.item_live_matches.*
 
 class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesViewHolder>() {
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
-    private val mItemsData: MutableList<LiveMatchItemData> = mutableListOf()
+    private val mItemsData: MutableList<LiveMatchesItemData> = mutableListOf()
 
     // Add tournament matches first, then sort by average MMR (descending)
-    fun add(itemData: LiveMatchItemData) {
+    fun add(itemData: LiveMatchesItemData) {
         if (itemData.mAverageMMR < 1) {
             mItemsData.add(0, itemData)
         } else {
@@ -45,7 +45,7 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
     }
 }
 
-class LiveMatchItemData {
+class LiveMatchesItemData {
     var mAverageMMR = 0  // Used to sort list by average MMR
     var mTitle: String = ""
     var mBlue: String = ""

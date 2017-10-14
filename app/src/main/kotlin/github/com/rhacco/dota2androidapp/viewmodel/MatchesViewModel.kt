@@ -7,7 +7,7 @@ import android.util.Log
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
-import github.com.rhacco.dota2androidapp.lists.LiveMatchItemData
+import github.com.rhacco.dota2androidapp.lists.LiveMatchesItemData
 import github.com.rhacco.dota2androidapp.sources.repos.matches.RealtimeStatsRepository
 import github.com.rhacco.dota2androidapp.sources.repos.matches.TopLiveGamesRepository
 import io.reactivex.disposables.CompositeDisposable
@@ -16,7 +16,7 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
     private val mIsLoading = MediatorLiveData<Boolean>()
     private val mDisposables = CompositeDisposable()
     val mLiveMatchesQuery = MediatorLiveData<List<TopLiveGamesResponse.Game>>()
-    val mLiveMatchItemDataQuery = MediatorLiveData<LiveMatchItemData>()
+    val mLiveMatchesItemDataQuery = MediatorLiveData<LiveMatchesItemData>()
 
     override fun onCleared() = mDisposables.clear()
 
@@ -36,13 +36,13 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                 ))
     }
 
-    fun getLiveMatchItemData(averageMMR: Int, serverSteamId: Long) {
+    fun getLiveMatchesItemData(averageMMR: Int, serverSteamId: Long) {
         mIsLoading.value = true
         mDisposables.add(RealtimeStatsRepository.getRealtimeStats(serverSteamId)
                 .subscribe(
                         { result ->
                             mIsLoading.value = false
-                            val newItemData = LiveMatchItemData()
+                            val newItemData = LiveMatchesItemData()
                             newItemData.mAverageMMR = averageMMR
                             if (averageMMR < 1)
                                 newItemData.mTitle = "Tournament Match (Match ID " +
@@ -65,7 +65,7 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                 newItemData.mLightBlue = direPlayers[2].name
                                 newItemData.mDarkGreen = direPlayers[3].name
                                 newItemData.mBrown = direPlayers[4].name
-                                mLiveMatchItemDataQuery.value = newItemData
+                                mLiveMatchesItemDataQuery.value = newItemData
                             } else
                                 Log.d(App.instance.getString(R.string.log_msg_debug),
                                         "GetRealtimeStats returned a wrong number of teams/players")
