@@ -17,12 +17,11 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
     fun add(itemData: LiveMatchItemData) {
         if (itemData.mAverageMMR < 1) {
             mItemsData.add(0, itemData)
-            notifyItemInserted(0)
-            return
+        } else {
+            val index = mItemsData.count { it.mAverageMMR < 1 || it.mAverageMMR >= itemData.mAverageMMR }
+            mItemsData.add(index, itemData)
         }
-        val index = mItemsData.count { it.mAverageMMR < 1 || it.mAverageMMR >= itemData.mAverageMMR }
-        mItemsData.add(index, itemData)
-        notifyItemInserted(index)
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = mItemsData.size
@@ -33,16 +32,16 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
     override fun onBindViewHolder(holder: LiveMatchesViewHolder, position: Int) {
         val itemData = mItemsData[position]
         holder.title?.text = itemData.mTitle
-        holder.blue?.text = itemData.mBlue
-        holder.teal?.text = itemData.mTeal
-        holder.purple?.text = itemData.mPurple
-        holder.yellow?.text = itemData.mYellow
-        holder.orange?.text = itemData.mOrange
-        holder.pink?.text = itemData.mPink
-        holder.gray?.text = itemData.mGray
-        holder.light_blue?.text = itemData.mLightBlue
-        holder.dark_green?.text = itemData.mDarkGreen
-        holder.brown?.text = itemData.mBrown
+        holder.player_blue?.text = itemData.mBlue
+        holder.player_teal?.text = itemData.mTeal
+        holder.player_purple?.text = itemData.mPurple
+        holder.player_yellow?.text = itemData.mYellow
+        holder.player_orange?.text = itemData.mOrange
+        holder.player_pink?.text = itemData.mPink
+        holder.player_gray?.text = itemData.mGray
+        holder.player_light_blue?.text = itemData.mLightBlue
+        holder.player_dark_green?.text = itemData.mDarkGreen
+        holder.player_brown?.text = itemData.mBrown
     }
 }
 
