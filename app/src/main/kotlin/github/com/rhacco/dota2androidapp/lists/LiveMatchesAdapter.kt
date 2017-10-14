@@ -11,7 +11,19 @@ import kotlinx.android.synthetic.main.item_live_matches.*
 
 class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesViewHolder>() {
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
-    val mItemsData: MutableList<ItemData> = mutableListOf()
+    private val mItemsData: MutableList<LiveMatchItemData> = mutableListOf()
+
+    // Add tournament matches first, then sort by average MMR (descending)
+    fun add(itemData: LiveMatchItemData) {
+        if (itemData.mAverageMMR < 1) {
+            mItemsData.add(0, itemData)
+            notifyItemInserted(0)
+            return
+        }
+        val index = mItemsData.count { it.mAverageMMR < 1 || it.mAverageMMR >= itemData.mAverageMMR }
+        mItemsData.add(index, itemData)
+        notifyItemInserted(index)
+    }
 
     override fun getItemCount(): Int = mItemsData.size
 
@@ -32,21 +44,21 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         holder.dark_green?.text = itemData.mDarkGreen
         holder.brown?.text = itemData.mBrown
     }
+}
 
-    class ItemData {
-        var mAverageMMR = 0  // Used to sort list by average MMR
-        var mTitle: String = ""
-        var mBlue: String = ""
-        var mTeal: String = ""
-        var mPurple: String = ""
-        var mYellow: String = ""
-        var mOrange: String = ""
-        var mPink: String = ""
-        var mGray: String = ""
-        var mLightBlue: String = ""
-        var mDarkGreen: String = ""
-        var mBrown: String = ""
-    }
+class LiveMatchItemData {
+    var mAverageMMR = 0  // Used to sort list by average MMR
+    var mTitle: String = ""
+    var mBlue: String = ""
+    var mTeal: String = ""
+    var mPurple: String = ""
+    var mYellow: String = ""
+    var mOrange: String = ""
+    var mPink: String = ""
+    var mGray: String = ""
+    var mLightBlue: String = ""
+    var mDarkGreen: String = ""
+    var mBrown: String = ""
 }
 
 class LiveMatchesViewHolder(view: View?, override val containerView: View? = view) :

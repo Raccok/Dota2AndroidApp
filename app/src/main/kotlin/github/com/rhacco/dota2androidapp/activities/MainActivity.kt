@@ -94,7 +94,7 @@ class MainActivity : BaseLifecycleActivity<HeroesViewModel>() {
             }
 
     override fun observeLiveData() =
-            mViewModel.mHeroesQueryLiveData.observe(this, Observer<Pair<String, List<HeroEntity>>> {
+            mViewModel.mHeroQuery.observe(this, Observer<Pair<String, List<HeroEntity>>> {
                 it?.let { (userInput, result) -> validateUserInput(userInput, result) }
             })
 }

@@ -7,29 +7,29 @@ import android.util.Log
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
-import github.com.rhacco.dota2androidapp.lists.LiveMatchesAdapter
+import github.com.rhacco.dota2androidapp.lists.LiveMatchItemData
 import github.com.rhacco.dota2androidapp.sources.repos.matches.RealtimeStatsRepository
 import github.com.rhacco.dota2androidapp.sources.repos.matches.TopLiveGamesRepository
 import io.reactivex.disposables.CompositeDisposable
 
 class MatchesViewModel(application: Application) : AndroidViewModel(application) {
-    private val mIsLoadingLiveData = MediatorLiveData<Boolean>()
+    private val mIsLoading = MediatorLiveData<Boolean>()
     private val mDisposables = CompositeDisposable()
-    val mLiveMatchesQueryLiveData = MediatorLiveData<List<TopLiveGamesResponse.Game>>()
-    val mLiveMatchItemDataQueryLiveData = MediatorLiveData<LiveMatchesAdapter.ItemData>()
+    val mLiveMatchesQuery = MediatorLiveData<List<TopLiveGamesResponse.Game>>()
+    val mLiveMatchItemDataQuery = MediatorLiveData<LiveMatchItemData>()
 
     override fun onCleared() = mDisposables.clear()
 
     fun getLiveMatches() {
-        mIsLoadingLiveData.value = true
+        mIsLoading.value = true
         mDisposables.add(TopLiveGamesRepository.getTopLiveGames()
                 .subscribe(
                         { result ->
-                            mIsLoadingLiveData.value = false
-                            mLiveMatchesQueryLiveData.value = result
+                            mIsLoading.value = false
+                            mLiveMatchesQuery.value = result
                         },
                         { error ->
-                            mIsLoadingLiveData.value = false
+                            mIsLoading.value = false
                             Log.d(App.instance.getString(R.string.log_msg_debug),
                                     "Failed to fetch top live games: " + error)
                         }
@@ -37,12 +37,12 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun getLiveMatchItemData(averageMMR: Int, serverSteamId: Long) {
-        mIsLoadingLiveData.value = true
+        mIsLoading.value = true
         mDisposables.add(RealtimeStatsRepository.getRealtimeStats(serverSteamId)
                 .subscribe(
                         { result ->
-                            mIsLoadingLiveData.value = false
-                            val newItemData: LiveMatchesAdapter.ItemData = LiveMatchesAdapter.ItemData()
+                            mIsLoading.value = false
+                            val newItemData = LiveMatchItemData()
                             newItemData.mAverageMMR = averageMMR
                             if (averageMMR < 1)
                                 newItemData.mTitle = "Tournament Match (Match ID " +
@@ -65,13 +65,13 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                 newItemData.mLightBlue = direPlayers[2].name
                                 newItemData.mDarkGreen = direPlayers[3].name
                                 newItemData.mBrown = direPlayers[4].name
-                                mLiveMatchItemDataQueryLiveData.value = newItemData
+                                mLiveMatchItemDataQuery.value = newItemData
                             } else
                                 Log.d(App.instance.getString(R.string.log_msg_debug),
                                         "GetRealtimeStats returned a wrong number of teams/players")
                         },
                         { error ->
-                            mIsLoadingLiveData.value = false
+                            mIsLoading.value = false
                             Log.d(App.instance.getString(R.string.log_msg_debug),
                                     "Failed to fetch realtime stats: " + error)
                         }
