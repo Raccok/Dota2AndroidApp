@@ -8,6 +8,8 @@
 
     <string name="log_msg_debug">dota2androidapp.Debug</string>
 
+    <string name="heading_radiant_players">Radiant players:</string>
+    <string name="heading_dire_players">Dire players:</string>
     <string name="init_fav_hero_display">Your favorite Dota 2 hero has not been defined yet.
     </string>
     <string name="loaded_fav_hero_display">Your favorite Dota 2 hero is:\n\n%s\n\nWhat a fine
