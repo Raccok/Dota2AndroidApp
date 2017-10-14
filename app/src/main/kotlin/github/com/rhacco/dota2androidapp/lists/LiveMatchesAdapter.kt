@@ -13,7 +13,8 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val mItemsData: MutableList<LiveMatchesItemData> = mutableListOf()
 
-    // Add tournament matches first, then sort by average MMR (descending)
+    // Add tournament matches first, then sort by average MMR (descending). Tournament matches have
+    // an average MMR of 0, ranked matches have an average MMR > 0.
     fun add(itemData: LiveMatchesItemData) {
         if (itemData.mAverageMMR < 1) {
             mItemsData.add(0, itemData)
