@@ -12,14 +12,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-private val sDota2OfficialAPIService by lazy { Dota2OfficialAPIService.create() }
-
-fun getDota2OfficialAPIService(): Dota2OfficialAPIService? =
-        if (deviceIsOnline())
-            sDota2OfficialAPIService
-        else
-            null
-
 interface Dota2OfficialAPIService {
     @GET("IEconDOTA2_570/GetHeroes/v1")
     fun fetchHeroesLocalized(@Query("key") steamApiKey: String,
@@ -35,7 +27,16 @@ interface Dota2OfficialAPIService {
             Observable<RealtimeStatsResponse.Result>
 
     companion object {
-        fun create(): Dota2OfficialAPIService {
+        private val sService by lazy { create() }
+
+        // Return null when the device is not connected to the internet so no query can be performed
+        fun get(): Dota2OfficialAPIService? =
+                if (deviceIsOnline())
+                    sService
+                else
+                    null
+
+        private fun create(): Dota2OfficialAPIService {
             val retrofit = Retrofit.Builder().addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .baseUrl(URLStrings.STEAM_API)

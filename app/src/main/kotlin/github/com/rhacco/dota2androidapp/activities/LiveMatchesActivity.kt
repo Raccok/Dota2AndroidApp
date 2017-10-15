@@ -2,29 +2,36 @@ package github.com.rhacco.dota2androidapp.activities
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
 import github.com.rhacco.dota2androidapp.base.BaseLifecycleActivity
-import github.com.rhacco.dota2androidapp.lists.LiveMatchesListAdapter
+import github.com.rhacco.dota2androidapp.lists.LiveMatchesItemData
+import github.com.rhacco.dota2androidapp.lists.LiveMatchesAdapter
 import github.com.rhacco.dota2androidapp.viewmodel.MatchesViewModel
 import kotlinx.android.synthetic.main.activity_live_matches.*
 
 class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
     override val mViewModelClass = MatchesViewModel::class.java
-    private lateinit var mListAdapter: LiveMatchesListAdapter
+    private lateinit var mAdapter: LiveMatchesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_live_matches)
         actionBar?.setDisplayHomeAsUpEnabled(true)
-        mListAdapter = LiveMatchesListAdapter(this)
-        listView.adapter = mListAdapter
-        swipeRefreshLayout.setOnRefreshListener {
-            mListAdapter.mListItemsData.clear()
+        mAdapter = LiveMatchesAdapter(this)
+        recycler_view.adapter = mAdapter
+        val layoutManager = LinearLayoutManager(this)
+        recycler_view.layoutManager = layoutManager
+        recycler_view.addItemDecoration(
+                DividerItemDecoration(recycler_view.context, layoutManager.orientation))
+        swipe_refresh_layout.setOnRefreshListener {
+            mAdapter.clear()
             mViewModel.clearLiveMatches()
             mViewModel.clearLiveMatchesListData()
             mViewModel.getLiveMatches()
-            swipeRefreshLayout.isRefreshing = false
+            swipe_refresh_layout.isRefreshing = false
         }
         observeLiveData()
         // Only execute the last bit when the Activity is created fresh. Otherwise, e.g. when screen
@@ -33,44 +40,15 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
             mViewModel.getLiveMatches()
     }
 
-    private fun updateLiveMatches(list: List<TopLiveGamesResponse.Game>) {
-        for (game in list)
-            mViewModel.getLiveMatchListData(game.average_mmr, game.server_steam_id)
-    }
-
-    // Add tournament matches first, then sort by average MMR (descending)
-    private fun updateLiveMatchesListData(newItem: LiveMatchesListAdapter.ListItemData) {
-        // Strangely, sometimes the same match arrives here twice, so prevent creating duplicates
-        mListAdapter.mListItemsData
-                .filter { it.mMatchID == newItem.mMatchID }
-                .forEach { return }
-
-        if (newItem.mAverageMMR < 1) {
-            mListAdapter.mListItemsData.add(0, newItem)
-            return
-        }
-        var index = 0
-        for (item in mListAdapter.mListItemsData) {
-            if (item.mAverageMMR < 1 || item.mAverageMMR >= newItem.mAverageMMR) {
-                ++index
-                continue
-            }
-            mListAdapter.mListItemsData.add(index, newItem)
-            return
-        }
-        mListAdapter.mListItemsData.add(newItem)
-    }
-
     override fun observeLiveData() {
-        mViewModel.mLiveMatchesQueryLiveData.observe(this, Observer<List<TopLiveGamesResponse.Game>> {
-            it?.let { result -> updateLiveMatches(result) }
+        mViewModel.mLiveMatchesQuery.observe(this, Observer<List<TopLiveGamesResponse.Game>> {
+            it?.let { list ->
+                for (game in list)
+                    mViewModel.getLiveMatchesItemData(game.average_mmr, game.server_steam_id)
+            }
         })
-        mViewModel.mLiveMatchListDataQueryLiveData
-                .observe(this, Observer<LiveMatchesListAdapter.ListItemData> {
-                    it?.let { newItem ->
-                        updateLiveMatchesListData(newItem)
-                        mListAdapter.notifyDataSetChanged()
-                    }
+        mViewModel.mLiveMatchesItemDataQuery.observe(this, Observer<LiveMatchesItemData> {
+            it?.let { itemData -> mAdapter.add(itemData) }
         })
     }
 }
