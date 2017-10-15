@@ -7,8 +7,8 @@ import android.support.v7.widget.LinearLayoutManager
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
 import github.com.rhacco.dota2androidapp.base.BaseLifecycleActivity
-import github.com.rhacco.dota2androidapp.lists.LiveMatchesItemData
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesAdapter
+import github.com.rhacco.dota2androidapp.lists.LiveMatchesItemData
 import github.com.rhacco.dota2androidapp.viewmodel.MatchesViewModel
 import kotlinx.android.synthetic.main.activity_live_matches.*
 
