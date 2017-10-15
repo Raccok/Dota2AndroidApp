@@ -55,16 +55,16 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                     result.teams[1].players.size == 5) {
                                 val radiantPlayers = result.teams[0].players
                                 val direPlayers = result.teams[1].players
-                                newItemData.mBlue = radiantPlayers[0].name
-                                newItemData.mTeal = radiantPlayers[1].name
-                                newItemData.mPurple = radiantPlayers[2].name
-                                newItemData.mYellow = radiantPlayers[3].name
-                                newItemData.mOrange = radiantPlayers[4].name
-                                newItemData.mPink = direPlayers[0].name
-                                newItemData.mGray = direPlayers[1].name
-                                newItemData.mLightBlue = direPlayers[2].name
-                                newItemData.mDarkGreen = direPlayers[3].name
-                                newItemData.mBrown = direPlayers[4].name
+                                newItemData.mRadiantPlayer0 = radiantPlayers[0].name
+                                newItemData.mRadiantPlayer1 = radiantPlayers[1].name
+                                newItemData.mRadiantPlayer2 = radiantPlayers[2].name
+                                newItemData.mRadiantPlayer3 = radiantPlayers[3].name
+                                newItemData.mRadiantPlayer4 = radiantPlayers[4].name
+                                newItemData.mDirePlayer0 = direPlayers[0].name
+                                newItemData.mDirePlayer1 = direPlayers[1].name
+                                newItemData.mDirePlayer2 = direPlayers[2].name
+                                newItemData.mDirePlayer3 = direPlayers[3].name
+                                newItemData.mDirePlayer4 = direPlayers[4].name
                                 mLiveMatchesItemDataQuery.value = newItemData
                             } else
                                 Log.d(App.instance.getString(R.string.log_msg_debug),

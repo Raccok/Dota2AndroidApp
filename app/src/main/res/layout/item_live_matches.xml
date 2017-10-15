@@ -20,19 +20,19 @@
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="@string/heading_radiant_players"/>
             <TextView
-                android:id="@+id/player_blue"
+                android:id="@+id/radiant_player0"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
             <TextView
-                android:id="@+id/player_teal"
+                android:id="@+id/radiant_player1"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
             <TextView
-                android:id="@+id/player_purple"
+                android:id="@+id/radiant_player2"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
             <TextView
-                android:id="@+id/player_yellow"
+                android:id="@+id/radiant_player3"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
             <TextView
-                android:id="@+id/player_orange"
+                android:id="@+id/radiant_player4"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
@@ -43,19 +43,19 @@
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="@string/heading_dire_players"/>
             <TextView
-                android:id="@+id/player_pink"
+                android:id="@+id/dire_player0"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
             <TextView
-                android:id="@+id/player_gray"
+                android:id="@+id/dire_player1"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
             <TextView
-                android:id="@+id/player_light_blue"
+                android:id="@+id/dire_player2"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
             <TextView
-                android:id="@+id/player_dark_green"
+                android:id="@+id/dire_player3"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
             <TextView
-                android:id="@+id/player_brown"
+                android:id="@+id/dire_player4"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>

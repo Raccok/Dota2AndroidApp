@@ -33,32 +33,32 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
     override fun onBindViewHolder(holder: LiveMatchesViewHolder, position: Int) {
         val itemData = mItemsData[position]
         holder.title?.text = itemData.mTitle
-        holder.player_blue?.text = itemData.mBlue
-        holder.player_teal?.text = itemData.mTeal
-        holder.player_purple?.text = itemData.mPurple
-        holder.player_yellow?.text = itemData.mYellow
-        holder.player_orange?.text = itemData.mOrange
-        holder.player_pink?.text = itemData.mPink
-        holder.player_gray?.text = itemData.mGray
-        holder.player_light_blue?.text = itemData.mLightBlue
-        holder.player_dark_green?.text = itemData.mDarkGreen
-        holder.player_brown?.text = itemData.mBrown
+        holder.radiant_player0?.text = itemData.mRadiantPlayer0
+        holder.radiant_player1?.text = itemData.mRadiantPlayer1
+        holder.radiant_player2?.text = itemData.mRadiantPlayer2
+        holder.radiant_player3?.text = itemData.mRadiantPlayer3
+        holder.radiant_player4?.text = itemData.mRadiantPlayer4
+        holder.dire_player0?.text = itemData.mDirePlayer0
+        holder.dire_player1?.text = itemData.mDirePlayer1
+        holder.dire_player2?.text = itemData.mDirePlayer2
+        holder.dire_player3?.text = itemData.mDirePlayer3
+        holder.dire_player4?.text = itemData.mDirePlayer4
     }
 }
 
 class LiveMatchesItemData {
     var mAverageMMR = 0  // Used to sort list by average MMR
     var mTitle: String = ""
-    var mBlue: String = ""
-    var mTeal: String = ""
-    var mPurple: String = ""
-    var mYellow: String = ""
-    var mOrange: String = ""
-    var mPink: String = ""
-    var mGray: String = ""
-    var mLightBlue: String = ""
-    var mDarkGreen: String = ""
-    var mBrown: String = ""
+    var mRadiantPlayer0: String = ""
+    var mRadiantPlayer1: String = ""
+    var mRadiantPlayer2: String = ""
+    var mRadiantPlayer3: String = ""
+    var mRadiantPlayer4: String = ""
+    var mDirePlayer0: String = ""
+    var mDirePlayer1: String = ""
+    var mDirePlayer2: String = ""
+    var mDirePlayer3: String = ""
+    var mDirePlayer4: String = ""
 }
 
 class LiveMatchesViewHolder(view: View?, override val containerView: View? = view) :
