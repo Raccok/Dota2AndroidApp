@@ -3,14 +3,14 @@ package github.com.rhacco.dota2androidapp.sources.repos.heroes
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.entities.HeroEntity
-import github.com.rhacco.dota2androidapp.sources.remote.getDota2OfficialAPIService
+import github.com.rhacco.dota2androidapp.sources.remote.Dota2OfficialAPIService
 import io.reactivex.Single
 
 object HeroesRemoteDataSource : HeroesDataSource {
     override fun getHeroes(): Single<List<HeroEntity>> =
             Single.create(
                     { subscriber ->
-                        getDota2OfficialAPIService()
+                        Dota2OfficialAPIService.get()
                                 ?.fetchHeroesLocalized(App.instance.getString(R.string.api_key), "en_us")
                                 ?.map { it.component1() }
                                 ?.subscribe(
