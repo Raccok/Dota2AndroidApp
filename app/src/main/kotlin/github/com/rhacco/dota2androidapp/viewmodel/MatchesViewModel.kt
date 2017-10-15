@@ -45,11 +45,11 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                             val newItemData = LiveMatchesItemData()
                             newItemData.mAverageMMR = averageMMR
                             if (averageMMR < 1)
-                                newItemData.mTitle = "Tournament Match (Match ID " +
-                                        result.match.matchid + ")"
+                                newItemData.mTitle = App.instance.getString(
+                                        R.string.heading_live_tournament_match, result.match.matchid)
                             else
-                                newItemData.mTitle = "Ranked Match (Average MMR " + averageMMR +
-                                        ", Match ID " + result.match.matchid + ")"
+                                newItemData.mTitle = App.instance.getString(
+                                        R.string.heading_live_ranked_match, averageMMR, result.match.matchid)
                             if (result.teams.size == 2 &&
                                     result.teams[0].players.size == 5 &&
                                     result.teams[1].players.size == 5) {
