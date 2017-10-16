@@ -31,10 +31,7 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
             swipe_refresh_layout.isRefreshing = false
         }
         observeLiveData()
-        // Only execute the last bit when the Activity is created fresh. Otherwise, e.g. when screen
-        // orientation changed, the SwipeRefreshLayout takes care of reinitializing the contents
-        if (savedInstanceState == null)
-            mViewModel.getLiveMatches()
+        mViewModel.getLiveMatches()
     }
 
     override fun observeLiveData() {
