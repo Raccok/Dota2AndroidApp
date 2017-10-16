@@ -23,4 +23,6 @@ object TopLiveGamesLocalDataSource : TopLiveGamesDataSource {
         for (game in list)
             mTopLiveGames[game.server_steam_id] = game
     }
+
+    fun removeTopLiveGame(serverSteamId: Long) = mTopLiveGames.remove(serverSteamId)
 }

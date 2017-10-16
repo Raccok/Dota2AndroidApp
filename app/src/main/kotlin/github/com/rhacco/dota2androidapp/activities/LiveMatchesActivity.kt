@@ -42,7 +42,18 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
             }
         })
         mViewModel.mLiveMatchesItemDataQuery.observe(this, Observer<LiveMatchesItemData> {
-            it?.let { itemData -> mAdapter.add(itemData) }
+            it?.let { itemData ->
+                mAdapter.add(itemData)
+                mViewModel.checkIfMatchFinished(itemData.mMatchID)
+            }
+        })
+        mViewModel.mMatchFinishedQuery.observe(this, Observer<Pair<Long, Boolean>> {
+            it?.let { (matchId, isFinished) ->
+                if (isFinished) {
+                    mAdapter.remove(matchId)
+                    mViewModel.removeFinishedMatch(matchId)
+                }
+            }
         })
     }
 }

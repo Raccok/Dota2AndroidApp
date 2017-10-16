@@ -26,6 +26,18 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         notifyDataSetChanged()
     }
 
+    fun remove(matchId: Long) {
+        var index = 0
+        while (index < mItemsData.size) {
+            if (mItemsData[index].mMatchID == matchId) {
+                mItemsData.removeAt(index)
+                notifyItemRemoved(index)
+                return
+            }
+            ++index
+        }
+    }
+
     override fun getItemCount(): Int = mItemsData.size
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): LiveMatchesViewHolder =

@@ -19,4 +19,18 @@ object RealtimeStatsLocalDataSource : RealtimeStatsDataSource {
     override fun saveRealtimeStats(serverSteamId: Long, result: RealtimeStatsResponse.Result) {
         mRealtimeStats[serverSteamId] = result
     }
+
+    fun removeRealtimeStats(matchId: Long) {
+        val values = mRealtimeStats.values.toList()
+        var index = 0
+        while (index < values.size) {
+            val realtimeStats = values[index]
+            if (realtimeStats.match.matchid == matchId) {
+                mRealtimeStats.remove(realtimeStats.match.server_steam_id)
+                TopLiveGamesLocalDataSource.removeTopLiveGame(realtimeStats.match.server_steam_id)
+                return
+            }
+            ++index
+        }
+    }
 }

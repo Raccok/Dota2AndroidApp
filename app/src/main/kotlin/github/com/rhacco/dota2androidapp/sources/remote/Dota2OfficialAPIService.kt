@@ -1,6 +1,7 @@
 package github.com.rhacco.dota2androidapp.sources.remote
 
 import github.com.rhacco.dota2androidapp.api.HeroesResponse
+import github.com.rhacco.dota2androidapp.api.MatchDetailsResponse
 import github.com.rhacco.dota2androidapp.api.RealtimeStatsResponse
 import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
 import github.com.rhacco.dota2androidapp.utilities.URLStrings
@@ -25,6 +26,10 @@ interface Dota2OfficialAPIService {
     fun fetchRealtimeStats(@Query("key") steamApiKey: String,
                            @Query("server_steam_id") serverSteamId: Long):
             Observable<RealtimeStatsResponse.Result>
+
+    @GET("IDOTA2Match_570/GetMatchDetails/V001")
+    fun fetchMatchDetails(@Query("key") steamApiKey: String,
+                          @Query("match_id") matchId: Long): Observable<MatchDetailsResponse.Result>
 
     companion object {
         private val sService by lazy { create() }

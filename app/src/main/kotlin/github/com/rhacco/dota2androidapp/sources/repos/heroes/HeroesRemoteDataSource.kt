@@ -14,7 +14,7 @@ object HeroesRemoteDataSource : HeroesDataSource {
                                 ?.fetchHeroesLocalized(App.instance.getString(R.string.api_key), "en_us")
                                 ?.map { it.component1() }
                                 ?.subscribe(
-                                        { result -> subscriber.onSuccess(result.heroesList()) },
+                                        { result -> subscriber.onSuccess(result.heroes) },
                                         { _ -> subscriber.onError(Exception()) })
                     }
             )
