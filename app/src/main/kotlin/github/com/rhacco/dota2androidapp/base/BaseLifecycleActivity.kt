@@ -13,4 +13,7 @@ abstract class BaseLifecycleActivity<T : AndroidViewModel> : AppCompatActivity()
     private val mRegistry = LifecycleRegistry(this)
 
     override fun getLifecycle(): LifecycleRegistry = mRegistry
+
+    // Observe actions on data stored and managed by the related ViewModel and react accordingly.
+    abstract fun observeLiveData()
 }

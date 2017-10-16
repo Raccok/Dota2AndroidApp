@@ -1,4 +1,4 @@
-package github.com.rhacco.dota2androidapp.sources.repos
+package github.com.rhacco.dota2androidapp.sources.repos.heroes
 
 import github.com.rhacco.dota2androidapp.entities.HeroEntity
 import io.reactivex.Single
@@ -7,22 +7,20 @@ import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 
 object HeroesRepository : HeroesDataSource {
-    override fun getRepositories(): Single<List<HeroEntity>> =
-            HeroesLocalDataSource.getRepositories()
+    override fun getHeroes(): Single<List<HeroEntity>> =
+            HeroesLocalDataSource.getHeroes()
                     .onErrorResumeNext {
-                        HeroesRemoteDataSource.getRepositories()
-                                .doOnSuccess { HeroesLocalDataSource.saveRepositories(it) }
+                        HeroesRemoteDataSource.getHeroes()
+                                .doOnSuccess { HeroesLocalDataSource.saveHeroes(it) }
                     }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
 
-    override fun getHeroByLocalName(hero: String): Single<List<HeroEntity>> =
-            HeroesLocalDataSource.getHeroByLocalName(hero)
+    override fun getHeroByLocalizedName(hero: String): Single<List<HeroEntity>> =
+            HeroesLocalDataSource.getHeroByLocalizedName(hero)
                     .onErrorResumeNext {
-                        HeroesRemoteDataSource.getRepositories()
-                                .doOnSuccess {
-                                    HeroesLocalDataSource.saveRepositories(it)
-                                }
+                        HeroesRemoteDataSource.getHeroes()
+                                .doOnSuccess { HeroesLocalDataSource.saveHeroes(it) }
                                 .map(Function<List<HeroEntity>, List<HeroEntity>> { heroEntities ->
                                     return@Function heroEntities
                                             .firstOrNull { it.localized_name == hero }

@@ -36,6 +36,8 @@ If you see this screen, your setup is complete.
 
 ## Using the app
 
-Click into the text edit field, enter your favorite Dota 2 hero with the Android keyboard and click `OK`. Now, the text in the app should show what you entered. Close and restart the app (in the virtual Android device or via Android Studio), now it should show what you entered before immediately, without asking you to enter anything.
+Click on `LIVE MATCHES` to enter a new Activity that shows the current top 10 live matches fetched from the official Dota 2 API. Example with Team Liquid vs Team Secret in the semifinals of StarLadder i-League Invitational Season 3 and several high MMR ranked matches:
 
-In the virtual Android device, go to "Settings" and uninstall the "Dota 2 Android App". Run the app again via Android Studio, now you should be able to enter a new hero.
+<img src="screenshots/activity_live_matches.png" width="230" height="410"/>
+
+Click on `SET FAVORITE HERO` to define a new favorite hero. Click into the text edit field, enter your favorite Dota 2 hero with the Android keyboard and click `OK`. Now, the text in the app should show what you entered. Close and restart the app (in the virtual Android device or via Android Studio), now it should show what you entered before immediately.
