@@ -36,7 +36,7 @@ If you see this screen, your setup is complete.
 
 ## Using the app
 
-Click on `LIVE MATCHES` to enter a new Activity that shows the current top 10 live matches fetched from the official Dota 2 API. Example with a Chinese qualifier match (DreamLeague Season 8) and several high MMR ranked matches:
+Click on `LIVE MATCHES` to enter a new Activity that shows the current top 10 live matches fetched from the official Dota 2 API. Example with Team Liquid vs Team Secret in the semifinals of StarLadder i-League Invitational Season 3 and several high MMR ranked matches:
 
 <img src="screenshots/activity_live_matches.png" width="230" height="410"/>
 
