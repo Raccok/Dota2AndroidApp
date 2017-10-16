@@ -15,17 +15,16 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
 
     // Add tournament matches first, then sort by average MMR (descending). Tournament matches have
     // an average MMR of 0, ranked matches have an average MMR > 0.
-    fun add(itemData: LiveMatchesItemData) {
-        if (itemData.mAverageMMR < 1) {
-            mItemsData.add(0, itemData)
-        } else {
-            val index = mItemsData.count { it.mAverageMMR < 1 || it.mAverageMMR >= itemData.mAverageMMR }
-            mItemsData.add(index, itemData)
-        }
+    fun add(newItemData: LiveMatchesItemData) {
+        // Don't add if match already exists
+        mItemsData.filter { newItemData.mMatchID == it.mMatchID }.forEach { return }
+
+        var index = 0
+        if (newItemData.mAverageMMR > 0)
+            index = mItemsData.count { it.mAverageMMR < 1 || it.mAverageMMR >= newItemData.mAverageMMR }
+        mItemsData.add(index, newItemData)
         notifyDataSetChanged()
     }
-
-    fun clear() = mItemsData.clear()
 
     override fun getItemCount(): Int = mItemsData.size
 
@@ -49,7 +48,8 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
 }
 
 class LiveMatchesItemData {
-    var mAverageMMR = 0  // Used to sort list by average MMR
+    var mMatchID = 0L
+    var mAverageMMR = 0
     var mTitle: String = ""
     var mRadiantPlayer0: String = ""
     var mRadiantPlayer1: String = ""

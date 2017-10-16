@@ -16,6 +16,4 @@ object RealtimeStatsRepository : RealtimeStatsDataSource {
                     }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-
-    override fun clearRealtimeStats() = RealtimeStatsLocalDataSource.clearRealtimeStats()
 }

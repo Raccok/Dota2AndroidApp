@@ -36,8 +36,6 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                 ))
     }
 
-    fun clearLiveMatches() = TopLiveGamesRepository.clearTopLiveGames()
-
     fun getLiveMatchesItemData(averageMMR: Int, serverSteamId: Long) {
         mIsLoading.value = true
         mDisposables.add(RealtimeStatsRepository.getRealtimeStats(serverSteamId)
@@ -45,6 +43,7 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                         { result ->
                             mIsLoading.value = false
                             val newItemData = LiveMatchesItemData()
+                            newItemData.mMatchID = result.match.matchid
                             newItemData.mAverageMMR = averageMMR
                             if (averageMMR < 1)
                                 newItemData.mTitle = App.instance.getString(
@@ -79,6 +78,4 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                         }
                 ))
     }
-
-    fun clearLiveMatchesListData() = RealtimeStatsRepository.clearRealtimeStats()
 }

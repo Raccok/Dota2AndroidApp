@@ -27,9 +27,6 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
         recycler_view.addItemDecoration(
                 DividerItemDecoration(recycler_view.context, layoutManager.orientation))
         swipe_refresh_layout.setOnRefreshListener {
-            mAdapter.clear()
-            mViewModel.clearLiveMatches()
-            mViewModel.clearLiveMatchesListData()
             mViewModel.getLiveMatches()
             swipe_refresh_layout.isRefreshing = false
         }
