@@ -45,7 +45,8 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
             it?.let { itemData ->
                 if (mAdapter.add(itemData))
                     recycler_view.layoutManager.scrollToPosition(0)
-                mViewModel.checkIfMatchFinished(itemData.mMatchID)
+                else
+                    mViewModel.checkIfMatchFinished(itemData.mMatchID)
             }
         })
         mViewModel.mMatchFinishedQuery.observe(this, Observer<Pair<Long, Boolean>> {
