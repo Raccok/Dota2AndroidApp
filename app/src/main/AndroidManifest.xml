@@ -25,8 +25,8 @@
         </activity>
         <activity
             android:name="github.com.rhacco.dota2androidapp.activities.LiveMatchesActivity"
-            android:label="@string/activity_live_matches"
             android:configChanges="orientation|screenSize"
+            android:label="@string/activity_live_matches"
             android:parentActivityName="github.com.rhacco.dota2androidapp.activities.MainActivity">
         </activity>
     </application>

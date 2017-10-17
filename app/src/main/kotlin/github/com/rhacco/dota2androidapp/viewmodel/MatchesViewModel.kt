@@ -91,8 +91,9 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                 .subscribe(
                         { result ->
                             mIsLoading.value = false
-                            // The official Dota 2 API returns 'error' as null when match details
-                            // are present for given matchId, i.e. when the match is finished
+                            // The official Dota 2 API returns nothing for 'error' when match
+                            // details *are* present for given matchId, i.e. when the match is
+                            // finished, so 'error' is null in this case
                             mMatchFinishedQuery.value = Pair(matchId, result.error == null)
                         },
                         { error ->

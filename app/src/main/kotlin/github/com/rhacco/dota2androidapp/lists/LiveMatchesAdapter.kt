@@ -15,15 +15,16 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
 
     // Add tournament matches first, then sort by average MMR (descending). Tournament matches have
     // an average MMR of 0, ranked matches have an average MMR > 0.
-    fun add(newItemData: LiveMatchesItemData) {
+    fun add(newItemData: LiveMatchesItemData): Boolean {
         // Don't add if match already exists
-        mItemsData.filter { newItemData.mMatchID == it.mMatchID }.forEach { return }
+        mItemsData.filter { newItemData.mMatchID == it.mMatchID }.forEach { return false }
 
         var index = 0
         if (newItemData.mAverageMMR > 0)
             index = mItemsData.count { it.mAverageMMR < 1 || it.mAverageMMR >= newItemData.mAverageMMR }
         mItemsData.add(index, newItemData)
-        notifyDataSetChanged()
+        notifyItemInserted(index)
+        return true
     }
 
     fun remove(matchId: Long) {

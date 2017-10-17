@@ -43,7 +43,8 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
         })
         mViewModel.mLiveMatchesItemDataQuery.observe(this, Observer<LiveMatchesItemData> {
             it?.let { itemData ->
-                mAdapter.add(itemData)
+                if (mAdapter.add(itemData))
+                    recycler_view.layoutManager.scrollToPosition(0)
                 mViewModel.checkIfMatchFinished(itemData.mMatchID)
             }
         })
