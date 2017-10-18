@@ -46,16 +46,17 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
                 if (mAdapter.add(itemData))
                     recycler_view.layoutManager.scrollToPosition(0)
                 else
-                    mViewModel.checkIfMatchFinished(itemData.mMatchID)
+                    mViewModel.checkMatchFinished(itemData.mMatchID)
             }
         })
-        mViewModel.mMatchFinishedQuery.observe(this, Observer<Pair<Long, Boolean>> {
+        mViewModel.mCheckMatchFinishedQuery.observe(this, Observer<Pair<Long, Boolean>> {
             it?.let { (matchId, isFinished) ->
-                if (isFinished) {
-                    mAdapter.remove(matchId)
+                if (isFinished)
                     mViewModel.removeFinishedMatch(matchId)
-                }
             }
+        })
+        mViewModel.mRemoveFinishedMatchQuery.observe(this, Observer<Long> {
+            it?.let { matchId -> mAdapter.remove(matchId) }
         })
     }
 }

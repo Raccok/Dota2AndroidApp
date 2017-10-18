@@ -19,7 +19,8 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
     private val mDisposables = CompositeDisposable()
     val mLiveMatchesQuery = MediatorLiveData<List<TopLiveGamesResponse.Game>>()
     val mLiveMatchesItemDataQuery = MediatorLiveData<LiveMatchesItemData>()
-    val mMatchFinishedQuery = MediatorLiveData<Pair<Long, Boolean>>()
+    val mCheckMatchFinishedQuery = MediatorLiveData<Pair<Long, Boolean>>()
+    val mRemoveFinishedMatchQuery = MediatorLiveData<Long>()
 
     override fun onCleared() = mDisposables.clear()
 
@@ -85,7 +86,7 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                 ))
     }
 
-    fun checkIfMatchFinished(matchId: Long) {
+    fun checkMatchFinished(matchId: Long) {
         mIsLoading.value = true
         mDisposables.add(MatchDetailsRepository.getMatchDetails(matchId)
                 .subscribe(
@@ -94,7 +95,7 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                             // The official Dota 2 API returns nothing for 'error' when match
                             // details *are* present for given matchId, i.e. when the match is
                             // finished, so 'error' is null in this case
-                            mMatchFinishedQuery.value = Pair(matchId, result.error == null)
+                            mCheckMatchFinishedQuery.value = Pair(matchId, result.error == null)
                         },
                         { error ->
                             mIsLoading.value = false
@@ -104,5 +105,8 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                 ))
     }
 
-    fun removeFinishedMatch(matchId: Long) = RealtimeStatsLocalDataSource.removeRealtimeStats(matchId)
+    fun removeFinishedMatch(matchId: Long) {
+        RealtimeStatsLocalDataSource.removeRealtimeStats(matchId)
+        mRemoveFinishedMatchQuery.value = matchId
+    }
 }
