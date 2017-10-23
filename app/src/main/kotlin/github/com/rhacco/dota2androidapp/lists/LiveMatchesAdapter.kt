@@ -46,6 +46,11 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         }
     }
 
+    fun switchShowOfficialName(itemPosition: Int) {
+        mItemsData[itemPosition].mPlayers.forEach { it.showOfficialName = !it.showOfficialName }
+        notifyItemChanged(itemPosition)
+    }
+
     fun remove(matchId: Long) {
         var index = 0
         while (index < mItemsData.size) {
@@ -61,7 +66,7 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
     override fun getItemCount(): Int = mItemsData.size
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): LiveMatchesViewHolder =
-            LiveMatchesViewHolder(mInflater.inflate(R.layout.item_live_matches, parent, false))
+            LiveMatchesViewHolder(mInflater.inflate(R.layout.item_live_matches, parent, false), this)
 
     override fun onBindViewHolder(holder: LiveMatchesViewHolder, position: Int) {
         val itemData = mItemsData[position]
@@ -83,12 +88,19 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
     }
 
     private fun bindPlayerName(textView: TextView?, player: Player) =
-            if (player.officialName.isEmpty()) {
-                textView?.text = player.currentSteamName
-                textView?.setTypeface(null, Typeface.NORMAL)
-            } else {
-                textView?.text = player.officialName
-                textView?.setTypeface(null, Typeface.BOLD)
+            when {
+                player.officialName.isEmpty() -> {
+                    textView?.text = player.currentSteamName
+                    textView?.setTypeface(null, Typeface.NORMAL)
+                }
+                player.showOfficialName -> {
+                    textView?.text = player.officialName
+                    textView?.setTypeface(null, Typeface.BOLD)
+                }
+                else -> {
+                    textView?.text = player.currentSteamName
+                    textView?.setTypeface(null, Typeface.NORMAL)
+                }
             }
 }
 
@@ -99,7 +111,17 @@ class LiveMatchesItemData {
     var mPlayers: MutableList<Player> = mutableListOf()
 }
 
-data class Player(var steamAccountId: Long, var currentSteamName: String, var officialName: String = "")
+data class Player(var steamAccountId: Long, var currentSteamName: String, var officialName: String = "",
+                  var showOfficialName: Boolean = true)
 
-class LiveMatchesViewHolder(view: View?, override val containerView: View? = view) :
-        RecyclerView.ViewHolder(view), LayoutContainer
+class LiveMatchesViewHolder(view: View?, adapter: LiveMatchesAdapter) :
+        RecyclerView.ViewHolder(view), LayoutContainer, View.OnClickListener {
+    override val containerView: View? = view
+    private val mAdapter = adapter
+
+    init {
+        itemView.setOnClickListener(this)
+    }
+
+    override fun onClick(view: View?) = mAdapter.switchShowOfficialName(adapterPosition)
+}
