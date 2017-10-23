@@ -1,10 +1,14 @@
 package github.com.rhacco.dota2androidapp.lists
 
 import android.content.Context
+import android.graphics.Typeface
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_live_matches.*
@@ -27,6 +31,21 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         return true
     }
 
+    fun setPlayerOfficialName(steamAccountId: Long, officialName: String) {
+        var index = 0
+        while (index < mItemsData.size) {
+            for (player in mItemsData[index].mPlayers)
+                if (player.steamAccountId == steamAccountId) {
+                    if (player.officialName != officialName) {
+                        player.officialName = officialName
+                        notifyItemChanged(index)
+                    }
+                    return
+                }
+            ++index
+        }
+    }
+
     fun remove(matchId: Long) {
         var index = 0
         while (index < mItemsData.size) {
@@ -47,34 +66,40 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
     override fun onBindViewHolder(holder: LiveMatchesViewHolder, position: Int) {
         val itemData = mItemsData[position]
         holder.title?.text = itemData.mTitle
-        holder.radiant_player0?.text = itemData.mRadiantPlayer0
-        holder.radiant_player1?.text = itemData.mRadiantPlayer1
-        holder.radiant_player2?.text = itemData.mRadiantPlayer2
-        holder.radiant_player3?.text = itemData.mRadiantPlayer3
-        holder.radiant_player4?.text = itemData.mRadiantPlayer4
-        holder.dire_player0?.text = itemData.mDirePlayer0
-        holder.dire_player1?.text = itemData.mDirePlayer1
-        holder.dire_player2?.text = itemData.mDirePlayer2
-        holder.dire_player3?.text = itemData.mDirePlayer3
-        holder.dire_player4?.text = itemData.mDirePlayer4
+        if (itemData.mPlayers.size == 10) {
+            bindPlayerName(holder.radiant_player0, itemData.mPlayers[0])
+            bindPlayerName(holder.radiant_player1, itemData.mPlayers[1])
+            bindPlayerName(holder.radiant_player2, itemData.mPlayers[2])
+            bindPlayerName(holder.radiant_player3, itemData.mPlayers[3])
+            bindPlayerName(holder.radiant_player4, itemData.mPlayers[4])
+            bindPlayerName(holder.dire_player0, itemData.mPlayers[5])
+            bindPlayerName(holder.dire_player1, itemData.mPlayers[6])
+            bindPlayerName(holder.dire_player2, itemData.mPlayers[7])
+            bindPlayerName(holder.dire_player3, itemData.mPlayers[8])
+            bindPlayerName(holder.dire_player4, itemData.mPlayers[9])
+        } else
+            Log.d(App.instance.getString(R.string.log_msg_debug),
+                    "A Live Matches item has corrupted players data")
     }
+
+    private fun bindPlayerName(textView: TextView?, player: Player) =
+            if (player.officialName.isEmpty()) {
+                textView?.text = player.currentSteamName
+                textView?.setTypeface(null, Typeface.NORMAL)
+            } else {
+                textView?.text = player.officialName
+                textView?.setTypeface(null, Typeface.BOLD)
+            }
 }
 
 class LiveMatchesItemData {
     var mMatchID = 0L
     var mAverageMMR = 0
     var mTitle: String = ""
-    var mRadiantPlayer0: String = ""
-    var mRadiantPlayer1: String = ""
-    var mRadiantPlayer2: String = ""
-    var mRadiantPlayer3: String = ""
-    var mRadiantPlayer4: String = ""
-    var mDirePlayer0: String = ""
-    var mDirePlayer1: String = ""
-    var mDirePlayer2: String = ""
-    var mDirePlayer3: String = ""
-    var mDirePlayer4: String = ""
+    var mPlayers: MutableList<Player> = mutableListOf()
 }
+
+data class Player(var steamAccountId: Long, var currentSteamName: String, var officialName: String = "")
 
 class LiveMatchesViewHolder(view: View?, override val containerView: View? = view) :
         RecyclerView.ViewHolder(view), LayoutContainer

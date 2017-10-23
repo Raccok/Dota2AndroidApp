@@ -49,6 +49,11 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
                     mViewModel.checkMatchFinished(itemData.mMatchID)
             }
         })
+        mViewModel.mOfficialNameQuery.observe(this, Observer<Pair<Long, String>> {
+            it?.let { (steamAccountId, officialName) ->
+                mAdapter.setPlayerOfficialName(steamAccountId, officialName)
+            }
+        })
         mViewModel.mCheckMatchFinishedQuery.observe(this, Observer<Pair<Long, Boolean>> {
             it?.let { (matchId, isFinished) ->
                 if (isFinished)
