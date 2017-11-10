@@ -19,7 +19,6 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_live_matches)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
         mAdapter = LiveMatchesAdapter(this)
         recycler_view.adapter = mAdapter
         val layoutManager = LinearLayoutManager(this)
