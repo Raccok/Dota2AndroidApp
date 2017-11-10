@@ -14,7 +14,7 @@ object RealtimeStatsRemoteDataSource : RealtimeStatsDataSource {
                                 ?.fetchRealtimeStats(App.instance.getString(R.string.api_key), serverSteamId)
                                 ?.subscribe(
                                         { result -> subscriber.onSuccess(result) },
-                                        { _ -> subscriber.onError(Exception()) }
+                                        { error -> subscriber.onError(error) }
                                 )
                     }
             )

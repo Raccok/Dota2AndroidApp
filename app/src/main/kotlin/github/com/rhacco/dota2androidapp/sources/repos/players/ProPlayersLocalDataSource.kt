@@ -6,32 +6,34 @@ import io.reactivex.Single
 object ProPlayersLocalDataSource {
     private val mProPlayers: MutableMap<Long, ProPlayersResponse.ProPlayer> = mutableMapOf()
 
-    fun getOfficialName(steamAccountId: Long): Single<String> =
+    fun checkProPlayers(playerSteamIds: List<Long>): Single<List<ProPlayersResponse.ProPlayer>> =
             Single.create(
                     { subscriber ->
-                        when {
-                            mProPlayers.isEmpty() ->
-                                ProPlayersRemoteDataSource.getProPlayers()
-                                        .subscribe(
-                                                { result ->
-                                                    saveProPlayers(result)
-                                                    if (mProPlayers.containsKey(steamAccountId))
-                                                        subscriber.onSuccess(mProPlayers[steamAccountId]!!.name)
-                                                    else
-                                                        subscriber.onSuccess("")
-                                                },
-                                                { error -> subscriber.onError(error) }
-                                        )
-                            mProPlayers.containsKey(steamAccountId) ->
-                                subscriber.onSuccess(mProPlayers[steamAccountId]!!.name)
-                            else ->
-                                subscriber.onSuccess("")
-                        }
+                        if (mProPlayers.isEmpty())
+                            ProPlayersRemoteDataSource.getProPlayers()
+                                    .subscribe(
+                                            { result ->
+                                                saveProPlayers(result)
+                                                subscriber.onSuccess(checkProPlayersHelper(playerSteamIds))
+                                            },
+                                            { error -> subscriber.onError(error) }
+                                    )
+                        else
+                            subscriber.onSuccess(checkProPlayersHelper(playerSteamIds))
                     }
             )
 
     private fun saveProPlayers(proPlayers: List<ProPlayersResponse.ProPlayer>) {
         for (player in proPlayers)
             mProPlayers[player.account_id] = player
+    }
+
+    private fun checkProPlayersHelper(playerSteamIds: List<Long>): List<ProPlayersResponse.ProPlayer> {
+        val result: MutableList<ProPlayersResponse.ProPlayer> = mutableListOf()
+        playerSteamIds.forEach {
+            if (mProPlayers.containsKey(it))
+                result.add(mProPlayers[it]!!)
+        }
+        return result
     }
 }

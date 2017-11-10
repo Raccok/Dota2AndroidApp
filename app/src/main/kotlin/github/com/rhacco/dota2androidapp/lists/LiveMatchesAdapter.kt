@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
+import github.com.rhacco.dota2androidapp.api.ProPlayersResponse
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_live_matches.*
 
@@ -31,18 +32,21 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         return true
     }
 
-    fun setPlayerOfficialName(steamAccountId: Long, officialName: String) {
-        var index = 0
-        while (index < mItemsData.size) {
-            for (player in mItemsData[index].mPlayers)
-                if (player.steamAccountId == steamAccountId) {
-                    if (player.officialName != officialName) {
-                        player.officialName = officialName
-                        notifyItemChanged(index)
+    fun setOfficialNames(proPlayers: List<ProPlayersResponse.ProPlayer>) {
+        proPlayers.forEach {
+            var index = 0
+            while (index < mItemsData.size) {
+                for (player in mItemsData[index].mPlayers)
+                    if (player.steamId == it.account_id) {
+                        if (player.officialName != it.name) {
+                            player.officialName = it.name
+                            notifyItemChanged(index)
+                        }
+                        index = mItemsData.size  // breaks outer while loop
+                        break
                     }
-                    return
-                }
-            ++index
+                ++index
+            }
         }
     }
 
@@ -111,7 +115,7 @@ class LiveMatchesItemData {
     var mPlayers: MutableList<Player> = mutableListOf()
 }
 
-data class Player(var steamAccountId: Long, var currentSteamName: String, var officialName: String = "",
+data class Player(var steamId: Long, var currentSteamName: String, var officialName: String = "",
                   var showOfficialName: Boolean = true)
 
 class LiveMatchesViewHolder(view: View?, adapter: LiveMatchesAdapter) :

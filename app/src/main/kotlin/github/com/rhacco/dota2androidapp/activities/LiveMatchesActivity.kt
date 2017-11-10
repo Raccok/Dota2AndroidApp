@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import github.com.rhacco.dota2androidapp.R
+import github.com.rhacco.dota2androidapp.api.ProPlayersResponse
 import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
 import github.com.rhacco.dota2androidapp.base.BaseLifecycleActivity
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesAdapter
@@ -35,9 +36,9 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
 
     override fun observeLiveData() {
         mViewModel.mLiveMatchesQuery.observe(this, Observer<List<TopLiveGamesResponse.Game>> {
-            it?.let { list ->
-                for (game in list)
-                    mViewModel.getLiveMatchesItemData(game.average_mmr, game.server_steam_id)
+            it?.let { topLiveMatches ->
+                for (match in topLiveMatches)
+                    mViewModel.getLiveMatchesItemData(match.average_mmr, match.server_steam_id)
             }
         })
         mViewModel.mLiveMatchesItemDataQuery.observe(this, Observer<LiveMatchesItemData> {
@@ -48,10 +49,8 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
                     mViewModel.checkMatchFinished(itemData.mMatchID)
             }
         })
-        mViewModel.mOfficialNameQuery.observe(this, Observer<Pair<Long, String>> {
-            it?.let { (steamAccountId, officialName) ->
-                mAdapter.setPlayerOfficialName(steamAccountId, officialName)
-            }
+        mViewModel.mCheckProPlayersQuery.observe(this, Observer<List<ProPlayersResponse.ProPlayer>> {
+            it?.let { proPlayers -> mAdapter.setOfficialNames(proPlayers) }
         })
         mViewModel.mCheckMatchFinishedQuery.observe(this, Observer<Pair<Long, Boolean>> {
             it?.let { (matchId, isFinished) ->

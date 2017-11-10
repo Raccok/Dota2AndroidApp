@@ -15,7 +15,7 @@ object TopLiveGamesLocalDataSource : TopLiveGamesDataSource {
                                             saveTopLiveGames(result)
                                             subscriber.onSuccess(mTopLiveGames.values.toList())
                                         },
-                                        { _ -> subscriber.onError(Exception()) }
+                                        { error -> subscriber.onError(error) }
                                 )
                     })
 

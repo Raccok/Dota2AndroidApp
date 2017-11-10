@@ -14,7 +14,7 @@ object TopLiveGamesRemoteDataSource : TopLiveGamesDataSource {
                                 ?.fetchTopLiveGames(App.instance.getString(R.string.api_key), 0)
                                 ?.subscribe(
                                         { result -> subscriber.onSuccess(result.game_list) },
-                                        { _ -> subscriber.onError(Exception()) }
+                                        { error -> subscriber.onError(error) }
                                 )
                     }
             )

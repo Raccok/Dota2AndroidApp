@@ -6,6 +6,7 @@ import android.arch.lifecycle.MediatorLiveData
 import android.util.Log
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
+import github.com.rhacco.dota2androidapp.api.ProPlayersResponse
 import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesItemData
 import github.com.rhacco.dota2androidapp.lists.Player
@@ -18,10 +19,12 @@ import io.reactivex.disposables.CompositeDisposable
 
 class MatchesViewModel(application: Application) : AndroidViewModel(application) {
     private val mIsLoading = MediatorLiveData<Boolean>()
+    private var mIsLoadingProPlayers = false
     private val mDisposables = CompositeDisposable()
+    private val mPlayersOnHold: MutableList<Long> = mutableListOf()
     val mLiveMatchesQuery = MediatorLiveData<List<TopLiveGamesResponse.Game>>()
     val mLiveMatchesItemDataQuery = MediatorLiveData<LiveMatchesItemData>()
-    val mOfficialNameQuery = MediatorLiveData<Pair<Long, String>>()
+    val mCheckProPlayersQuery = MediatorLiveData<List<ProPlayersResponse.ProPlayer>>()
     val mCheckMatchFinishedQuery = MediatorLiveData<Pair<Long, Boolean>>()
     val mRemoveFinishedMatchQuery = MediatorLiveData<Long>()
 
@@ -60,16 +63,16 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                         R.string.heading_live_ranked_match, averageMMR, result.match.matchid)
                             if (result.teams?.size == 2) {
                                 for (team in result.teams) {
-                                    val steamAccountIds = mutableListOf<Long>()
+                                    val playerSteamIds = mutableListOf<Long>()
                                     if (team.players?.size == 5)
                                         team.players.forEach {
                                             newItemData.mPlayers.add(Player(it.accountid, it.name))
-                                            steamAccountIds.add(it.accountid)
+                                            playerSteamIds.add(it.accountid)
                                         }
                                     else
                                         Log.d(App.instance.getString(R.string.log_msg_debug),
                                                 "GetRealtimeStats returned corrupted players data")
-                                    getOfficialNames(steamAccountIds)
+                                    checkProPlayers(playerSteamIds)
                                 }
                                 mLiveMatchesItemDataQuery.value = newItemData
                             } else
@@ -84,46 +87,30 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                 ))
     }
 
-    private fun getOfficialNames(steamAccountIds: List<Long>) {
-        if (steamAccountIds.isEmpty())
+    private fun checkProPlayers(playerSteamIds: List<Long>) {
+        if (playerSteamIds.isEmpty())
             return
-        mIsLoading.value = true
-        // The initial query takes a while (fetches quite a big list from OpenDota API and saves it
-        // locally) so wait for that before continuing with other players
-        mDisposables.add(ProPlayersRepository.getOfficialName(steamAccountIds[0])
-                .subscribe(
-                        { result ->
-                            mIsLoading.value = false
-                            if (result.isNotEmpty())
-                                mOfficialNameQuery.value = Pair(steamAccountIds[0], result)
-                            steamAccountIds.forEachIndexed { index, steamAccountId ->
-                                if (index > 0)
-                                    getOfficialName(steamAccountId)
+        if (mIsLoadingProPlayers)
+            mPlayersOnHold.addAll(playerSteamIds)
+        else {
+            mIsLoadingProPlayers = true
+            mDisposables.add(ProPlayersRepository.checkProPlayers(playerSteamIds)
+                    .subscribe(
+                            { result ->
+                                mIsLoadingProPlayers = false
+                                if (result.isNotEmpty())
+                                    mCheckProPlayersQuery.value = result
+                                // Pass a copy of mPlayersOnHold so we can clear them afterwards
+                                checkProPlayers(mPlayersOnHold.toList())
+                                mPlayersOnHold.clear()
+                            },
+                            { error ->
+                                mIsLoadingProPlayers = false
+                                Log.d(App.instance.getString(R.string.log_msg_debug),
+                                        "Failed to fetch official player names: " + error)
                             }
-                        },
-                        { error ->
-                            mIsLoading.value = false
-                            Log.d(App.instance.getString(R.string.log_msg_debug),
-                                    "Failed to fetch official player name (1): " + error)
-                        }
-                ))
-    }
-
-    private fun getOfficialName(steamAccountId: Long) {
-        mIsLoading.value = true
-        mDisposables.add(ProPlayersRepository.getOfficialName(steamAccountId)
-                .subscribe(
-                        { result ->
-                            mIsLoading.value = false
-                            if (result.isNotEmpty())
-                                mOfficialNameQuery.value = Pair(steamAccountId, result)
-                        },
-                        { error ->
-                            mIsLoading.value = false
-                            Log.d(App.instance.getString(R.string.log_msg_debug),
-                                    "Failed to fetch official player name (2): " + error)
-                        }
-                ))
+                    ))
+        }
     }
 
     fun checkMatchFinished(matchId: Long) {
