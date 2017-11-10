@@ -46,7 +46,6 @@ object ProPlayersLocalDataSource {
                     }
             )
 
-
     private fun checkProPlayersHelper(playerSteamIds: List<Long>, proPlayers: List<ProPlayerEntity>):
             List<ProPlayerEntity> {
         val result: MutableList<ProPlayerEntity> = mutableListOf()

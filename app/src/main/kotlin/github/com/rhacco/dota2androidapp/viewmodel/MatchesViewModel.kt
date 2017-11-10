@@ -62,8 +62,8 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                 newItemData.mTitle = App.instance.getString(
                                         R.string.heading_live_ranked_match, averageMMR, result.match.matchid)
                             if (result.teams?.size == 2) {
+                                val playerSteamIds = mutableListOf<Long>()
                                 for (team in result.teams) {
-                                    val playerSteamIds = mutableListOf<Long>()
                                     if (team.players?.size == 5)
                                         team.players.forEach {
                                             newItemData.mPlayers.add(Player(it.accountid, it.name))
@@ -72,8 +72,8 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                     else
                                         Log.d(App.instance.getString(R.string.log_msg_debug),
                                                 "GetRealtimeStats returned corrupted players data")
-                                    checkProPlayers(playerSteamIds)
                                 }
+                                checkProPlayers(playerSteamIds)
                                 mLiveMatchesItemDataQuery.value = newItemData
                             } else
                                 Log.d(App.instance.getString(R.string.log_msg_debug),
