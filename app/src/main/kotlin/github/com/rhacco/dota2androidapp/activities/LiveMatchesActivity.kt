@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import github.com.rhacco.dota2androidapp.R
-import github.com.rhacco.dota2androidapp.api.ProPlayersResponse
 import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
 import github.com.rhacco.dota2androidapp.base.BaseLifecycleActivity
+import github.com.rhacco.dota2androidapp.entities.ProPlayerEntity
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesAdapter
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesItemData
 import github.com.rhacco.dota2androidapp.viewmodel.MatchesViewModel
@@ -49,7 +49,7 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
                     mViewModel.checkMatchFinished(itemData.mMatchID)
             }
         })
-        mViewModel.mCheckProPlayersQuery.observe(this, Observer<List<ProPlayersResponse.ProPlayer>> {
+        mViewModel.mCheckProPlayersQuery.observe(this, Observer<List<ProPlayerEntity>> {
             it?.let { proPlayers -> mAdapter.setOfficialNames(proPlayers) }
         })
         mViewModel.mCheckMatchFinishedQuery.observe(this, Observer<Pair<Long, Boolean>> {

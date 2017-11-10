@@ -1,6 +1,6 @@
 package github.com.rhacco.dota2androidapp.sources.remote
 
-import github.com.rhacco.dota2androidapp.api.ProPlayersResponse
+import github.com.rhacco.dota2androidapp.entities.ProPlayerEntity
 import github.com.rhacco.dota2androidapp.utilities.URLStrings
 import github.com.rhacco.dota2androidapp.utilities.deviceIsOnline
 import io.reactivex.Observable
@@ -11,7 +11,7 @@ import retrofit2.http.GET
 
 interface OpenDotaAPIService {
     @GET("proPlayers")
-    fun fetchProPlayers(): Observable<List<ProPlayersResponse.ProPlayer>>
+    fun fetchProPlayers(): Observable<List<ProPlayerEntity>>
 
     companion object {
         private val sService by lazy { create() }

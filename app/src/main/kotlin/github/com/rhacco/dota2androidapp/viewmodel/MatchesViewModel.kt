@@ -6,8 +6,8 @@ import android.arch.lifecycle.MediatorLiveData
 import android.util.Log
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
-import github.com.rhacco.dota2androidapp.api.ProPlayersResponse
 import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
+import github.com.rhacco.dota2androidapp.entities.ProPlayerEntity
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesItemData
 import github.com.rhacco.dota2androidapp.lists.Player
 import github.com.rhacco.dota2androidapp.sources.repos.matches.MatchDetailsRepository
@@ -24,7 +24,7 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
     private val mPlayersOnHold: MutableList<Long> = mutableListOf()
     val mLiveMatchesQuery = MediatorLiveData<List<TopLiveGamesResponse.Game>>()
     val mLiveMatchesItemDataQuery = MediatorLiveData<LiveMatchesItemData>()
-    val mCheckProPlayersQuery = MediatorLiveData<List<ProPlayersResponse.ProPlayer>>()
+    val mCheckProPlayersQuery = MediatorLiveData<List<ProPlayerEntity>>()
     val mCheckMatchFinishedQuery = MediatorLiveData<Pair<Long, Boolean>>()
     val mRemoveFinishedMatchQuery = MediatorLiveData<Long>()
 

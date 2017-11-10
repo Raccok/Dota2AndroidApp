@@ -16,5 +16,5 @@ interface HeroesDao {
     fun getHeroByLocalName(heroLocalName: String): Flowable<List<HeroEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(products: MutableList<HeroEntity>)
+    fun insertAll(products: List<HeroEntity>)
 }

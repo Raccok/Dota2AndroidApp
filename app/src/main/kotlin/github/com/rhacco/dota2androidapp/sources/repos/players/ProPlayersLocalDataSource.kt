@@ -1,38 +1,47 @@
 package github.com.rhacco.dota2androidapp.sources.repos.players
 
-import github.com.rhacco.dota2androidapp.api.ProPlayersResponse
+import github.com.rhacco.dota2androidapp.entities.ProPlayerEntity
+import github.com.rhacco.dota2androidapp.sources.db.DatabaseCreator
 import io.reactivex.Single
 
 object ProPlayersLocalDataSource {
-    private val mProPlayers: MutableMap<Long, ProPlayersResponse.ProPlayer> = mutableMapOf()
+    private val mProPlayersDao = DatabaseCreator.mDatabase.proPlayersDao()
 
-    fun checkProPlayers(playerSteamIds: List<Long>): Single<List<ProPlayersResponse.ProPlayer>> =
+    fun checkProPlayers(playerSteamIds: List<Long>): Single<List<ProPlayerEntity>> =
             Single.create(
                     { subscriber ->
-                        if (mProPlayers.isEmpty())
-                            ProPlayersRemoteDataSource.getProPlayers()
-                                    .subscribe(
-                                            { result ->
-                                                saveProPlayers(result)
-                                                subscriber.onSuccess(checkProPlayersHelper(playerSteamIds))
-                                            },
-                                            { error -> subscriber.onError(error) }
-                                    )
-                        else
-                            subscriber.onSuccess(checkProPlayersHelper(playerSteamIds))
+                        mProPlayersDao.loadAllProPlayers()
+                                .subscribe(
+                                        { result ->
+                                            if (result.isEmpty())
+                                                ProPlayersRemoteDataSource.getProPlayers()
+                                                        .subscribe(
+                                                                { remoteResult ->
+                                                                    mProPlayersDao.insertAll(remoteResult)
+                                                                    subscriber.onSuccess(
+                                                                            checkProPlayersHelper(
+                                                                                    playerSteamIds,
+                                                                                    remoteResult))
+                                                                },
+                                                                { error -> subscriber.onError(error) }
+                                                        )
+                                            else
+                                                subscriber.onSuccess(
+                                                        checkProPlayersHelper(playerSteamIds, result))
+                                        },
+                                        { error -> subscriber.onError(error) }
+                                )
                     }
             )
 
-    private fun saveProPlayers(proPlayers: List<ProPlayersResponse.ProPlayer>) {
-        for (player in proPlayers)
-            mProPlayers[player.account_id] = player
-    }
-
-    private fun checkProPlayersHelper(playerSteamIds: List<Long>): List<ProPlayersResponse.ProPlayer> {
-        val result: MutableList<ProPlayersResponse.ProPlayer> = mutableListOf()
-        playerSteamIds.forEach {
-            if (mProPlayers.containsKey(it))
-                result.add(mProPlayers[it]!!)
+    private fun checkProPlayersHelper(playerSteamIds: List<Long>, proPlayers: List<ProPlayerEntity>):
+            List<ProPlayerEntity> {
+        val result: MutableList<ProPlayerEntity> = mutableListOf()
+        playerSteamIds.forEach { playerSteamId ->
+            proPlayers.forEach { proPlayer ->
+                if (playerSteamId == proPlayer.account_id)
+                    result.add(proPlayer)
+            }
         }
         return result
     }

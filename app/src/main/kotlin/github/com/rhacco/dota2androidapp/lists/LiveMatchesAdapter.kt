@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
-import github.com.rhacco.dota2androidapp.api.ProPlayersResponse
+import github.com.rhacco.dota2androidapp.entities.ProPlayerEntity
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_live_matches.*
 
@@ -32,13 +32,13 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         return true
     }
 
-    fun setOfficialNames(proPlayers: List<ProPlayersResponse.ProPlayer>) {
+    fun setOfficialNames(proPlayers: List<ProPlayerEntity>) {
         proPlayers.forEach {
             var index = 0
             while (index < mItemsData.size) {
                 for (player in mItemsData[index].mPlayers)
                     if (player.steamId == it.account_id) {
-                        if (player.officialName != it.name) {
+                        if (it.name != null && player.officialName != it.name) {
                             player.officialName = it.name
                             notifyItemChanged(index)
                         }
