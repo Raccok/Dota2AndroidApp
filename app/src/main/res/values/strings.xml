@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Dota 2 Android App</string>
+    <string name="activity_main">Home</string>
     <string name="activity_live_matches">Live Matches</string>
 
     <!-- A valid Steam Web API key. Get yours at https://steamcommunity.com/dev/apikey -->
@@ -8,6 +9,8 @@
 
     <string name="log_msg_debug">dota2androidapp.Debug</string>
 
+    <string name="description_open_drawer">Open Menu</string>
+    <string name="description_close_drawer">Close Menu</string>
     <string name="heading_radiant_players">Radiant players:</string>
     <string name="heading_dire_players">Dire players:</string>
     <string name="heading_live_tournament_match">Tournament Match (Match ID %d)</string>

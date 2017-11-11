@@ -24,7 +24,6 @@ package github.com.rhacco.dota2androidapp.activities
 
 import android.app.AlertDialog
 import android.arch.lifecycle.Observer
-import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import github.com.rhacco.dota2androidapp.R
@@ -41,22 +40,19 @@ class MainActivity : BaseLifecycleActivity<HeroesViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        super.initNavigationDrawer(drawer_layout)
 
         if (getString(R.string.api_key).isEmpty()) {
             Toaster.toastLong(R.string.error_no_api_key)
             return
         }
-
         if (appIsMissingPermissions(applicationContext))
             return
 
-        setContentView(R.layout.activity_main)
         initialDisplay()
         observeLiveData()
 
-        showLiveMatchesButton.setOnClickListener {
-            startActivity(Intent(this, LiveMatchesActivity::class.java))
-        }
         setFavHeroButton.setOnClickListener { setNewFavoriteHero() }
     }
 
