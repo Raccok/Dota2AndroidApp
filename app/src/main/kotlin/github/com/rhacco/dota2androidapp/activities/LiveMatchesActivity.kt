@@ -40,7 +40,7 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
         mViewModel.mLiveMatchesQuery.observe(this, Observer<List<TopLiveGamesResponse.Game>> {
             it?.let { topLiveMatches ->
                 for (match in topLiveMatches)
-                    mViewModel.getLiveMatchesItemData(match.average_mmr, match.server_steam_id)
+                    mViewModel.getLiveMatchesItemData(match)
             }
         })
         mViewModel.mLiveMatchesItemDataQuery.observe(this, Observer<LiveMatchesItemData> {

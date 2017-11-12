@@ -46,21 +46,24 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                 ))
     }
 
-    fun getLiveMatchesItemData(averageMMR: Int, serverSteamId: Long) {
+    fun getLiveMatchesItemData(match: TopLiveGamesResponse.Game) {
         mIsLoading.value = true
-        mDisposables.add(RealtimeStatsRepository.getRealtimeStats(serverSteamId)
+        mDisposables.add(RealtimeStatsRepository.getRealtimeStats(match.server_steam_id)
                 .subscribe(
                         { result ->
                             mIsLoading.value = false
                             val newItemData = LiveMatchesItemData()
                             newItemData.mMatchID = result.match.matchid
-                            newItemData.mAverageMMR = averageMMR
-                            if (averageMMR < 1)
+                            newItemData.mAverageMMR = match.average_mmr
+                            if (match.average_mmr < 1) {
                                 newItemData.mTitle = App.instance.getString(
                                         R.string.heading_live_tournament_match, result.match.matchid)
-                            else
+                                newItemData.mTeamRadiant = match.team_name_radiant
+                                newItemData.mTeamDire = match.team_name_dire
+                            } else
                                 newItemData.mTitle = App.instance.getString(
-                                        R.string.heading_live_ranked_match, averageMMR, result.match.matchid)
+                                        R.string.heading_live_ranked_match,
+                                        match.average_mmr, result.match.matchid)
                             if (result.teams?.size == 2) {
                                 val playerSteamIds = mutableListOf<Long>()
                                 for (team in result.teams) {

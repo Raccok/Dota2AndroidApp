@@ -75,6 +75,8 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
     override fun onBindViewHolder(holder: LiveMatchesViewHolder, position: Int) {
         val itemData = mItemsData[position]
         holder.title?.text = itemData.mTitle
+        holder.team_radiant?.text = itemData.mTeamRadiant
+        holder.team_dire?.text = itemData.mTeamDire
         if (itemData.mPlayers.size == 10) {
             bindPlayerName(holder.radiant_player0, itemData.mPlayers[0])
             bindPlayerName(holder.radiant_player1, itemData.mPlayers[1])
@@ -112,9 +114,11 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
 }
 
 class LiveMatchesItemData {
-    var mMatchID = 0L
-    var mAverageMMR = 0
     var mTitle: String = ""
+    var mAverageMMR = 0
+    var mTeamRadiant = App.instance.getString(R.string.team_radiant)!!
+    var mTeamDire = App.instance.getString(R.string.team_dire)!!
+    var mMatchID = 0L
     var mPlayers: MutableList<Player> = mutableListOf()
 }
 

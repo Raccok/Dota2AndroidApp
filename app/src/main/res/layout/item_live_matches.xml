@@ -5,7 +5,7 @@
               android:orientation="vertical">
     <TextView android:id="@+id/title"
               android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:textStyle="bold"
+              android:textSize="@dimen/text_title"
               tools:text="Tournament/Ranked Match"/>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -17,8 +17,11 @@
             android:layout_weight="1"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/team_radiant"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="@string/heading_radiant_players"/>
+                android:textColor="@color/team_radiant"
+                android:textSize="@dimen/text_subtitle"
+                tools:text="@string/team_radiant"/>
             <TextView
                 android:id="@+id/radiant_player0"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
@@ -40,8 +43,11 @@
             android:layout_weight="1"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/team_dire"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="@string/heading_dire_players"/>
+                android:textColor="@color/team_dire"
+                android:textSize="@dimen/text_subtitle"
+                tools:text="@string/team_dire"/>
             <TextView
                 android:id="@+id/dire_player0"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
