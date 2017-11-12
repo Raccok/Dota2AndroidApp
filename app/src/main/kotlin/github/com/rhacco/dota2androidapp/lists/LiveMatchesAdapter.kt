@@ -1,7 +1,7 @@
 package github.com.rhacco.dota2androidapp.lists
 
 import android.content.Context
-import android.graphics.Typeface
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -95,15 +95,18 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
             when {
                 player.officialName.isEmpty() -> {
                     textView?.text = player.currentSteamName
-                    textView?.setTypeface(null, Typeface.NORMAL)
+                    textView?.setTextColor(ContextCompat.getColor(
+                            App.instance.applicationContext, R.color.text_general))
                 }
                 player.showOfficialName -> {
                     textView?.text = player.officialName
-                    textView?.setTypeface(null, Typeface.BOLD)
+                    textView?.setTextColor(ContextCompat.getColor(
+                            App.instance.applicationContext, R.color.text_pro_player))
                 }
                 else -> {
                     textView?.text = player.currentSteamName
-                    textView?.setTypeface(null, Typeface.NORMAL)
+                    textView?.setTextColor(ContextCompat.getColor(
+                            App.instance.applicationContext, R.color.text_general))
                 }
             }
 }

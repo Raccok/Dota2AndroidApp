@@ -20,12 +20,14 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_live_matches)
+        super.initNavigationDrawer(drawer_layout)
+
         mAdapter = LiveMatchesAdapter(this)
-        recycler_view.adapter = mAdapter
+        live_matches_list.adapter = mAdapter
         val layoutManager = LinearLayoutManager(this)
-        recycler_view.layoutManager = layoutManager
-        recycler_view.addItemDecoration(
-                DividerItemDecoration(recycler_view.context, layoutManager.orientation))
+        live_matches_list.layoutManager = layoutManager
+        live_matches_list.addItemDecoration(
+                DividerItemDecoration(live_matches_list.context, layoutManager.orientation))
         swipe_refresh_layout.setOnRefreshListener {
             mViewModel.getLiveMatches()
             swipe_refresh_layout.isRefreshing = false
@@ -44,7 +46,7 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
         mViewModel.mLiveMatchesItemDataQuery.observe(this, Observer<LiveMatchesItemData> {
             it?.let { itemData ->
                 if (mAdapter.add(itemData))
-                    recycler_view.layoutManager.scrollToPosition(0)
+                    live_matches_list.layoutManager.scrollToPosition(0)
                 else
                     mViewModel.checkMatchFinished(itemData.mMatchID)
             }
