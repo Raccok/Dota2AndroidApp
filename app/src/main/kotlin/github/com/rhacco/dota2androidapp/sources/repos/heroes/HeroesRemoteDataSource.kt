@@ -15,7 +15,7 @@ object HeroesRemoteDataSource : HeroesDataSource {
                                 ?.map { it.component1() }
                                 ?.subscribe(
                                         { result -> subscriber.onSuccess(result.heroes) },
-                                        { _ -> subscriber.onError(Exception()) })
+                                        { error -> subscriber.onError(error) })
                     }
             )
 

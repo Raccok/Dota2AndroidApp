@@ -15,7 +15,7 @@ object MatchDetailsRemoteDataSource : MatchDetailsDataSource {
                                 ?.map { it.component1() }
                                 ?.subscribe(
                                         { result -> subscriber.onSuccess(result) },
-                                        { _ -> subscriber.onError(Exception()) }
+                                        { error -> subscriber.onError(error) }
                                 )
                     }
             )

@@ -7,18 +7,24 @@ import android.util.Log
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
+import github.com.rhacco.dota2androidapp.entities.ProPlayerEntity
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesItemData
+import github.com.rhacco.dota2androidapp.lists.Player
 import github.com.rhacco.dota2androidapp.sources.repos.matches.MatchDetailsRepository
 import github.com.rhacco.dota2androidapp.sources.repos.matches.RealtimeStatsLocalDataSource
 import github.com.rhacco.dota2androidapp.sources.repos.matches.RealtimeStatsRepository
 import github.com.rhacco.dota2androidapp.sources.repos.matches.TopLiveGamesRepository
+import github.com.rhacco.dota2androidapp.sources.repos.players.ProPlayersRepository
 import io.reactivex.disposables.CompositeDisposable
 
 class MatchesViewModel(application: Application) : AndroidViewModel(application) {
     private val mIsLoading = MediatorLiveData<Boolean>()
+    private var mIsLoadingProPlayers = false
     private val mDisposables = CompositeDisposable()
+    private val mPlayersOnHold: MutableList<Long> = mutableListOf()
     val mLiveMatchesQuery = MediatorLiveData<List<TopLiveGamesResponse.Game>>()
     val mLiveMatchesItemDataQuery = MediatorLiveData<LiveMatchesItemData>()
+    val mCheckProPlayersQuery = MediatorLiveData<List<ProPlayerEntity>>()
     val mCheckMatchFinishedQuery = MediatorLiveData<Pair<Long, Boolean>>()
     val mRemoveFinishedMatchQuery = MediatorLiveData<Long>()
 
@@ -56,24 +62,19 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                 newItemData.mTitle = App.instance.getString(
                                         R.string.heading_live_ranked_match, averageMMR, result.match.matchid)
                             if (result.teams?.size == 2) {
-                                val radiantPlayers = result.teams[0].players
-                                val direPlayers = result.teams[1].players
-                                if (radiantPlayers != null && direPlayers != null &&
-                                        radiantPlayers.size == 5 && direPlayers.size == 5) {
-                                    newItemData.mRadiantPlayer0 = radiantPlayers[0].name
-                                    newItemData.mRadiantPlayer1 = radiantPlayers[1].name
-                                    newItemData.mRadiantPlayer2 = radiantPlayers[2].name
-                                    newItemData.mRadiantPlayer3 = radiantPlayers[3].name
-                                    newItemData.mRadiantPlayer4 = radiantPlayers[4].name
-                                    newItemData.mDirePlayer0 = direPlayers[0].name
-                                    newItemData.mDirePlayer1 = direPlayers[1].name
-                                    newItemData.mDirePlayer2 = direPlayers[2].name
-                                    newItemData.mDirePlayer3 = direPlayers[3].name
-                                    newItemData.mDirePlayer4 = direPlayers[4].name
-                                    mLiveMatchesItemDataQuery.value = newItemData
-                                } else
-                                    Log.d(App.instance.getString(R.string.log_msg_debug),
-                                            "GetRealtimeStats returned corrupted players data")
+                                val playerSteamIds = mutableListOf<Long>()
+                                for (team in result.teams) {
+                                    if (team.players?.size == 5)
+                                        team.players.forEach {
+                                            newItemData.mPlayers.add(Player(it.accountid, it.name))
+                                            playerSteamIds.add(it.accountid)
+                                        }
+                                    else
+                                        Log.d(App.instance.getString(R.string.log_msg_debug),
+                                                "GetRealtimeStats returned corrupted players data")
+                                }
+                                checkProPlayers(playerSteamIds)
+                                mLiveMatchesItemDataQuery.value = newItemData
                             } else
                                 Log.d(App.instance.getString(R.string.log_msg_debug),
                                         "GetRealtimeStats returned corrupted teams data")
@@ -84,6 +85,32 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                     "Failed to fetch realtime stats: " + error)
                         }
                 ))
+    }
+
+    private fun checkProPlayers(playerSteamIds: List<Long>) {
+        if (playerSteamIds.isEmpty())
+            return
+        if (mIsLoadingProPlayers)
+            mPlayersOnHold.addAll(playerSteamIds)
+        else {
+            mIsLoadingProPlayers = true
+            mDisposables.add(ProPlayersRepository.checkProPlayers(playerSteamIds)
+                    .subscribe(
+                            { result ->
+                                mIsLoadingProPlayers = false
+                                if (result.isNotEmpty())
+                                    mCheckProPlayersQuery.value = result
+                                // Pass a copy of mPlayersOnHold so we can clear them afterwards
+                                checkProPlayers(mPlayersOnHold.toList())
+                                mPlayersOnHold.clear()
+                            },
+                            { error ->
+                                mIsLoadingProPlayers = false
+                                Log.d(App.instance.getString(R.string.log_msg_debug),
+                                        "Failed to fetch official player names: " + error)
+                            }
+                    ))
+        }
     }
 
     fun checkMatchFinished(matchId: Long) {

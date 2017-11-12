@@ -16,5 +16,5 @@ object HeroesLocalDataSource : HeroesDataSource {
             mHeroesDao.getHeroByLocalName(hero).firstOrError()
                     .doOnSuccess { if (it.isEmpty()) throw Exception() }
 
-    override fun saveHeroes(list: List<HeroEntity>) = mHeroesDao.insertAll(list.toMutableList())
+    override fun saveHeroes(list: List<HeroEntity>) = mHeroesDao.insertAll(list)
 }
