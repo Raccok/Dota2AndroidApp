@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.TextView
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
@@ -50,6 +51,25 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         }
     }
 
+    fun updateRealtimeStats(newItemData: LiveMatchesItemData) {
+        var index = 0
+        while (index < mItemsData.size) {
+            if (mItemsData[index].mMatchID == newItemData.mMatchID) {
+                val oldItemData = mItemsData[index]
+                if (oldItemData.mRadiantScore != newItemData.mRadiantScore ||
+                        oldItemData.mElapsedTime != newItemData.mElapsedTime ||
+                        oldItemData.mDireScore != newItemData.mDireScore ||
+                        oldItemData.mGoldAdvantage != newItemData.mGoldAdvantage) {
+                    newItemData.mShowAdditionalInfo = oldItemData.mShowAdditionalInfo
+                    mItemsData[index] = newItemData
+                    notifyItemChanged(index)
+                }
+                return
+            }
+            ++index
+        }
+    }
+
     fun switchShowAdditionalInfo(itemPosition: Int) {
         mItemsData[itemPosition].mShowAdditionalInfo = !mItemsData[itemPosition].mShowAdditionalInfo
         notifyItemChanged(itemPosition)
@@ -77,6 +97,7 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         holder.title?.text = itemData.mTitle
         holder.team_radiant?.text = itemData.mTeamRadiant
         holder.team_dire?.text = itemData.mTeamDire
+        bindStats(holder, itemData)
         if (itemData.mPlayers.size == 10) {
             bindPlayerName(holder.radiant_player0, itemData.mPlayers[0], itemData)
             bindPlayerName(holder.radiant_player1, itemData.mPlayers[1], itemData)
@@ -92,6 +113,33 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
             Log.d(App.instance.getString(R.string.log_msg_debug),
                     "A Live Matches item has corrupted players data")
         bindIDs(holder, itemData)
+    }
+
+    private fun bindStats(holder: LiveMatchesViewHolder, itemData: LiveMatchesItemData) {
+        holder.score_radiant?.text = itemData.mRadiantScore.toString()
+        val elapsedTimeMin = maxOf(0, Math.floor(itemData.mElapsedTime / 60.0).toInt())
+        val elapsedTimeSec = maxOf(0, itemData.mElapsedTime % 60)
+        if (elapsedTimeSec < 10)
+            holder.elapsed_time?.text = App.instance.getString(R.string.elapsed_time_corrected_sec,
+                    elapsedTimeMin, elapsedTimeSec)
+        else
+            holder.elapsed_time?.text = App.instance.getString(R.string.elapsed_time,
+                    elapsedTimeMin, elapsedTimeSec)
+        holder.score_dire?.text = itemData.mDireScore.toString()
+        val goldAdvantageThousands = Math.floor(Math.abs(itemData.mGoldAdvantage) / 1000.0).toInt()
+        val goldAdvantageHundreds = Math.round(Math.abs(itemData.mGoldAdvantage) / 100.0) % 10
+        holder.gold_advantage?.text = App.instance.getString(R.string.gold_advantage,
+                goldAdvantageThousands, goldAdvantageHundreds)
+        val params = RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        params.addRule(RelativeLayout.CENTER_VERTICAL)
+        params.leftMargin = 20
+        params.rightMargin = 20
+        if (itemData.mGoldAdvantage >= 0)
+            params.addRule(RelativeLayout.LEFT_OF, R.id.score_radiant)
+        else
+            params.addRule(RelativeLayout.RIGHT_OF, R.id.score_dire)
+        holder.gold_advantage?.layoutParams = params
     }
 
     private fun bindPlayerName(textView: TextView?, player: Player, itemData: LiveMatchesItemData) =
@@ -130,6 +178,10 @@ class LiveMatchesItemData {
     var mIsTournamentMatch = false
     var mTitle: String = App.instance.getString(R.string.heading_live_tournament_match)
     var mAverageMMR = 0
+    var mRadiantScore = 0
+    var mElapsedTime = 0
+    var mDireScore = 0
+    var mGoldAdvantage = 0
     var mTeamRadiant: String = App.instance.getString(R.string.team_radiant)
     var mTeamDire: String = App.instance.getString(R.string.team_dire)
     var mPlayers: MutableList<Player> = mutableListOf()

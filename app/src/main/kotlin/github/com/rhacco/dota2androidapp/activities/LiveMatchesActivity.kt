@@ -47,8 +47,10 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
             it?.let { itemData ->
                 if (mAdapter.add(itemData))
                     live_matches_list.layoutManager.scrollToPosition(0)
-                else
+                else {
+                    mAdapter.updateRealtimeStats(itemData)
                     mViewModel.checkMatchFinished(itemData.mMatchID)
+                }
             }
         })
         mViewModel.mCheckProPlayersQuery.observe(this, Observer<List<ProPlayerEntity>> {

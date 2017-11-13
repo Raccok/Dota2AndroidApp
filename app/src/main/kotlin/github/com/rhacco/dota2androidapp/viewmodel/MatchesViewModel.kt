@@ -62,6 +62,10 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                         R.string.heading_live_ranked_match, match.average_mmr)
                                 newItemData.mAverageMMR = match.average_mmr
                             }
+                            newItemData.mRadiantScore = match.radiant_score
+                            newItemData.mElapsedTime = match.game_time
+                            newItemData.mDireScore = match.dire_score
+                            newItemData.mGoldAdvantage = match.radiant_lead
                             newItemData.mServerID = match.server_steam_id
                             newItemData.mMatchID = result.match.matchid
                             if (result.teams?.size == 2) {
