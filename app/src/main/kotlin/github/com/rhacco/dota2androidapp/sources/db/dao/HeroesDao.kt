@@ -12,6 +12,9 @@ interface HeroesDao {
     @Query("SELECT * FROM heroes")
     fun loadAllHeroes(): Flowable<List<HeroEntity>>
 
+    @Query("SELECT * FROM heroes WHERE id IN (:heroIds)")
+    fun getHeroesByIds(heroIds: List<Int>): Flowable<List<HeroEntity>>
+
     @Query("SELECT * FROM heroes WHERE localized_name = :heroLocalName LIMIT 1")
     fun getHeroByLocalName(heroLocalName: String): Flowable<List<HeroEntity>>
 

@@ -8,12 +8,6 @@ import io.reactivex.schedulers.Schedulers
 object RealtimeStatsRepository : RealtimeStatsDataSource {
     override fun getRealtimeStats(serverSteamId: Long): Single<RealtimeStatsResponse.Result> =
             RealtimeStatsLocalDataSource.getRealtimeStats(serverSteamId)
-                    .onErrorResumeNext {
-                        RealtimeStatsRemoteDataSource.getRealtimeStats(serverSteamId)
-                                .doOnSuccess {
-                                    RealtimeStatsLocalDataSource.saveRealtimeStats(serverSteamId, it)
-                                }
-                    }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
 }

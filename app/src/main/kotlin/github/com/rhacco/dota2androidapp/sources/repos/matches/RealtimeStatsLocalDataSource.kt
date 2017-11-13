@@ -9,12 +9,15 @@ object RealtimeStatsLocalDataSource : RealtimeStatsDataSource {
     override fun getRealtimeStats(serverSteamId: Long): Single<RealtimeStatsResponse.Result> =
             Single.create(
                     { subscriber ->
-                        if (mRealtimeStats.containsKey(serverSteamId))
-                            subscriber.onSuccess(mRealtimeStats[serverSteamId])
-                        else
-                            subscriber.onError(Exception())
-                    }
-            )
+                        RealtimeStatsRemoteDataSource.getRealtimeStats(serverSteamId)
+                                .subscribe(
+                                        { result ->
+                                            saveRealtimeStats(serverSteamId, result)
+                                            subscriber.onSuccess(mRealtimeStats[serverSteamId])
+                                        },
+                                        { error -> subscriber.onError(error) }
+                                )
+                    })
 
     override fun saveRealtimeStats(serverSteamId: Long, result: RealtimeStatsResponse.Result) {
         mRealtimeStats[serverSteamId] = result

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
 import github.com.rhacco.dota2androidapp.base.BaseLifecycleActivity
+import github.com.rhacco.dota2androidapp.entities.HeroEntity
 import github.com.rhacco.dota2androidapp.entities.ProPlayerEntity
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesAdapter
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesItemData
@@ -39,8 +40,15 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
     override fun observeLiveData() {
         mViewModel.mLiveMatchesQuery.observe(this, Observer<List<TopLiveGamesResponse.Game>> {
             it?.let { topLiveMatches ->
-                for (match in topLiveMatches)
-                    mViewModel.getLiveMatchesItemData(match)
+                val matchesInListToUpdate: MutableMap<Long, LiveMatchesItemData> = mutableMapOf()
+                mAdapter.getItemsData().forEach { matchesInListToUpdate[it.mServerId] = it }
+                topLiveMatches.forEach {
+                    mViewModel.getLiveMatchesItemData(it)
+                    matchesInListToUpdate.remove(it.server_steam_id)
+                }
+                matchesInListToUpdate.values.forEach {
+                    mViewModel.getLiveMatchesItemData(it.mMatchBaseVals)
+                }
             }
         })
         mViewModel.mLiveMatchesItemDataQuery.observe(this, Observer<LiveMatchesItemData> {
@@ -49,12 +57,17 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
                     live_matches_list.layoutManager.scrollToPosition(0)
                 else {
                     mAdapter.updateRealtimeStats(itemData)
-                    mViewModel.checkMatchFinished(itemData.mMatchID)
+                    mViewModel.checkMatchFinished(itemData.mMatchId)
                 }
             }
         })
         mViewModel.mCheckProPlayersQuery.observe(this, Observer<List<ProPlayerEntity>> {
             it?.let { proPlayers -> mAdapter.setOfficialNames(proPlayers) }
+        })
+        mViewModel.mHeroesQuery.observe(this, Observer<Triple<Long, List<HeroEntity>, Int>> {
+            it?.let { (matchId, heroEntities, elapsedTime) ->
+                mAdapter.updateHeroNames(matchId, heroEntities, elapsedTime)
+            }
         })
         mViewModel.mCheckMatchFinishedQuery.observe(this, Observer<Pair<Long, Boolean>> {
             it?.let { (matchId, isFinished) ->

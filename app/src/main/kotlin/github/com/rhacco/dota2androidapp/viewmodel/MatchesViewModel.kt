@@ -7,9 +7,12 @@ import android.util.Log
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
+import github.com.rhacco.dota2androidapp.entities.HeroEntity
 import github.com.rhacco.dota2androidapp.entities.ProPlayerEntity
+import github.com.rhacco.dota2androidapp.lists.Hero
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesItemData
 import github.com.rhacco.dota2androidapp.lists.Player
+import github.com.rhacco.dota2androidapp.sources.repos.heroes.HeroesRepository
 import github.com.rhacco.dota2androidapp.sources.repos.matches.MatchDetailsRepository
 import github.com.rhacco.dota2androidapp.sources.repos.matches.RealtimeStatsLocalDataSource
 import github.com.rhacco.dota2androidapp.sources.repos.matches.RealtimeStatsRepository
@@ -25,6 +28,7 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
     val mLiveMatchesQuery = MediatorLiveData<List<TopLiveGamesResponse.Game>>()
     val mLiveMatchesItemDataQuery = MediatorLiveData<LiveMatchesItemData>()
     val mCheckProPlayersQuery = MediatorLiveData<List<ProPlayerEntity>>()
+    val mHeroesQuery = MediatorLiveData<Triple<Long, List<HeroEntity>, Int>>()
     val mCheckMatchFinishedQuery = MediatorLiveData<Pair<Long, Boolean>>()
     val mRemoveFinishedMatchQuery = MediatorLiveData<Long>()
 
@@ -46,41 +50,46 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                 ))
     }
 
-    fun getLiveMatchesItemData(match: TopLiveGamesResponse.Game) {
+    fun getLiveMatchesItemData(matchBaseVals: TopLiveGamesResponse.Game) {
         mIsLoading.value = true
-        mDisposables.add(RealtimeStatsRepository.getRealtimeStats(match.server_steam_id)
+        mDisposables.add(RealtimeStatsRepository.getRealtimeStats(matchBaseVals.server_steam_id)
                 .subscribe(
                         { result ->
                             mIsLoading.value = false
                             val newItemData = LiveMatchesItemData()
-                            if (match.average_mmr < 1) {
+                            newItemData.mMatchBaseVals = matchBaseVals
+                            if (matchBaseVals.average_mmr < 1)
                                 newItemData.mIsTournamentMatch = true
-                                newItemData.mTeamRadiant = match.team_name_radiant
-                                newItemData.mTeamDire = match.team_name_dire
-                            } else {
+                            else
                                 newItemData.mTitle = App.instance.getString(
-                                        R.string.heading_live_ranked_match, match.average_mmr)
-                                newItemData.mAverageMMR = match.average_mmr
-                            }
-                            newItemData.mRadiantScore = match.radiant_score
-                            newItemData.mElapsedTime = match.game_time
-                            newItemData.mDireScore = match.dire_score
-                            newItemData.mGoldAdvantage = match.radiant_lead
-                            newItemData.mServerID = match.server_steam_id
-                            newItemData.mMatchID = result.match.matchid
+                                        R.string.heading_live_ranked_match, matchBaseVals.average_mmr)
+                            if (result.graph_data?.graph_gold != null)
+                                newItemData.mGoldAdvantage = result.graph_data.graph_gold.last()
+                            else
+                                Log.d(App.instance.getString(R.string.log_msg_debug),
+                                        "GetRealtimeStats returned corrupted gold graph data")
+                            newItemData.mElapsedTime = result.match.game_time
                             if (result.teams?.size == 2) {
+                                newItemData.mRadiantScore = result.teams[0].score
+                                newItemData.mDireScore = result.teams[1].score
                                 val playerSteamIds = mutableListOf<Long>()
+                                val heroIds = mutableListOf<Int>()
                                 for (team in result.teams) {
                                     if (team.players?.size == 5)
                                         team.players.forEach {
                                             newItemData.mPlayers.add(Player(it.accountid, it.name))
+                                            newItemData.mHeroes.add(Hero(it.heroid))
                                             playerSteamIds.add(it.accountid)
+                                            heroIds.add(it.heroid)
                                         }
                                     else
                                         Log.d(App.instance.getString(R.string.log_msg_debug),
                                                 "GetRealtimeStats returned corrupted players data")
                                 }
+                                newItemData.mServerId = matchBaseVals.server_steam_id
+                                newItemData.mMatchId = result.match.matchid
                                 checkProPlayers(playerSteamIds)
+                                getHeroes(result.match.matchid, heroIds, result.match.game_time)
                                 mLiveMatchesItemDataQuery.value = newItemData
                             } else
                                 Log.d(App.instance.getString(R.string.log_msg_debug),
@@ -119,6 +128,10 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                     ))
         }
     }
+
+    private fun getHeroes(matchId: Long, heroIds: List<Int>, elapsedTime: Int) =
+            HeroesRepository.getHeroesByIds(heroIds)
+                    .subscribe({ result -> mHeroesQuery.value = Triple(matchId, result, elapsedTime) })
 
     fun checkMatchFinished(matchId: Long) {
         mIsLoading.value = true

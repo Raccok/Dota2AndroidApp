@@ -8,8 +8,11 @@ object HeroesLocalDataSource : HeroesDataSource {
     private val mHeroesDao = DatabaseCreator.mDatabase.heroesDao()
 
     override fun getHeroes(): Single<List<HeroEntity>> =
-            mHeroesDao.loadAllHeroes()
-                    .firstOrError()
+            mHeroesDao.loadAllHeroes().firstOrError()
+                    .doOnSuccess { if (it.isEmpty()) throw Exception() }
+
+    fun getHeroesByIds(heroIds: List<Int>): Single<List<HeroEntity>> =
+            mHeroesDao.getHeroesByIds(heroIds).firstOrError()
                     .doOnSuccess { if (it.isEmpty()) throw Exception() }
 
     override fun getHeroByLocalizedName(hero: String): Single<List<HeroEntity>> =

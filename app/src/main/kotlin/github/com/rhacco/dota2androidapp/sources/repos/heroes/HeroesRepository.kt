@@ -16,6 +16,15 @@ object HeroesRepository : HeroesDataSource {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
 
+    fun getHeroesByIds(heroIds: List<Int>): Single<List<HeroEntity>> =
+            HeroesLocalDataSource.getHeroesByIds(heroIds)
+                    .onErrorResumeNext {
+                        HeroesRemoteDataSource.getHeroes()
+                                .doOnSuccess { HeroesLocalDataSource.saveHeroes(it) }
+                    }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+
     override fun getHeroByLocalizedName(hero: String): Single<List<HeroEntity>> =
             HeroesLocalDataSource.getHeroByLocalizedName(hero)
                     .onErrorResumeNext {
