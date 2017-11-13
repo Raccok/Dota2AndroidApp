@@ -53,17 +53,17 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                         { result ->
                             mIsLoading.value = false
                             val newItemData = LiveMatchesItemData()
-                            newItemData.mMatchID = result.match.matchid
-                            newItemData.mAverageMMR = match.average_mmr
                             if (match.average_mmr < 1) {
-                                newItemData.mTitle = App.instance.getString(
-                                        R.string.heading_live_tournament_match, result.match.matchid)
+                                newItemData.mIsTournamentMatch = true
                                 newItemData.mTeamRadiant = match.team_name_radiant
                                 newItemData.mTeamDire = match.team_name_dire
-                            } else
+                            } else {
                                 newItemData.mTitle = App.instance.getString(
-                                        R.string.heading_live_ranked_match,
-                                        match.average_mmr, result.match.matchid)
+                                        R.string.heading_live_ranked_match, match.average_mmr)
+                                newItemData.mAverageMMR = match.average_mmr
+                            }
+                            newItemData.mServerID = match.server_steam_id
+                            newItemData.mMatchID = result.match.matchid
                             if (result.teams?.size == 2) {
                                 val playerSteamIds = mutableListOf<Long>()
                                 for (team in result.teams) {

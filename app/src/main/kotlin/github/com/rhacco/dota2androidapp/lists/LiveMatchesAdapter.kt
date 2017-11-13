@@ -25,8 +25,8 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         mItemsData.filter { newItemData.mMatchID == it.mMatchID }.forEach { return false }
 
         var index = 0
-        if (newItemData.mAverageMMR > 0)
-            index = mItemsData.count { it.mAverageMMR < 1 || it.mAverageMMR >= newItemData.mAverageMMR }
+        if (!newItemData.mIsTournamentMatch)
+            index = mItemsData.count { it.mIsTournamentMatch || it.mAverageMMR >= newItemData.mAverageMMR }
         mItemsData.add(index, newItemData)
         notifyItemInserted(index)
         return true
@@ -50,8 +50,8 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         }
     }
 
-    fun switchShowOfficialName(itemPosition: Int) {
-        mItemsData[itemPosition].mPlayers.forEach { it.showOfficialName = !it.showOfficialName }
+    fun switchShowAdditionalInfo(itemPosition: Int) {
+        mItemsData[itemPosition].mShowAdditionalInfo = !mItemsData[itemPosition].mShowAdditionalInfo
         notifyItemChanged(itemPosition)
     }
 
@@ -78,52 +78,67 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         holder.team_radiant?.text = itemData.mTeamRadiant
         holder.team_dire?.text = itemData.mTeamDire
         if (itemData.mPlayers.size == 10) {
-            bindPlayerName(holder.radiant_player0, itemData.mPlayers[0])
-            bindPlayerName(holder.radiant_player1, itemData.mPlayers[1])
-            bindPlayerName(holder.radiant_player2, itemData.mPlayers[2])
-            bindPlayerName(holder.radiant_player3, itemData.mPlayers[3])
-            bindPlayerName(holder.radiant_player4, itemData.mPlayers[4])
-            bindPlayerName(holder.dire_player0, itemData.mPlayers[5])
-            bindPlayerName(holder.dire_player1, itemData.mPlayers[6])
-            bindPlayerName(holder.dire_player2, itemData.mPlayers[7])
-            bindPlayerName(holder.dire_player3, itemData.mPlayers[8])
-            bindPlayerName(holder.dire_player4, itemData.mPlayers[9])
+            bindPlayerName(holder.radiant_player0, itemData.mPlayers[0], itemData)
+            bindPlayerName(holder.radiant_player1, itemData.mPlayers[1], itemData)
+            bindPlayerName(holder.radiant_player2, itemData.mPlayers[2], itemData)
+            bindPlayerName(holder.radiant_player3, itemData.mPlayers[3], itemData)
+            bindPlayerName(holder.radiant_player4, itemData.mPlayers[4], itemData)
+            bindPlayerName(holder.dire_player0, itemData.mPlayers[5], itemData)
+            bindPlayerName(holder.dire_player1, itemData.mPlayers[6], itemData)
+            bindPlayerName(holder.dire_player2, itemData.mPlayers[7], itemData)
+            bindPlayerName(holder.dire_player3, itemData.mPlayers[8], itemData)
+            bindPlayerName(holder.dire_player4, itemData.mPlayers[9], itemData)
         } else
             Log.d(App.instance.getString(R.string.log_msg_debug),
                     "A Live Matches item has corrupted players data")
+        bindIDs(holder, itemData)
     }
 
-    private fun bindPlayerName(textView: TextView?, player: Player) =
+    private fun bindPlayerName(textView: TextView?, player: Player, itemData: LiveMatchesItemData) =
             when {
-                player.officialName.isEmpty() -> {
+                player.officialName.isEmpty() || itemData.mIsTournamentMatch || itemData.mShowAdditionalInfo
+                -> {
                     textView?.text = player.currentSteamName
                     textView?.setTextColor(ContextCompat.getColor(
                             App.instance.applicationContext, R.color.text_general))
                 }
-                player.showOfficialName -> {
+                else -> {
                     textView?.text = player.officialName
                     textView?.setTextColor(ContextCompat.getColor(
                             App.instance.applicationContext, R.color.text_pro_player))
                 }
+            }
+
+    private fun bindIDs(holder: LiveMatchesViewHolder, itemData: LiveMatchesItemData) =
+            when {
+                itemData.mShowAdditionalInfo -> {
+                    holder.server_id?.text = App.instance.getString(
+                            R.string.additional_info_server_id, itemData.mServerID)
+                    holder.server_id?.visibility = View.VISIBLE
+                    holder.match_id?.text = App.instance.getString(
+                            R.string.additional_info_match_id, itemData.mMatchID)
+                    holder.match_id?.visibility = View.VISIBLE
+                }
                 else -> {
-                    textView?.text = player.currentSteamName
-                    textView?.setTextColor(ContextCompat.getColor(
-                            App.instance.applicationContext, R.color.text_general))
+                    holder.server_id?.visibility = View.GONE
+                    holder.match_id?.visibility = View.GONE
                 }
             }
 }
 
 class LiveMatchesItemData {
-    var mTitle: String = ""
+    var mIsTournamentMatch = false
+    var mTitle: String = App.instance.getString(R.string.heading_live_tournament_match)
     var mAverageMMR = 0
-    var mTeamRadiant = App.instance.getString(R.string.team_radiant)!!
-    var mTeamDire = App.instance.getString(R.string.team_dire)!!
-    var mMatchID = 0L
+    var mTeamRadiant: String = App.instance.getString(R.string.team_radiant)
+    var mTeamDire: String = App.instance.getString(R.string.team_dire)
     var mPlayers: MutableList<Player> = mutableListOf()
+    var mServerID = 0L
+    var mMatchID = 0L
+    var mShowAdditionalInfo = false
 }
 
-data class Player(var steamId: Long, var currentSteamName: String, var officialName: String = "",
-                  var showOfficialName: Boolean = true)
+data class Player(var steamId: Long, var currentSteamName: String, var officialName: String = "")
 
 class LiveMatchesViewHolder(view: View?, adapter: LiveMatchesAdapter) :
         RecyclerView.ViewHolder(view), LayoutContainer, View.OnClickListener {
@@ -134,5 +149,5 @@ class LiveMatchesViewHolder(view: View?, adapter: LiveMatchesAdapter) :
         itemView.setOnClickListener(this)
     }
 
-    override fun onClick(view: View?) = mAdapter.switchShowOfficialName(adapterPosition)
+    override fun onClick(view: View?) = mAdapter.switchShowAdditionalInfo(adapterPosition)
 }

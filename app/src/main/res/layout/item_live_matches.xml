@@ -65,4 +65,14 @@
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
+    <TextView
+        android:id="@+id/server_id"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textColor="@color/text_additional_info"
+        android:textSize="@dimen/text_additional_info"/>
+    <TextView
+        android:id="@+id/match_id"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textColor="@color/text_additional_info"
+        android:textSize="@dimen/text_additional_info"/>
 </LinearLayout>
