@@ -5,9 +5,9 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-object TopLiveGamesRepository : TopLiveGamesDataSource {
-    override fun getTopLiveGames(): Single<List<TopLiveGamesResponse.Game>> =
-            TopLiveGamesLocalDataSource.getTopLiveGames()
+object TopLiveGamesRepository {
+    fun getTopLiveGames(): Single<List<TopLiveGamesResponse.Game>> =
+            TopLiveGamesRemoteDataSource.getTopLiveGames()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
 }

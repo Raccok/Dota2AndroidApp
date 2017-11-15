@@ -48,6 +48,7 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
                 }
                 matchesInListToUpdate.values.forEach {
                     mViewModel.getLiveMatchesItemData(it.mMatchBaseVals)
+                    mViewModel.checkMatchFinished(it.mMatchId)
                 }
             }
         })
@@ -69,13 +70,7 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
                 mAdapter.updateHeroNames(matchId, heroEntities, elapsedTime)
             }
         })
-        mViewModel.mCheckMatchFinishedQuery.observe(this, Observer<Pair<Long, Boolean>> {
-            it?.let { (matchId, isFinished) ->
-                if (isFinished)
-                    mViewModel.removeFinishedMatch(matchId)
-            }
-        })
-        mViewModel.mRemoveFinishedMatchQuery.observe(this, Observer<Long> {
+        mViewModel.mCheckMatchFinishedQuery.observe(this, Observer<Long> {
             it?.let { matchId -> mAdapter.remove(matchId) }
         })
     }

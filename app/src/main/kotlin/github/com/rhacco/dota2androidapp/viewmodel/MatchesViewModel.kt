@@ -14,7 +14,6 @@ import github.com.rhacco.dota2androidapp.lists.LiveMatchesItemData
 import github.com.rhacco.dota2androidapp.lists.Player
 import github.com.rhacco.dota2androidapp.sources.repos.heroes.HeroesRepository
 import github.com.rhacco.dota2androidapp.sources.repos.matches.MatchDetailsRepository
-import github.com.rhacco.dota2androidapp.sources.repos.matches.RealtimeStatsLocalDataSource
 import github.com.rhacco.dota2androidapp.sources.repos.matches.RealtimeStatsRepository
 import github.com.rhacco.dota2androidapp.sources.repos.matches.TopLiveGamesRepository
 import github.com.rhacco.dota2androidapp.sources.repos.players.ProPlayersRepository
@@ -25,12 +24,12 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
     private var mIsLoadingProPlayers = false
     private val mDisposables = CompositeDisposable()
     private val mPlayersOnHold: MutableList<Long> = mutableListOf()
+    private val mFinishedMatches: MutableList<Long> = mutableListOf()
     val mLiveMatchesQuery = MediatorLiveData<List<TopLiveGamesResponse.Game>>()
     val mLiveMatchesItemDataQuery = MediatorLiveData<LiveMatchesItemData>()
     val mCheckProPlayersQuery = MediatorLiveData<List<ProPlayerEntity>>()
     val mHeroesQuery = MediatorLiveData<Triple<Long, List<HeroEntity>, Int>>()
-    val mCheckMatchFinishedQuery = MediatorLiveData<Pair<Long, Boolean>>()
-    val mRemoveFinishedMatchQuery = MediatorLiveData<Long>()
+    val mCheckMatchFinishedQuery = MediatorLiveData<Long>()
 
     override fun onCleared() = mDisposables.clear()
 
@@ -55,6 +54,8 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
         mDisposables.add(RealtimeStatsRepository.getRealtimeStats(matchBaseVals.server_steam_id)
                 .subscribe(
                         { result ->
+                            if (mFinishedMatches.contains(result.match.matchid))
+                                return@subscribe
                             mIsLoading.value = false
                             val newItemData = LiveMatchesItemData()
                             newItemData.mMatchBaseVals = matchBaseVals
@@ -142,7 +143,10 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                             // The official Dota 2 API returns nothing for 'error' when match
                             // details *are* present for given matchId, i.e. when the match is
                             // finished, so 'error' is null in this case
-                            mCheckMatchFinishedQuery.value = Pair(matchId, result.error == null)
+                            if (result.error == null) {
+                                mFinishedMatches.add(matchId)
+                                mCheckMatchFinishedQuery.value = matchId
+                            }
                         },
                         { error ->
                             mIsLoading.value = false
@@ -150,10 +154,5 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                     "Failed to fetch match details: " + error)
                         }
                 ))
-    }
-
-    fun removeFinishedMatch(matchId: Long) {
-        RealtimeStatsLocalDataSource.removeRealtimeStats(matchId)
-        mRemoveFinishedMatchQuery.value = matchId
     }
 }
