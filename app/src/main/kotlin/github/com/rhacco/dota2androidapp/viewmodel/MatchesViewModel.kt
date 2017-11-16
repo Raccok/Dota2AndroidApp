@@ -21,14 +21,14 @@ import io.reactivex.disposables.CompositeDisposable
 
 class MatchesViewModel(application: Application) : AndroidViewModel(application) {
     private val mIsLoading = MediatorLiveData<Boolean>()
-    private var mIsLoadingProPlayers = false
     private val mDisposables = CompositeDisposable()
-    private val mPlayersOnHold: MutableList<Long> = mutableListOf()
+    private val mProPlayersChecked: MutableList<Long> = mutableListOf()
+    private val mHeroesSet: MutableList<Long> = mutableListOf()
     private val mFinishedMatches: MutableList<Long> = mutableListOf()
     val mLiveMatchesQuery = MediatorLiveData<List<TopLiveGamesResponse.Game>>()
     val mLiveMatchesItemDataQuery = MediatorLiveData<LiveMatchesItemData>()
-    val mCheckProPlayersQuery = MediatorLiveData<List<ProPlayerEntity>>()
-    val mHeroesQuery = MediatorLiveData<Triple<Long, List<HeroEntity>, Int>>()
+    val mCheckProPlayersQuery = MediatorLiveData<Pair<Long, List<ProPlayerEntity>>>()
+    val mHeroesQuery = MediatorLiveData<Pair<Long, List<HeroEntity>>>()
     val mCheckMatchFinishedQuery = MediatorLiveData<Long>()
 
     override fun onCleared() = mDisposables.clear()
@@ -79,7 +79,6 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                     if (team.players?.size == 5)
                                         team.players.forEach {
                                             newItemData.mPlayers.add(Player(it.accountid, it.name))
-                                            newItemData.mHeroes.add(Hero(it.heroid))
                                             playerSteamIds.add(it.accountid)
                                             heroIds.add(it.heroid)
                                         }
@@ -87,11 +86,24 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                         Log.d(App.instance.getString(R.string.log_msg_debug),
                                                 "GetRealtimeStats returned corrupted players data")
                                 }
+                                if (heroIds.size == 10 && heroIds[0] != 0 && heroIds[1] != 0)
+                                    newItemData.mHeroesAssigned = true
+                                if (newItemData.mHeroesAssigned)
+                                    heroIds.forEach { newItemData.mHeroes.add(Hero(it)) }
                                 newItemData.mServerId = matchBaseVals.server_steam_id
                                 newItemData.mMatchId = result.match.matchid
-                                checkProPlayers(playerSteamIds)
-                                getHeroes(result.match.matchid, heroIds, result.match.game_time)
-                                mLiveMatchesItemDataQuery.value = newItemData
+                                if (newItemData.mMatchId > 0) {
+                                    mLiveMatchesItemDataQuery.value = newItemData
+                                    if (!mProPlayersChecked.contains(newItemData.mMatchId)) {
+                                        checkProPlayers(newItemData.mMatchId, playerSteamIds)
+                                        mProPlayersChecked.add(newItemData.mMatchId)
+                                    }
+                                    if (newItemData.mHeroesAssigned &&
+                                            !mHeroesSet.contains(newItemData.mMatchId)) {
+                                        getHeroes(newItemData.mMatchId, heroIds)
+                                        mHeroesSet.add(newItemData.mMatchId)
+                                    }
+                                }
                             } else
                                 Log.d(App.instance.getString(R.string.log_msg_debug),
                                         "GetRealtimeStats returned corrupted teams data")
@@ -104,35 +116,27 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                 ))
     }
 
-    private fun checkProPlayers(playerSteamIds: List<Long>) {
-        if (playerSteamIds.isEmpty())
-            return
-        if (mIsLoadingProPlayers)
-            mPlayersOnHold.addAll(playerSteamIds)
-        else {
-            mIsLoadingProPlayers = true
+    private fun checkProPlayers(matchId: Long, playerSteamIds: List<Long>) =
             mDisposables.add(ProPlayersRepository.checkProPlayers(playerSteamIds)
                     .subscribe(
-                            { result ->
-                                mIsLoadingProPlayers = false
-                                if (result.isNotEmpty())
-                                    mCheckProPlayersQuery.value = result
-                                // Pass a copy of mPlayersOnHold so we can clear them afterwards
-                                checkProPlayers(mPlayersOnHold.toList())
-                                mPlayersOnHold.clear()
-                            },
+                            { result -> mCheckProPlayersQuery.value = Pair(matchId, result) },
                             { error ->
-                                mIsLoadingProPlayers = false
+                                mProPlayersChecked.remove(matchId)
                                 Log.d(App.instance.getString(R.string.log_msg_debug),
-                                        "Failed to fetch official player names: " + error)
+                                        "Failed to fetch pro players: " + error)
                             }
                     ))
-        }
-    }
 
-    private fun getHeroes(matchId: Long, heroIds: List<Int>, elapsedTime: Int) =
-            HeroesRepository.getHeroesByIds(heroIds)
-                    .subscribe({ result -> mHeroesQuery.value = Triple(matchId, result, elapsedTime) })
+    private fun getHeroes(matchId: Long, heroIds: List<Int>) =
+            mDisposables.add(HeroesRepository.getHeroesByIds(heroIds)
+                    .subscribe(
+                            { result -> mHeroesQuery.value = Pair(matchId, result) },
+                            { error ->
+                                mHeroesSet.remove(matchId)
+                                Log.d(App.instance.getString(R.string.log_msg_debug),
+                                        "Failed to fetch heroes: " + error)
+                            }
+                    ))
 
     fun checkMatchFinished(matchId: Long) {
         mIsLoading.value = true
@@ -144,6 +148,8 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                             // details *are* present for given matchId, i.e. when the match is
                             // finished, so 'error' is null in this case
                             if (result.error == null) {
+                                mProPlayersChecked.remove(matchId)
+                                mHeroesSet.remove(matchId)
                                 mFinishedMatches.add(matchId)
                                 mCheckMatchFinishedQuery.value = matchId
                             }

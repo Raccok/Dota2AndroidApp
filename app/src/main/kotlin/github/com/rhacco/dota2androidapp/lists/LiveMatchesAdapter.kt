@@ -29,48 +29,42 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         var index = 0
         if (!newItemData.mIsTournamentMatch)
             index = mItemsData.count {
-                it.mIsTournamentMatch || it.mMatchBaseVals.average_mmr >= newItemData.mMatchBaseVals.average_mmr
+                it.mIsTournamentMatch ||
+                        it.mMatchBaseVals.average_mmr >= newItemData.mMatchBaseVals.average_mmr
             }
         mItemsData.add(index, newItemData)
         notifyItemInserted(index)
         return true
     }
 
-    fun setOfficialNames(proPlayers: List<ProPlayerEntity>) {
-        proPlayers.forEach {
-            var index = 0
-            while (index < mItemsData.size) {
-                for (player in mItemsData[index].mPlayers)
-                    if (player.steamId == it.account_id) {
-                        if (it.name != null && player.officialName != it.name) {
-                            player.officialName = it.name
-                            notifyItemChanged(index)
-                        }
-                        index = mItemsData.size  // breaks outer while loop
-                        break
-                    }
-                ++index
-            }
-        }
-    }
-
-    fun updateHeroNames(matchId: Long, heroEntities: List<HeroEntity>, elapsedTime: Int) {
-        if (elapsedTime < 0 || heroEntities.size != 10)
-            return
+    fun setOfficialNames(matchId: Long, proPlayerEntities: List<ProPlayerEntity>) {
         var index = 0
         while (index < mItemsData.size) {
             if (mItemsData[index].mMatchId == matchId) {
-                var itemChanged = false
-                mItemsData[index].mHeroes.forEach { hero ->
-                    heroEntities.forEach {
-                        if (hero.id == it.id && hero.name != it.localized_name) {
-                            hero.name = it.localized_name!!
-                            itemChanged = true
-                        }
+                mItemsData[index].mPlayers.forEach { playerInMatch ->
+                    proPlayerEntities.forEach { proPlayerEntity ->
+                        if (playerInMatch.steamId == proPlayerEntity.account_id)
+                            playerInMatch.officialName = proPlayerEntity.name!!
                     }
                 }
-                if (itemChanged)
-                    notifyItemChanged(index)
+                notifyItemChanged(index)
+                return
+            }
+            ++index
+        }
+    }
+
+    fun setHeroNames(matchId: Long, heroEntities: List<HeroEntity>) {
+        var index = 0
+        while (index < mItemsData.size) {
+            if (mItemsData[index].mMatchId == matchId) {
+                mItemsData[index].mHeroes.forEach { heroInMatch ->
+                    heroEntities.forEach { heroEntity ->
+                        if (heroInMatch.id == heroEntity.id)
+                            heroInMatch.name = heroEntity.localized_name!!
+                    }
+                }
+                notifyItemChanged(index)
                 return
             }
             ++index
@@ -78,21 +72,19 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
     }
 
     fun updateRealtimeStats(newItemData: LiveMatchesItemData) {
-        if (newItemData.mElapsedTime < 0)
+        if (!newItemData.mHeroesAssigned)
             return
         var index = 0
         while (index < mItemsData.size) {
             if (mItemsData[index].mMatchId == newItemData.mMatchId) {
-                val oldItemData = mItemsData[index]
-                if (oldItemData.mGoldAdvantage != newItemData.mGoldAdvantage ||
-                        oldItemData.mRadiantScore != newItemData.mRadiantScore ||
-                        oldItemData.mElapsedTime != newItemData.mElapsedTime ||
-                        oldItemData.mDireScore != newItemData.mDireScore) {
-                    newItemData.mPlayers = oldItemData.mPlayers
-                    newItemData.mShowAdditionalInfo = oldItemData.mShowAdditionalInfo
-                    mItemsData[index] = newItemData
-                    notifyItemChanged(index)
-                }
+                mItemsData[index].mGoldAdvantage = newItemData.mGoldAdvantage
+                mItemsData[index].mRadiantScore = newItemData.mRadiantScore
+                mItemsData[index].mElapsedTime = newItemData.mElapsedTime
+                mItemsData[index].mDireScore = newItemData.mDireScore
+                mItemsData[index].mHeroesAssigned = newItemData.mHeroesAssigned
+                if (mItemsData[index].mHeroes.isEmpty())
+                    mItemsData[index].mHeroes = newItemData.mHeroes
+                notifyItemChanged(index)
                 return
             }
             ++index
@@ -136,28 +128,41 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         bindStats(holder, itemData)
         if (itemData.mPlayers.size == 10) {
             bindPlayerName(holder.radiant_player0, itemData.mPlayers[0], itemData)
-            bindHeroName(holder.radiant_player0_hero_name, itemData.mHeroes[0], itemData.mElapsedTime)
             bindPlayerName(holder.radiant_player1, itemData.mPlayers[1], itemData)
-            bindHeroName(holder.radiant_player1_hero_name, itemData.mHeroes[1], itemData.mElapsedTime)
             bindPlayerName(holder.radiant_player2, itemData.mPlayers[2], itemData)
-            bindHeroName(holder.radiant_player2_hero_name, itemData.mHeroes[2], itemData.mElapsedTime)
             bindPlayerName(holder.radiant_player3, itemData.mPlayers[3], itemData)
-            bindHeroName(holder.radiant_player3_hero_name, itemData.mHeroes[3], itemData.mElapsedTime)
             bindPlayerName(holder.radiant_player4, itemData.mPlayers[4], itemData)
-            bindHeroName(holder.radiant_player4_hero_name, itemData.mHeroes[4], itemData.mElapsedTime)
             bindPlayerName(holder.dire_player0, itemData.mPlayers[5], itemData)
-            bindHeroName(holder.dire_player0_hero_name, itemData.mHeroes[5], itemData.mElapsedTime)
             bindPlayerName(holder.dire_player1, itemData.mPlayers[6], itemData)
-            bindHeroName(holder.dire_player1_hero_name, itemData.mHeroes[6], itemData.mElapsedTime)
             bindPlayerName(holder.dire_player2, itemData.mPlayers[7], itemData)
-            bindHeroName(holder.dire_player2_hero_name, itemData.mHeroes[7], itemData.mElapsedTime)
             bindPlayerName(holder.dire_player3, itemData.mPlayers[8], itemData)
-            bindHeroName(holder.dire_player3_hero_name, itemData.mHeroes[8], itemData.mElapsedTime)
             bindPlayerName(holder.dire_player4, itemData.mPlayers[9], itemData)
-            bindHeroName(holder.dire_player4_hero_name, itemData.mHeroes[9], itemData.mElapsedTime)
         } else
             Log.d(App.instance.getString(R.string.log_msg_debug),
                     "A Live Matches item has corrupted players data")
+        if (itemData.mHeroes.size == 10) {
+            bindHeroName(holder.radiant_player0_hero_name, itemData.mHeroes[0])
+            bindHeroName(holder.radiant_player1_hero_name, itemData.mHeroes[1])
+            bindHeroName(holder.radiant_player2_hero_name, itemData.mHeroes[2])
+            bindHeroName(holder.radiant_player3_hero_name, itemData.mHeroes[3])
+            bindHeroName(holder.radiant_player4_hero_name, itemData.mHeroes[4])
+            bindHeroName(holder.dire_player0_hero_name, itemData.mHeroes[5])
+            bindHeroName(holder.dire_player1_hero_name, itemData.mHeroes[6])
+            bindHeroName(holder.dire_player2_hero_name, itemData.mHeroes[7])
+            bindHeroName(holder.dire_player3_hero_name, itemData.mHeroes[8])
+            bindHeroName(holder.dire_player4_hero_name, itemData.mHeroes[9])
+        } else {
+            holder.radiant_player0_hero_name?.visibility = View.GONE
+            holder.radiant_player1_hero_name?.visibility = View.GONE
+            holder.radiant_player2_hero_name?.visibility = View.GONE
+            holder.radiant_player3_hero_name?.visibility = View.GONE
+            holder.radiant_player4_hero_name?.visibility = View.GONE
+            holder.dire_player0_hero_name?.visibility = View.GONE
+            holder.dire_player1_hero_name?.visibility = View.GONE
+            holder.dire_player2_hero_name?.visibility = View.GONE
+            holder.dire_player3_hero_name?.visibility = View.GONE
+            holder.dire_player4_hero_name?.visibility = View.GONE
+        }
         bindIds(holder, itemData)
     }
 
@@ -177,8 +182,12 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
             params.addRule(RelativeLayout.RIGHT_OF, R.id.score_dire)
         holder.gold_advantage?.layoutParams = params
         holder.score_radiant?.text = itemData.mRadiantScore.toString()
-        val elapsedTimeMin = maxOf(0, Math.floor(itemData.mElapsedTime / 60.0).toInt())
-        val elapsedTimeSec = maxOf(0, itemData.mElapsedTime % 60)
+        var elapsedTimeMin = 0
+        var elapsedTimeSec = 0
+        if (itemData.mHeroesAssigned && itemData.mElapsedTime > 0) {
+            elapsedTimeMin = Math.floor(itemData.mElapsedTime / 60.0).toInt()
+            elapsedTimeSec = itemData.mElapsedTime % 60
+        }
         if (elapsedTimeSec < 10)
             holder.elapsed_time?.text = App.instance.getString(R.string.elapsed_time_corrected_sec,
                     elapsedTimeMin, elapsedTimeSec)
@@ -203,9 +212,9 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
                 }
             }
 
-    private fun bindHeroName(textView: TextView?, hero: Hero, elapsedTime: Int) =
+    private fun bindHeroName(textView: TextView?, hero: Hero) =
             when {
-                elapsedTime <= 0 -> textView?.visibility = View.GONE
+                hero.name.isEmpty() -> textView?.visibility = View.GONE
                 else -> {
                     textView?.text = hero.name
                     textView?.visibility = View.VISIBLE
@@ -239,6 +248,7 @@ class LiveMatchesItemData {
     var mDireScore = 0
     var mPlayers: MutableList<Player> = mutableListOf()
     var mHeroes: MutableList<Hero> = mutableListOf()
+    var mHeroesAssigned = false
     var mServerId = 0L
     var mMatchId = 0L
     var mShowAdditionalInfo = false

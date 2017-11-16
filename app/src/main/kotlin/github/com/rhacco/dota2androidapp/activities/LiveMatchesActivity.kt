@@ -53,22 +53,20 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
             }
         })
         mViewModel.mLiveMatchesItemDataQuery.observe(this, Observer<LiveMatchesItemData> {
-            it?.let { itemData ->
-                if (mAdapter.add(itemData))
+            it?.let { newItemData ->
+                if (mAdapter.add(newItemData))
                     live_matches_list.layoutManager.scrollToPosition(0)
                 else {
-                    mAdapter.updateRealtimeStats(itemData)
-                    mViewModel.checkMatchFinished(itemData.mMatchId)
+                    mAdapter.updateRealtimeStats(newItemData)
+                    mViewModel.checkMatchFinished(newItemData.mMatchId)
                 }
             }
         })
-        mViewModel.mCheckProPlayersQuery.observe(this, Observer<List<ProPlayerEntity>> {
-            it?.let { proPlayers -> mAdapter.setOfficialNames(proPlayers) }
+        mViewModel.mCheckProPlayersQuery.observe(this, Observer<Pair<Long, List<ProPlayerEntity>>> {
+            it?.let { (matchId, proPlayers) -> mAdapter.setOfficialNames(matchId, proPlayers) }
         })
-        mViewModel.mHeroesQuery.observe(this, Observer<Triple<Long, List<HeroEntity>, Int>> {
-            it?.let { (matchId, heroEntities, elapsedTime) ->
-                mAdapter.updateHeroNames(matchId, heroEntities, elapsedTime)
-            }
+        mViewModel.mHeroesQuery.observe(this, Observer<Pair<Long, List<HeroEntity>>> {
+            it?.let { (matchId, heroEntities) -> mAdapter.setHeroNames(matchId, heroEntities) }
         })
         mViewModel.mCheckMatchFinishedQuery.observe(this, Observer<Long> {
             it?.let { matchId -> mAdapter.remove(matchId) }
