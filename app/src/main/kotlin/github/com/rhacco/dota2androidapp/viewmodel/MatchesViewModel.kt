@@ -49,21 +49,27 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                 ))
     }
 
-    fun getLiveMatchesItemData(matchBaseVals: TopLiveGamesResponse.Game) {
+    fun getLiveMatchesItemData(teamRadiant: String?, teamDire: String?, averageMMR: Int, serverId: Long) {
         mIsLoading.value = true
-        mDisposables.add(RealtimeStatsRepository.getRealtimeStats(matchBaseVals.server_steam_id)
+        mDisposables.add(RealtimeStatsRepository.getRealtimeStats(serverId)
                 .subscribe(
                         { result ->
                             if (mFinishedMatches.contains(result.match.matchid))
                                 return@subscribe
                             mIsLoading.value = false
                             val newItemData = LiveMatchesItemData()
-                            newItemData.mMatchBaseVals = matchBaseVals
-                            if (matchBaseVals.average_mmr < 1)
+                            if (teamRadiant != null && teamDire != null &&
+                                    teamRadiant.isNotEmpty() && teamDire.isNotEmpty()) {
+                                newItemData.mTeamRadiant = teamRadiant
+                                newItemData.mTeamDire = teamDire
+                            } else {
+                                newItemData.mTeamRadiant = App.instance.getString(R.string.team_radiant)
+                                newItemData.mTeamDire = App.instance.getString(R.string.team_dire)
+                            }
+                            if (averageMMR < 1)
                                 newItemData.mIsTournamentMatch = true
                             else
-                                newItemData.mTitle = App.instance.getString(
-                                        R.string.heading_live_ranked_match, matchBaseVals.average_mmr)
+                                newItemData.mAverageMMR = averageMMR
                             if (result.graph_data?.graph_gold != null)
                                 newItemData.mGoldAdvantage = result.graph_data.graph_gold.last()
                             else
@@ -90,7 +96,7 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                     newItemData.mHeroesAssigned = true
                                 if (newItemData.mHeroesAssigned)
                                     heroIds.forEach { newItemData.mHeroes.add(Hero(it)) }
-                                newItemData.mServerId = matchBaseVals.server_steam_id
+                                newItemData.mServerId = serverId
                                 newItemData.mMatchId = result.match.matchid
                                 if (newItemData.mMatchId > 0) {
                                     mLiveMatchesItemDataQuery.value = newItemData

@@ -2,21 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent" android:layout_height="wrap_content">
-    <TextView android:id="@+id/title"
-              android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:gravity="center_horizontal"
-              android:textSize="@dimen/text_title"
-              tools:text="Tournament/Ranked Match"/>
-    <RelativeLayout android:id="@+id/header_teams"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_below="@id/title">
-        <TextView android:id="@+id/team_radiant"
-                  android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:layout_alignParentLeft="true"
-                  android:layout_alignParentStart="true"
-                  android:textColor="@color/team_radiant"
-                  android:textSize="@dimen/text_subtitle"
-                  tools:text="@string/team_radiant"/>
+    <RelativeLayout android:id="@+id/header_realtime_stats"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
         <TextView android:id="@+id/gold_advantage"
                   android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:textColor="@color/in_game_gold"/>
@@ -29,13 +16,28 @@
                   android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:layout_centerHorizontal="true"
                   android:layout_centerVertical="true"
-                  android:layout_marginLeft="6dp"
-                  android:layout_marginRight="6dp"/>
+                  android:layout_marginLeft="10dp"
+                  android:layout_marginRight="10dp"/>
         <TextView android:id="@+id/score_dire"
                   android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:layout_toEndOf="@+id/elapsed_time"
                   android:layout_toRightOf="@+id/elapsed_time"
                   android:textSize="@dimen/text_subtitle"/>
+    </RelativeLayout>
+    <RelativeLayout android:id="@+id/header_teams"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_below="@id/header_realtime_stats">
+        <TextView android:id="@+id/team_radiant"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_alignParentLeft="true"
+                  android:layout_alignParentStart="true"
+                  android:textColor="@color/team_radiant"
+                  android:textSize="@dimen/text_subtitle"
+                  tools:text="@string/team_radiant"/>
+        <TextView android:id="@+id/average_mmr"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"/>
         <TextView android:id="@+id/team_dire"
                   android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:layout_alignParentEnd="true"
@@ -46,7 +48,7 @@
     </RelativeLayout>
     <LinearLayout android:id="@+id/players"
                   android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:layout_below="@+id/header_teams"
+                  android:layout_below="@id/header_teams"
                   android:baselineAligned="false"
                   android:orientation="horizontal"
                   android:weightSum="2">

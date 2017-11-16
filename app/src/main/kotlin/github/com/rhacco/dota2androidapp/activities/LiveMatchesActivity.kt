@@ -43,11 +43,13 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
                 val matchesInListToUpdate: MutableMap<Long, LiveMatchesItemData> = mutableMapOf()
                 mAdapter.getItemsData().forEach { matchesInListToUpdate[it.mServerId] = it }
                 topLiveMatches.forEach {
-                    mViewModel.getLiveMatchesItemData(it)
+                    mViewModel.getLiveMatchesItemData(it.team_name_radiant, it.team_name_dire,
+                            it.average_mmr, it.server_steam_id)
                     matchesInListToUpdate.remove(it.server_steam_id)
                 }
                 matchesInListToUpdate.values.forEach {
-                    mViewModel.getLiveMatchesItemData(it.mMatchBaseVals)
+                    mViewModel.getLiveMatchesItemData(it.mTeamRadiant, it.mTeamDire,
+                            it.mAverageMMR, it.mServerId)
                     mViewModel.checkMatchFinished(it.mMatchId)
                 }
             }

@@ -11,10 +11,9 @@
 
     <string name="description_open_drawer">Open Menu</string>
     <string name="description_close_drawer">Close Menu</string>
-    <string name="heading_live_tournament_match">Tournament Match</string>
-    <string name="heading_live_ranked_match">Ranked Match — %d Avg. MMR</string>
     <string name="team_radiant">Radiant</string>
     <string name="team_dire">Dire</string>
+    <string name="average_mmr">%d Avg. MMR</string>
     <string name="gold_advantage">+%1$d.%2$dk</string>
     <string name="elapsed_time">%1$d:%2$d</string>
     <string name="elapsed_time_corrected_sec">%1$d:0%2$d</string>

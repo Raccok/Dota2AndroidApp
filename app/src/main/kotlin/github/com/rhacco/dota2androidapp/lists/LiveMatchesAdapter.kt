@@ -11,7 +11,6 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
-import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
 import github.com.rhacco.dota2androidapp.entities.HeroEntity
 import github.com.rhacco.dota2androidapp.entities.ProPlayerEntity
 import kotlinx.android.extensions.LayoutContainer
@@ -29,8 +28,7 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         var index = 0
         if (!newItemData.mIsTournamentMatch)
             index = mItemsData.count {
-                it.mIsTournamentMatch ||
-                        it.mMatchBaseVals.average_mmr >= newItemData.mMatchBaseVals.average_mmr
+                it.mIsTournamentMatch || it.mAverageMMR >= newItemData.mAverageMMR
             }
         mItemsData.add(index, newItemData)
         notifyItemInserted(index)
@@ -117,15 +115,15 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
 
     override fun onBindViewHolder(holder: LiveMatchesViewHolder, position: Int) {
         val itemData = mItemsData[position]
-        holder.title?.text = itemData.mTitle
-        if (itemData.mIsTournamentMatch) {
-            holder.team_radiant?.text = itemData.mMatchBaseVals.team_name_radiant
-            holder.team_dire?.text = itemData.mMatchBaseVals.team_name_dire
-        } else {
-            holder.team_radiant?.text = App.instance.getString(R.string.team_radiant)
-            holder.team_dire?.text = App.instance.getString(R.string.team_dire)
+        bindRealtimeStats(holder, itemData)
+        holder.team_radiant?.text = itemData.mTeamRadiant
+        holder.team_dire?.text = itemData.mTeamDire
+        if (itemData.mIsTournamentMatch)
+            holder.average_mmr?.visibility = View.GONE
+        else {
+            holder.average_mmr?.text = App.instance.getString(R.string.average_mmr, itemData.mAverageMMR)
+            holder.average_mmr?.visibility = View.VISIBLE
         }
-        bindStats(holder, itemData)
         if (itemData.mPlayers.size == 10) {
             bindPlayerName(holder.radiant_player0, itemData.mPlayers[0], itemData)
             bindPlayerName(holder.radiant_player1, itemData.mPlayers[1], itemData)
@@ -166,21 +164,25 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         bindIds(holder, itemData)
     }
 
-    private fun bindStats(holder: LiveMatchesViewHolder, itemData: LiveMatchesItemData) {
-        val goldAdvantageThousands = Math.floor(Math.abs(itemData.mGoldAdvantage) / 1000.0).toInt()
-        val goldAdvantageHundreds = Math.round(Math.abs(itemData.mGoldAdvantage) / 100.0) % 10
-        holder.gold_advantage?.text = App.instance.getString(R.string.gold_advantage,
-                goldAdvantageThousands, goldAdvantageHundreds)
-        val params = RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        params.addRule(RelativeLayout.CENTER_VERTICAL)
-        params.leftMargin = 15
-        params.rightMargin = 15
-        if (itemData.mGoldAdvantage >= 0)
-            params.addRule(RelativeLayout.LEFT_OF, R.id.score_radiant)
-        else
-            params.addRule(RelativeLayout.RIGHT_OF, R.id.score_dire)
-        holder.gold_advantage?.layoutParams = params
+    private fun bindRealtimeStats(holder: LiveMatchesViewHolder, itemData: LiveMatchesItemData) {
+        if (itemData.mHeroesAssigned) {
+            val goldAdvantageThousands = Math.floor(Math.abs(itemData.mGoldAdvantage) / 1000.0).toInt()
+            val goldAdvantageHundreds = Math.round(Math.abs(itemData.mGoldAdvantage) / 100.0) % 10
+            holder.gold_advantage?.text = App.instance.getString(R.string.gold_advantage,
+                    goldAdvantageThousands, goldAdvantageHundreds)
+            val params = RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            params.addRule(RelativeLayout.CENTER_VERTICAL)
+            params.leftMargin = 25
+            params.rightMargin = 25
+            if (itemData.mGoldAdvantage >= 0)
+                params.addRule(RelativeLayout.LEFT_OF, R.id.score_radiant)
+            else
+                params.addRule(RelativeLayout.RIGHT_OF, R.id.score_dire)
+            holder.gold_advantage?.layoutParams = params
+            holder.gold_advantage?.visibility = View.VISIBLE
+        } else
+            holder.gold_advantage?.visibility = View.GONE
         holder.score_radiant?.text = itemData.mRadiantScore.toString()
         var elapsedTimeMin = 0
         var elapsedTimeSec = 0
@@ -239,9 +241,10 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
 }
 
 class LiveMatchesItemData {
-    var mMatchBaseVals: TopLiveGamesResponse.Game = TopLiveGamesResponse.Game(0L, 0, "", "")
     var mIsTournamentMatch = false
-    var mTitle: String = App.instance.getString(R.string.heading_live_tournament_match)
+    var mTeamRadiant = ""
+    var mTeamDire = ""
+    var mAverageMMR = 0
     var mGoldAdvantage = 0
     var mRadiantScore = 0
     var mElapsedTime = -1
