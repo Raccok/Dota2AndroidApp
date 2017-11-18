@@ -11,7 +11,8 @@
                   android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:layout_toLeftOf="@+id/elapsed_time"
                   android:layout_toStartOf="@+id/elapsed_time"
-                  android:textSize="@dimen/text_subtitle"/>
+                  android:textSize="@dimen/text_subtitle"
+                  tools:ignore="RelativeOverlap"/>
         <TextView android:id="@+id/elapsed_time"
                   android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:layout_centerHorizontal="true"
@@ -44,7 +45,8 @@
                   android:layout_alignParentRight="true"
                   android:textColor="@color/team_dire"
                   android:textSize="@dimen/text_subtitle"
-                  tools:text="@string/team_dire"/>
+                  tools:text="@string/team_dire"
+                  tools:ignore="RelativeOverlap"/>
     </RelativeLayout>
     <LinearLayout android:id="@+id/players"
                   android:layout_width="match_parent" android:layout_height="wrap_content"

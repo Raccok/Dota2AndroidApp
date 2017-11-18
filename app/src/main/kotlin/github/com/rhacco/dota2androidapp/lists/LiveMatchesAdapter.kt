@@ -13,11 +13,13 @@ import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.entities.HeroEntity
 import github.com.rhacco.dota2androidapp.entities.ProPlayerEntity
+import github.com.rhacco.dota2androidapp.utilities.OnSwipeTouchListener
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_live_matches.*
 
-class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesViewHolder>() {
-    private val mInflater: LayoutInflater = LayoutInflater.from(context)
+
+class LiveMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<LiveMatchesViewHolder>() {
+    private val mInflater: LayoutInflater = LayoutInflater.from(mContext)
     private val mItemsData: MutableList<LiveMatchesItemData> = mutableListOf()
 
     // Add tournament matches first, then sort by average MMR (descending)
@@ -108,10 +110,16 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         notifyItemChanged(itemPosition)
     }
 
+    fun switchShowOfficialNames(itemPosition: Int) {
+        mItemsData[itemPosition].mShowOfficialNames = !mItemsData[itemPosition].mShowOfficialNames
+        notifyItemChanged(itemPosition)
+    }
+
     override fun getItemCount(): Int = mItemsData.size
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): LiveMatchesViewHolder =
-            LiveMatchesViewHolder(mInflater.inflate(R.layout.item_live_matches, parent, false), this)
+            LiveMatchesViewHolder(
+                    mContext, mInflater.inflate(R.layout.item_live_matches, parent, false), this)
 
     override fun onBindViewHolder(holder: LiveMatchesViewHolder, position: Int) {
         val itemData = mItemsData[position]
@@ -138,7 +146,7 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
         } else
             Log.d(App.instance.getString(R.string.log_msg_debug),
                     "A Live Matches item has corrupted players data")
-        if (itemData.mHeroes.size == 10) {
+        if (itemData.mHeroes.size == 10 && itemData.mShowAdditionalInfo) {
             bindHeroName(holder.radiant_player0_hero_name, itemData.mHeroes[0])
             bindHeroName(holder.radiant_player1_hero_name, itemData.mHeroes[1])
             bindHeroName(holder.radiant_player2_hero_name, itemData.mHeroes[2])
@@ -201,8 +209,8 @@ class LiveMatchesAdapter(context: Context) : RecyclerView.Adapter<LiveMatchesVie
 
     private fun bindPlayerName(textView: TextView?, player: Player, itemData: LiveMatchesItemData) =
             when {
-                player.officialName.isEmpty() || itemData.mIsTournamentMatch || itemData.mShowAdditionalInfo
-                -> {
+                player.officialName.isEmpty() || itemData.mIsTournamentMatch ||
+                        !itemData.mShowOfficialNames -> {
                     textView?.text = player.currentSteamName
                     textView?.setTextColor(ContextCompat.getColor(
                             App.instance.applicationContext, R.color.text_general))
@@ -255,18 +263,27 @@ class LiveMatchesItemData {
     var mServerId = 0L
     var mMatchId = 0L
     var mShowAdditionalInfo = false
+    var mShowOfficialNames = true
 }
 
 data class Player(var steamId: Long, var currentSteamName: String, var officialName: String = "")
 data class Hero(var id: Int, var name: String = "")  // TODO add hero image here later
 
-class LiveMatchesViewHolder(view: View?, adapter: LiveMatchesAdapter) :
+class LiveMatchesViewHolder(context: Context, view: View?, private val mAdapter: LiveMatchesAdapter) :
         RecyclerView.ViewHolder(view), LayoutContainer, View.OnClickListener {
     override val containerView: View? = view
-    private val mAdapter = adapter
 
     init {
         itemView.setOnClickListener(this)
+        itemView.setOnTouchListener(object : OnSwipeTouchListener(context) {
+            override fun onSwipeLeft() {
+                mAdapter.switchShowOfficialNames(adapterPosition)
+            }
+
+            override fun onSwipeRight() {
+                mAdapter.switchShowOfficialNames(adapterPosition)
+            }
+        })
     }
 
     override fun onClick(view: View?) = mAdapter.switchShowAdditionalInfo(adapterPosition)
