@@ -27,19 +27,19 @@ open class OnSwipeTouchListener(private val mContext: Context) : View.OnTouchLis
     private class GestureListener(private val mCaller: OnSwipeTouchListener) :
             GestureDetector.SimpleOnGestureListener() {
         override fun onFling(e1: MotionEvent, e2: MotionEvent, velX: Float, velY: Float): Boolean {
-            if (e1.x - e2.x > 90 && Math.abs(velX) > 120) {
+            if (e1.x - e2.x > 5 && Math.abs(velX) > 5) {
                 mCaller.onSwipeLeft()
                 return true
             }
-            if (e2.x - e1.x > 90 && Math.abs(velX) > 120) {
+            if (e2.x - e1.x > 5 && Math.abs(velX) > 5) {
                 mCaller.onSwipeRight()
                 return true
             }
-            if (e1.y - e2.y > 90 && Math.abs(velY) > 120) {
+            if (e1.y - e2.y > 5 && Math.abs(velY) > 5) {
                 mCaller.onSwipeTop()
                 return true
             }
-            if (e2.y - e1.y > 90 && Math.abs(velY) > 120) {
+            if (e2.y - e1.y > 5 && Math.abs(velY) > 5) {
                 mCaller.onSwipeBottom()
                 return true
             }

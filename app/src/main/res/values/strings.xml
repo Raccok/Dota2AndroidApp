@@ -29,6 +29,14 @@
     <string name="saved_fav_hero">Saved your favorite hero \'%s\' to device storage</string>
     <string name="loaded_fav_hero">Loaded your favorite Dota 2 hero \'%s\' from device storage
     </string>
+    <string name="info_live_matches">
+        This screen shows an overview of top tournament and ranked matches currently being played,
+        similar to the \"Watch\" tab in the Dota 2 client.\n\n
+        Click on a match to show or hide additional information. Swipe left or right on a ranked
+        match to switch between pro players\' official name and current Steam name.\n\n
+        Type \"watch_server &lt;Server ID&gt;\" into your Dota 2 console and press Enter to start
+        spectating the match in your Dota 2 client.
+    </string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="error_no_api_key">Need to provide a valid Steam Web API key in

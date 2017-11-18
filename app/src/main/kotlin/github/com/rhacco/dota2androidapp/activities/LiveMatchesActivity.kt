@@ -1,9 +1,12 @@
 package github.com.rhacco.dota2androidapp.activities
 
+import android.app.AlertDialog
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
+import android.view.MenuItem
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
 import github.com.rhacco.dota2androidapp.base.BaseLifecycleActivity
@@ -13,6 +16,7 @@ import github.com.rhacco.dota2androidapp.lists.LiveMatchesAdapter
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesItemData
 import github.com.rhacco.dota2androidapp.viewmodel.MatchesViewModel
 import kotlinx.android.synthetic.main.activity_live_matches.*
+
 
 class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
     override val mViewModelClass = MatchesViewModel::class.java
@@ -73,5 +77,22 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
         mViewModel.mCheckMatchFinishedQuery.observe(this, Observer<Long> {
             it?.let { matchId -> mAdapter.remove(matchId) }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.button_info, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.button_info) {
+            val alertDialog = AlertDialog.Builder(this).create()
+            alertDialog.setMessage(getString(R.string.info_live_matches))
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.dialog_ok),
+                    { dialog, _ -> dialog.dismiss() })
+            alertDialog.show()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
