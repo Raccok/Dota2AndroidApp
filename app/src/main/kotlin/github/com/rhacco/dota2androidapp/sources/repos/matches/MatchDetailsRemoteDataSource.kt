@@ -6,8 +6,8 @@ import github.com.rhacco.dota2androidapp.api.MatchDetailsResponse
 import github.com.rhacco.dota2androidapp.sources.remote.Dota2OfficialAPIService
 import io.reactivex.Single
 
-object MatchDetailsRemoteDataSource : MatchDetailsDataSource {
-    override fun getMatchDetails(matchId: Long): Single<MatchDetailsResponse.Values> =
+object MatchDetailsRemoteDataSource {
+    fun getMatchDetails(matchId: Long): Single<MatchDetailsResponse.Values> =
             Single.create(
                     { subscriber ->
                         Dota2OfficialAPIService.get()

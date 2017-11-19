@@ -6,8 +6,8 @@ import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
 import github.com.rhacco.dota2androidapp.sources.remote.Dota2OfficialAPIService
 import io.reactivex.Single
 
-object TopLiveGamesRemoteDataSource : TopLiveGamesDataSource {
-    override fun getTopLiveGames(): Single<List<TopLiveGamesResponse.Game>> =
+object TopLiveGamesRemoteDataSource {
+    fun getTopLiveGames(): Single<List<TopLiveGamesResponse.Game>> =
             Single.create(
                     { subscriber ->
                         Dota2OfficialAPIService.get()

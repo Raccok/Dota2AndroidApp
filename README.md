@@ -1,6 +1,6 @@
 # Dota2AndroidApp
 
-A community project aiming to provide new features and content to the Dota 2 community.
+A community project aiming to provide convenient features and content to the Dota 2 community.
 
 The first states of the app were developed using [this](https://www.raywenderlich.com/132381/kotlin-for-android-an-introduction) tutorial and modifying the example app provided by the tutorial.
 
@@ -8,7 +8,7 @@ The first states of the app were developed using [this](https://www.raywenderlic
 
 The app is not yet available on the Play Store. However, you can still easily install the finished app (APK) on pretty much any Android device by following these steps:
 
-On your device, simply go to `Settings > Security > Unknown sources` and enable "Allow installation of apps from unknown sources". Then, in your device's browser, click the following link to download the latest version:
+On your device, go to `Settings > Security > Unknown sources` and enable "Allow installation of apps from unknown sources". On Android 8 or higher, go to `Settings > Apps & notifications > Advanced > Special app access > Install unknown apps` and allow your device's browser (most likely Chrome) to install unknown apps. Then, in your device's browser, click the following link to download the latest version:
 
 https://sourceforge.net/projects/dota2androidapp/files/Dota2AndroidApp.apk/download
 
@@ -56,20 +56,8 @@ In Android Studio, click the green play button in the middle of the toolbar (or 
 
 Watch Android Studio start the virtual Android device to run the app. Follow the status bar at the bottom of Android Studio, it gives you some nice information about what's currently happening. When presented with a window titled "GPU Driver Issue", select `Never show this again` and click `OK`.
 
-The app should now be started on the virtual Android device, giving you a display almost identical or similar to:
-
-<img src="screenshots/app_startup.png" width="230" height="410"/>
-
-If you see this screen, your personal development environment is complete.
+The app should now be started on the virtual Android device and ready to use.
 
 ### Running the manually built app on a physical Android device
 
 Of course you can also install and run the app on a physical Android device. Connect the device to your computer via USB. On the Android device, enable "Developer options" and "Android debugging" (or "USB debugging"), Google will tell you how to do that. Press the green play button in the middle of the toolbar (or press Shift+F10) and you should be able to select your physical Android device.
-
-## Using the app
-
-Click on `LIVE MATCHES` to enter a new Activity that shows the current top 10 live matches fetched from the official Dota 2 API. Example with Team Liquid vs Team Secret in the semifinals of StarLadder i-League Invitational Season 3 and several high MMR ranked matches:
-
-<img src="screenshots/activity_live_matches.png" width="230" height="410"/>
-
-Click on `SET FAVORITE HERO` to define a new favorite hero. Click into the text edit field, enter your favorite Dota 2 hero with the Android keyboard and click `OK`. Now, the text in the app should show what you entered. Close and restart the app (in the virtual Android device or via Android Studio), now it should show what you entered before immediately.

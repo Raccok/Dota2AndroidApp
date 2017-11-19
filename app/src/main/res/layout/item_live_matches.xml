@@ -1,62 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:orientation="vertical">
-    <TextView android:id="@+id/title"
-              android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:textStyle="bold"
-              tools:text="Tournament/Ranked Match"/>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent" android:layout_height="wrap_content">
+    <RelativeLayout android:id="@+id/header_realtime_stats"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:id="@+id/gold_advantage"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textColor="@color/in_game_gold"/>
+        <TextView android:id="@+id/score_radiant"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_toLeftOf="@+id/elapsed_time"
+                  android:layout_toStartOf="@+id/elapsed_time"
+                  android:textSize="@dimen/text_subtitle"
+                  tools:ignore="RelativeOverlap"/>
+        <TextView android:id="@+id/elapsed_time"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                  android:layout_marginLeft="10dp"
+                  android:layout_marginRight="10dp"/>
+        <TextView android:id="@+id/score_dire"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_toEndOf="@+id/elapsed_time"
+                  android:layout_toRightOf="@+id/elapsed_time"
+                  android:textSize="@dimen/text_subtitle"/>
+    </RelativeLayout>
+    <RelativeLayout android:id="@+id/header_teams"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_below="@id/header_realtime_stats">
+        <TextView android:id="@+id/team_radiant"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_alignParentLeft="true"
+                  android:layout_alignParentStart="true"
+                  android:textColor="@color/team_radiant"
+                  android:textSize="@dimen/text_subtitle"
+                  tools:text="@string/team_radiant"/>
+        <TextView android:id="@+id/average_mmr"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"/>
+        <TextView android:id="@+id/team_dire"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_alignParentEnd="true"
+                  android:layout_alignParentRight="true"
+                  android:textColor="@color/team_dire"
+                  android:textSize="@dimen/text_subtitle"
+                  tools:ignore="RelativeOverlap"
+                  tools:text="@string/team_dire"/>
+    </RelativeLayout>
+    <LinearLayout android:id="@+id/players"
                   android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:layout_below="@id/header_teams"
                   android:baselineAligned="false"
                   android:orientation="horizontal"
                   android:weightSum="2">
-        <LinearLayout
-            android:layout_width="0dp" android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="@string/heading_radiant_players"/>
-            <TextView
-                android:id="@+id/radiant_player0"
-                android:layout_width="match_parent" android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/radiant_player1"
-                android:layout_width="match_parent" android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/radiant_player2"
-                android:layout_width="match_parent" android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/radiant_player3"
-                android:layout_width="match_parent" android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/radiant_player4"
-                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:orientation="vertical">
+            <TextView android:id="@+id/radiant_player0"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"/>
+            <TextView android:id="@+id/radiant_player0_hero_name"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:textColor="@color/text_additional_info"
+                      android:textSize="@dimen/text_additional_info"/>
+            <TextView android:id="@+id/radiant_player1"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"/>
+            <TextView android:id="@+id/radiant_player1_hero_name"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:textColor="@color/text_additional_info"
+                      android:textSize="@dimen/text_additional_info"/>
+            <TextView android:id="@+id/radiant_player2"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"/>
+            <TextView android:id="@+id/radiant_player2_hero_name"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:textColor="@color/text_additional_info"
+                      android:textSize="@dimen/text_additional_info"/>
+            <TextView android:id="@+id/radiant_player3"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"/>
+            <TextView android:id="@+id/radiant_player3_hero_name"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:textColor="@color/text_additional_info"
+                      android:textSize="@dimen/text_additional_info"/>
+            <TextView android:id="@+id/radiant_player4"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"/>
+            <TextView android:id="@+id/radiant_player4_hero_name"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:textColor="@color/text_additional_info"
+                      android:textSize="@dimen/text_additional_info"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp" android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="@string/heading_dire_players"/>
-            <TextView
-                android:id="@+id/dire_player0"
-                android:layout_width="match_parent" android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/dire_player1"
-                android:layout_width="match_parent" android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/dire_player2"
-                android:layout_width="match_parent" android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/dire_player3"
-                android:layout_width="match_parent" android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/dire_player4"
-                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:orientation="vertical">
+            <TextView android:id="@+id/dire_player0"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:gravity="end"/>
+            <TextView android:id="@+id/dire_player0_hero_name"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:gravity="end"
+                      android:textColor="@color/text_additional_info"
+                      android:textSize="@dimen/text_additional_info"/>
+            <TextView android:id="@+id/dire_player1"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:gravity="end"/>
+            <TextView android:id="@+id/dire_player1_hero_name"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:gravity="end"
+                      android:textColor="@color/text_additional_info"
+                      android:textSize="@dimen/text_additional_info"/>
+            <TextView android:id="@+id/dire_player2"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:gravity="end"/>
+            <TextView android:id="@+id/dire_player2_hero_name"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:gravity="end"
+                      android:textColor="@color/text_additional_info"
+                      android:textSize="@dimen/text_additional_info"/>
+            <TextView android:id="@+id/dire_player3"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:gravity="end"/>
+            <TextView android:id="@+id/dire_player3_hero_name"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:gravity="end"
+                      android:textColor="@color/text_additional_info"
+                      android:textSize="@dimen/text_additional_info"/>
+            <TextView android:id="@+id/dire_player4"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:gravity="end"/>
+            <TextView android:id="@+id/dire_player4_hero_name"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:gravity="end"
+                      android:textColor="@color/text_additional_info"
+                      android:textSize="@dimen/text_additional_info"/>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+    <TextView android:id="@+id/server_id"
+              android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:layout_below="@+id/players"
+              android:layout_marginTop="10dp"
+              android:textColor="@color/text_additional_info"
+              android:textSize="@dimen/text_additional_info"/>
+    <TextView android:id="@+id/match_id"
+              android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:layout_below="@id/server_id"
+              android:textColor="@color/text_additional_info"
+              android:textSize="@dimen/text_additional_info"/>
+</RelativeLayout>

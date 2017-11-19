@@ -6,8 +6,8 @@ import github.com.rhacco.dota2androidapp.api.RealtimeStatsResponse
 import github.com.rhacco.dota2androidapp.sources.remote.Dota2OfficialAPIService
 import io.reactivex.Single
 
-object RealtimeStatsRemoteDataSource : RealtimeStatsDataSource {
-    override fun getRealtimeStats(serverSteamId: Long): Single<RealtimeStatsResponse.Result> =
+object RealtimeStatsRemoteDataSource {
+    fun getRealtimeStats(serverSteamId: Long): Single<RealtimeStatsResponse.Result> =
             Single.create(
                     { subscriber ->
                         Dota2OfficialAPIService.get()

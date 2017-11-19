@@ -5,15 +5,9 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-object RealtimeStatsRepository : RealtimeStatsDataSource {
-    override fun getRealtimeStats(serverSteamId: Long): Single<RealtimeStatsResponse.Result> =
-            RealtimeStatsLocalDataSource.getRealtimeStats(serverSteamId)
-                    .onErrorResumeNext {
-                        RealtimeStatsRemoteDataSource.getRealtimeStats(serverSteamId)
-                                .doOnSuccess {
-                                    RealtimeStatsLocalDataSource.saveRealtimeStats(serverSteamId, it)
-                                }
-                    }
+object RealtimeStatsRepository {
+    fun getRealtimeStats(serverSteamId: Long): Single<RealtimeStatsResponse.Result> =
+            RealtimeStatsRemoteDataSource.getRealtimeStats(serverSteamId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
 }

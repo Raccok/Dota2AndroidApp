@@ -24,7 +24,8 @@ object ProPlayersLocalDataSource {
                                                         .subscribe(
                                                                 { remoteResult ->
                                                                     mProPlayersDao.insertAll(remoteResult)
-                                                                    val cal = Calendar.getInstance()
+                                                                    val cal = Calendar.getInstance(
+                                                                            Locale.ENGLISH)
                                                                     cal.add(Calendar.DAY_OF_MONTH, 1)
                                                                     val validDate = cal.time.toString()
                                                                     SharedPreferencesHelper(
