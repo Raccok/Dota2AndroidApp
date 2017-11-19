@@ -31,9 +31,13 @@
     </string>
     <string name="info_live_matches">
         This screen shows an overview of top tournament and ranked matches currently being played,
-        similar to the \"Watch\" tab in the Dota 2 client.\n\n
+        similar to the \"Watch\" tab in the Dota 2 client. Just like matches in the Dota 2 spectator
+        client, the matches seen here are delayed by two minutes.\n\n
+        Tournament matches are always displayed at the top of the list and show the pro teams\'
+        names instead of \"Radiant\" and \"Dire\". Ranked matches are sorted by average MMR and
+        pro players are highlighted with a distinct color.\n\n
         Click on a match to show or hide additional information. Swipe left or right on a ranked
-        match to switch between pro players\' official name and current Steam name.\n\n
+        match to switch between pro players\' official names and current Steam names.\n\n
         Type \"watch_server &lt;Server ID&gt;\" into your Dota 2 console and press Enter to start
         spectating the match in your Dota 2 client.
     </string>
