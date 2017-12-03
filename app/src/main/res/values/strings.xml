@@ -4,9 +4,6 @@
     <string name="activity_main">Home</string>
     <string name="activity_live_matches">Live Matches</string>
 
-    <!-- A valid Steam Web API key. Get yours at https://steamcommunity.com/dev/apikey -->
-    <string name="api_key"></string>
-
     <string name="log_msg_debug">dota2androidapp.Debug</string>
 
     <string name="description_open_drawer">Open Menu</string>
@@ -43,14 +40,10 @@
     </string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
-    <string name="error_no_api_key">Need to provide a valid Steam Web API key in
-        res/values/strings.xml!
-    </string>
     <string name="error_permission_network_state">App needs permission to access the current network
         state!
     </string>
     <string name="error_permission_internet">App needs permission to connect to the internet!
     </string>
     <string name="error_no_internet">Network error. Please check your internet connection</string>
-    <string name="error_invalid_hero">\'%s\' is not a valid Dota 2 hero!</string>
 </resources>

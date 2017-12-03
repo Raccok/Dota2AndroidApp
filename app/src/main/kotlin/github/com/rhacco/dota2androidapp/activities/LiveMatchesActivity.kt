@@ -8,15 +8,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import github.com.rhacco.dota2androidapp.R
-import github.com.rhacco.dota2androidapp.api.TopLiveGamesResponse
 import github.com.rhacco.dota2androidapp.base.BaseLifecycleActivity
-import github.com.rhacco.dota2androidapp.entities.HeroEntity
-import github.com.rhacco.dota2androidapp.entities.ProPlayerEntity
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesAdapter
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesItemData
 import github.com.rhacco.dota2androidapp.viewmodel.MatchesViewModel
 import kotlinx.android.synthetic.main.activity_live_matches.*
-
 
 class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
     override val mViewModelClass = MatchesViewModel::class.java
@@ -42,40 +38,11 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
     }
 
     override fun observeLiveData() {
-        mViewModel.mLiveMatchesQuery.observe(this, Observer<List<TopLiveGamesResponse.Game>> {
-            it?.let { topLiveMatches ->
-                val matchesInListToUpdate: MutableMap<Long, LiveMatchesItemData> = mutableMapOf()
-                mAdapter.getItemsData().forEach { matchesInListToUpdate[it.mServerId] = it }
-                topLiveMatches.forEach {
-                    mViewModel.getLiveMatchesItemData(it.team_name_radiant, it.team_name_dire,
-                            it.average_mmr, it.server_steam_id)
-                    matchesInListToUpdate.remove(it.server_steam_id)
-                }
-                matchesInListToUpdate.values.forEach {
-                    mViewModel.getLiveMatchesItemData(it.mTeamRadiant, it.mTeamDire,
-                            it.mAverageMMR, it.mServerId)
-                    mViewModel.checkMatchFinished(it.mMatchId)
-                }
-            }
+        mViewModel.mLiveMatchesQuery.observe(this, Observer<List<LiveMatchesItemData>> {
+            it?.let { newLiveMatches -> mAdapter.update(newLiveMatches) }
         })
-        mViewModel.mLiveMatchesItemDataQuery.observe(this, Observer<LiveMatchesItemData> {
-            it?.let { newItemData ->
-                if (mAdapter.add(newItemData))
-                    live_matches_list.layoutManager.scrollToPosition(0)
-                else {
-                    mAdapter.updateRealtimeStats(newItemData)
-                    mViewModel.checkMatchFinished(newItemData.mMatchId)
-                }
-            }
-        })
-        mViewModel.mCheckProPlayersQuery.observe(this, Observer<Pair<Long, List<ProPlayerEntity>>> {
-            it?.let { (matchId, proPlayers) -> mAdapter.setOfficialNames(matchId, proPlayers) }
-        })
-        mViewModel.mHeroesQuery.observe(this, Observer<Pair<Long, List<HeroEntity>>> {
-            it?.let { (matchId, heroEntities) -> mAdapter.setHeroNames(matchId, heroEntities) }
-        })
-        mViewModel.mCheckMatchFinishedQuery.observe(this, Observer<Long> {
-            it?.let { matchId -> mAdapter.remove(matchId) }
+        mViewModel.mHeroNamesQuery.observe(this, Observer<Pair<Long, List<String>>> {
+            it?.let { (matchId, heroNames) -> mAdapter.setHeroNames(matchId, heroNames) }
         })
     }
 
