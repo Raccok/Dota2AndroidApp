@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Dota 2 Android App</string>
     <string name="activity_main">Home</string>
-    <string name="activity_live_matches">Live Matches</string>
+    <string name="activity_top_matches">Top Matches</string>
 
     <string name="log_msg_debug">dota2androidapp.Debug</string>
 
@@ -26,17 +26,17 @@
     <string name="saved_fav_hero">Saved your favorite hero \'%s\' to device storage</string>
     <string name="loaded_fav_hero">Loaded your favorite Dota 2 hero \'%s\' from device storage
     </string>
-    <string name="info_live_matches">
-        This screen shows an overview of top tournament and ranked matches currently being played,
-        similar to the \"Watch\" tab in the Dota 2 client. Just like matches in the Dota 2 spectator
-        client, the matches seen here are delayed by two minutes.\n\n
-        Tournament matches are always displayed at the top of the list and show the pro teams\'
-        names instead of \"Radiant\" and \"Dire\". Ranked matches are sorted by average MMR and
-        pro players are highlighted with a distinct color.\n\n
-        Click on a match to show or hide additional information. Swipe left or right on a ranked
-        match to switch between pro players\' official names and current Steam names.\n\n
-        Type \"watch_server &lt;Server ID&gt;\" into your Dota 2 console and press Enter to start
-        spectating the match in your Dota 2 client.
+    <string name="info_top_matches">
+        Overviews of top tournament and ranked matches currently being played and recently finished.
+        Live matches are delayed just like in the Dota 2 spectator client.\n\n
+        Tournament matches show the pro teams\' names instead of \"Radiant\" and \"Dire\". Live
+        ranked matches are sorted by average MMR and pro players are highlighted with a distinct
+        color. Recent matches are sorted by time finished (most recent at the top of the list).\n\n
+        Swipe left and right to switch between live and recent matches. Click once on a match to
+        show or hide additional information. Quickly click twice on a ranked match to switch between
+        pro players\' official names and current Steam names.\n\n
+        Type \"watch_server Server ID\" (without \"\") into your Dota 2 console and press Enter to
+        start spectating the chosen match in your Dota 2 client.
     </string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>

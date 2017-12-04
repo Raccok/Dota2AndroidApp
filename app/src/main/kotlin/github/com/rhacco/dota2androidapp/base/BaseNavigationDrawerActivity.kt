@@ -21,11 +21,11 @@ abstract class BaseNavigationDrawerActivity : AppCompatActivity() {
                 R.string.description_open_drawer, R.string.description_close_drawer)
         drawerLayout.addDrawerListener(mNavigationDrawerToggle)
 
-        activities_list.adapter = BaseNavigationDrawerAdapter(this)
+        list_activities.adapter = BaseNavigationDrawerAdapter(this)
         val layoutManager = LinearLayoutManager(this)
-        activities_list.layoutManager = layoutManager
-        activities_list.addItemDecoration(
-                DividerItemDecoration(activities_list.context, layoutManager.orientation))
+        list_activities.layoutManager = layoutManager
+        list_activities.addItemDecoration(
+                DividerItemDecoration(list_activities.context, layoutManager.orientation))
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

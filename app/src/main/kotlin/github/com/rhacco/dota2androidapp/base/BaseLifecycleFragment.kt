@@ -4,10 +4,10 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.ViewModelProviders
+import android.support.v4.app.Fragment
 
 @Suppress("LeakingThis")
-abstract class BaseLifecycleActivity<T : AndroidViewModel> :
-        BaseNavigationDrawerActivity(), LifecycleRegistryOwner {
+abstract class BaseLifecycleFragment<T : AndroidViewModel> : Fragment(), LifecycleRegistryOwner {
     abstract val mViewModelClass: Class<T>
     protected val mViewModel: T by lazy { ViewModelProviders.of(this).get(mViewModelClass) }
     private val mRegistry = LifecycleRegistry(this)

@@ -293,15 +293,10 @@
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
-    <TextView android:id="@+id/server_id"
+    <TextView android:id="@+id/server_or_match_id"
               android:layout_width="match_parent" android:layout_height="wrap_content"
               android:layout_below="@+id/players"
               android:layout_marginTop="10dp"
-              android:textColor="@color/text_additional_info"
-              android:textSize="@dimen/text_additional_info"/>
-    <TextView android:id="@+id/match_id"
-              android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:layout_below="@id/server_id"
               android:textColor="@color/text_additional_info"
               android:textSize="@dimen/text_additional_info"/>
 </RelativeLayout>
