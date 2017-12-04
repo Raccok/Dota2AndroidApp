@@ -10,12 +10,12 @@ import github.com.rhacco.dota2androidapp.lists.Hero
 import github.com.rhacco.dota2androidapp.lists.LiveMatchesItemData
 import github.com.rhacco.dota2androidapp.lists.Player
 import github.com.rhacco.dota2androidapp.sources.repos.CustomAPIRepository
+import github.com.rhacco.dota2androidapp.sources.repos.HeroesRepository
 import io.reactivex.disposables.CompositeDisposable
 
 class MatchesViewModel(application: Application) : AndroidViewModel(application) {
     private val mDisposables = CompositeDisposable()
     val mLiveMatchesQuery = MediatorLiveData<List<LiveMatchesItemData>>()
-    val mHeroNamesQuery = MediatorLiveData<Pair<Long, List<String>>>()
 
     override fun onCleared() = mDisposables.clear()
 
@@ -44,12 +44,10 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                 it.players.forEach {
                                     newItemData.mPlayers.add(Player(it.current_steam_name, it.official_name))
                                 }
-                                if (it.heroes != null) {
-                                    newItemData.mHeroesAssigned = true
-                                    it.heroes.forEach { newItemData.mHeroes.add(Hero(it)) }
-                                }
-                                if (newItemData.mHeroesAssigned)
-                                    getHeroes(newItemData.mMatchId, it.heroes!!)
+                                if (it.heroes != null)
+                                    HeroesRepository.getNamesByIds(it.heroes).forEach {
+                                        newItemData.mHeroes.add(Hero(it))
+                                    }
                                 newLiveMatches.add(newItemData)
                             }
                             mLiveMatchesQuery.value = newLiveMatches
@@ -60,15 +58,4 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                         }
                 ))
     }
-
-    private fun getHeroes(matchId: Long, heroIds: List<Int>) =
-            mDisposables.add(CustomAPIRepository.getHeroNamesByIds(heroIds)
-                    .subscribe(
-                            { result -> mHeroNamesQuery.value = Pair(matchId, result) },
-                            { error ->
-                                Log.d(App.instance.getString(R.string.log_msg_debug),
-                                        "Failed to fetch hero names: " + error)
-                            }
-                    ))
-    // TODO: also get hero portraits here
 }

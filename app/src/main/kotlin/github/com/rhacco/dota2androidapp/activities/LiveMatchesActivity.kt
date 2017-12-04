@@ -41,9 +41,6 @@ class LiveMatchesActivity : BaseLifecycleActivity<MatchesViewModel>() {
         mViewModel.mLiveMatchesQuery.observe(this, Observer<List<LiveMatchesItemData>> {
             it?.let { newLiveMatches -> mAdapter.update(newLiveMatches) }
         })
-        mViewModel.mHeroNamesQuery.observe(this, Observer<Pair<Long, List<String>>> {
-            it?.let { (matchId, heroNames) -> mAdapter.setHeroNames(matchId, heroNames) }
-        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

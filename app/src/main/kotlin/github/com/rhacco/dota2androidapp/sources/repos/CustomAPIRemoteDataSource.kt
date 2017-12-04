@@ -14,14 +14,4 @@ object CustomAPIRemoteDataSource {
                         )
                     }
             )
-
-    fun getHeroNames(): Single<Map<Int, String>> =
-            Single.create(
-                    { subscriber ->
-                        CustomAPIService.get()?.fetchHeroNames()?.subscribe(
-                                { result -> subscriber.onSuccess(result) },
-                                { error -> subscriber.onError(error) }
-                        )
-                    }
-            )
 }

@@ -24,29 +24,13 @@ class LiveMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<L
                 if (newLiveMatch.mMatchId == oldLiveMatch.mMatchId) {
                     newLiveMatch.mShowAdditionalInfo = oldLiveMatch.mShowAdditionalInfo
                     newLiveMatch.mShowOfficialNames = oldLiveMatch.mShowOfficialNames
-                    if (oldLiveMatch.mHeroesAssigned)
+                    if (oldLiveMatch.mHeroes.isNotEmpty())
                         newLiveMatch.mHeroes = oldLiveMatch.mHeroes
                 }
             }
         }
         mItemsData = newLiveMatches
         notifyItemRangeChanged(0, mItemsData.size)
-    }
-
-    fun setHeroNames(matchId: Long, heroNames: List<String>) {
-        var index = 0
-        while (index < mItemsData.size) {
-            if (mItemsData[index].mMatchId == matchId) {
-                if (mItemsData[index].mHeroes[9].name.isNotEmpty())  // hero names already set
-                    return
-                mItemsData[index].mHeroes.forEachIndexed { playerIndex, heroInMatch ->
-                    heroInMatch.name = heroNames[playerIndex]
-                }
-                notifyItemChanged(index)
-                return
-            }
-            ++index
-        }
     }
 
     fun switchShowAdditionalInfo(itemPosition: Int) {
@@ -86,7 +70,7 @@ class LiveMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<L
         bindPlayerName(holder.dire_player2, itemData.mPlayers[7], itemData)
         bindPlayerName(holder.dire_player3, itemData.mPlayers[8], itemData)
         bindPlayerName(holder.dire_player4, itemData.mPlayers[9], itemData)
-        if (itemData.mShowAdditionalInfo) {
+        if (itemData.mShowAdditionalInfo && itemData.mHeroes.size == 10) {
             bindHeroName(holder.radiant_player0_hero_name, itemData.mHeroes[0])
             bindHeroName(holder.radiant_player1_hero_name, itemData.mHeroes[1])
             bindHeroName(holder.radiant_player2_hero_name, itemData.mHeroes[2])
@@ -113,7 +97,7 @@ class LiveMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<L
     }
 
     private fun bindRealtimeStats(holder: LiveMatchesViewHolder, itemData: LiveMatchesItemData) {
-        if (itemData.mHeroesAssigned) {
+        if (itemData.mHeroes.isNotEmpty()) {
             val goldAdvantageThousands = Math.floor(Math.abs(itemData.mGoldAdvantage) / 1000.0).toInt()
             val goldAdvantageHundreds = Math.round(Math.abs(itemData.mGoldAdvantage) / 100.0) % 10
             holder.gold_advantage?.text = App.instance.getString(R.string.gold_advantage,
@@ -134,7 +118,7 @@ class LiveMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<L
         holder.score_radiant?.text = itemData.mRadiantScore.toString()
         var elapsedTimeMin = 0
         var elapsedTimeSec = 0
-        if (itemData.mHeroesAssigned && itemData.mElapsedTime > 0) {
+        if (itemData.mHeroes.isNotEmpty() && itemData.mElapsedTime > 0) {
             elapsedTimeMin = Math.floor(itemData.mElapsedTime / 60.0).toInt()
             elapsedTimeSec = itemData.mElapsedTime % 60
         }
@@ -166,14 +150,10 @@ class LiveMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<L
                 }
             }
 
-    private fun bindHeroName(textView: TextView?, hero: Hero) =
-            when {
-                hero.name.isEmpty() -> textView?.visibility = View.GONE
-                else -> {
-                    textView?.text = hero.name
-                    textView?.visibility = View.VISIBLE
-                }
-            }
+    private fun bindHeroName(textView: TextView?, hero: Hero) {
+        textView?.text = hero.name
+        textView?.visibility = View.VISIBLE
+    }
 
     private fun bindIds(holder: LiveMatchesViewHolder, itemData: LiveMatchesItemData) =
             when {
@@ -203,7 +183,6 @@ class LiveMatchesItemData {
     var mDireScore = 0
     var mPlayers: MutableList<Player> = mutableListOf()
     var mHeroes: MutableList<Hero> = mutableListOf()
-    var mHeroesAssigned = false
     var mServerId = 0L
     var mMatchId = 0L
     var mShowAdditionalInfo = false
@@ -211,7 +190,7 @@ class LiveMatchesItemData {
 }
 
 data class Player(var currentSteamName: String?, var officialName: String?)
-data class Hero(var id: Int, var name: String = "")  // TODO add hero portrait here later
+data class Hero(var name: String?)  // TODO add hero portrait here later
 
 class LiveMatchesViewHolder(context: Context, view: View?, private val mAdapter: LiveMatchesAdapter) :
         RecyclerView.ViewHolder(view), LayoutContainer, View.OnClickListener {

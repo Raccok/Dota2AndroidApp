@@ -10,9 +10,4 @@ object CustomAPIRepository {
             CustomAPIRemoteDataSource.getTopLiveMatches()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-
-    fun getHeroNamesByIds(ids: List<Int>): Single<List<String>> =
-            CustomAPILocalDataSource.getHeroNamesByIds(ids)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
 }

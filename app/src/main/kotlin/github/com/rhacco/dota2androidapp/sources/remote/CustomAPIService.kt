@@ -12,9 +12,6 @@ interface CustomAPIService {
     @GET("TopLiveMatches")
     fun fetchTopLiveMatches(): Observable<List<TopLiveMatchesResponse.Match>>
 
-    @GET("Heroes")
-    fun fetchHeroNames(): Observable<Map<Int, String>>
-
     companion object {
         private val sService by lazy { create() }
         private const val BASE_URL = "http://173.249.7.253:60742/"
