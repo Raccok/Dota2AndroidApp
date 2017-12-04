@@ -6,11 +6,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
-import github.com.rhacco.dota2androidapp.utilities.OnSwipeTouchListener
+import github.com.rhacco.dota2androidapp.utilities.OnSwipeListener
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_live_matches.*
 
@@ -24,8 +25,6 @@ class LiveMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<L
                 if (newLiveMatch.mMatchId == oldLiveMatch.mMatchId) {
                     newLiveMatch.mShowAdditionalInfo = oldLiveMatch.mShowAdditionalInfo
                     newLiveMatch.mShowOfficialNames = oldLiveMatch.mShowOfficialNames
-                    if (oldLiveMatch.mHeroes.isNotEmpty())
-                        newLiveMatch.mHeroes = oldLiveMatch.mHeroes
                 }
             }
         }
@@ -72,26 +71,46 @@ class LiveMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<L
         bindPlayerName(holder.dire_player4, itemData.mPlayers[9], itemData)
         if (itemData.mShowAdditionalInfo && itemData.mHeroes.size == 10) {
             bindHeroName(holder.radiant_player0_hero_name, itemData.mHeroes[0])
+            bindHeroPortrait(holder.radiant_player0_hero_portrait, itemData.mHeroes[0])
             bindHeroName(holder.radiant_player1_hero_name, itemData.mHeroes[1])
+            bindHeroPortrait(holder.radiant_player1_hero_portrait, itemData.mHeroes[1])
             bindHeroName(holder.radiant_player2_hero_name, itemData.mHeroes[2])
+            bindHeroPortrait(holder.radiant_player2_hero_portrait, itemData.mHeroes[2])
             bindHeroName(holder.radiant_player3_hero_name, itemData.mHeroes[3])
+            bindHeroPortrait(holder.radiant_player3_hero_portrait, itemData.mHeroes[3])
             bindHeroName(holder.radiant_player4_hero_name, itemData.mHeroes[4])
+            bindHeroPortrait(holder.radiant_player4_hero_portrait, itemData.mHeroes[4])
             bindHeroName(holder.dire_player0_hero_name, itemData.mHeroes[5])
+            bindHeroPortrait(holder.dire_player0_hero_portrait, itemData.mHeroes[5])
             bindHeroName(holder.dire_player1_hero_name, itemData.mHeroes[6])
+            bindHeroPortrait(holder.dire_player1_hero_portrait, itemData.mHeroes[6])
             bindHeroName(holder.dire_player2_hero_name, itemData.mHeroes[7])
+            bindHeroPortrait(holder.dire_player2_hero_portrait, itemData.mHeroes[7])
             bindHeroName(holder.dire_player3_hero_name, itemData.mHeroes[8])
+            bindHeroPortrait(holder.dire_player3_hero_portrait, itemData.mHeroes[8])
             bindHeroName(holder.dire_player4_hero_name, itemData.mHeroes[9])
+            bindHeroPortrait(holder.dire_player4_hero_portrait, itemData.mHeroes[9])
         } else {
             holder.radiant_player0_hero_name?.visibility = View.GONE
+            holder.radiant_player0_hero_portrait?.visibility = View.GONE
             holder.radiant_player1_hero_name?.visibility = View.GONE
+            holder.radiant_player1_hero_portrait?.visibility = View.GONE
             holder.radiant_player2_hero_name?.visibility = View.GONE
+            holder.radiant_player2_hero_portrait?.visibility = View.GONE
             holder.radiant_player3_hero_name?.visibility = View.GONE
+            holder.radiant_player3_hero_portrait?.visibility = View.GONE
             holder.radiant_player4_hero_name?.visibility = View.GONE
+            holder.radiant_player4_hero_portrait?.visibility = View.GONE
             holder.dire_player0_hero_name?.visibility = View.GONE
+            holder.dire_player0_hero_portrait?.visibility = View.GONE
             holder.dire_player1_hero_name?.visibility = View.GONE
+            holder.dire_player1_hero_portrait?.visibility = View.GONE
             holder.dire_player2_hero_name?.visibility = View.GONE
+            holder.dire_player2_hero_portrait?.visibility = View.GONE
             holder.dire_player3_hero_name?.visibility = View.GONE
+            holder.dire_player3_hero_portrait?.visibility = View.GONE
             holder.dire_player4_hero_name?.visibility = View.GONE
+            holder.dire_player4_hero_portrait?.visibility = View.GONE
         }
         bindIds(holder, itemData)
     }
@@ -155,6 +174,14 @@ class LiveMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<L
         textView?.visibility = View.VISIBLE
     }
 
+    private fun bindHeroPortrait(imageView: ImageView?, hero: Hero) {
+        val portraitName = "hero_portrait_vert_" + hero.id
+        val portraitId = App.instance.resources.getIdentifier(
+                portraitName, "drawable", App.instance.packageName)
+        imageView?.setImageDrawable(ContextCompat.getDrawable(App.instance.applicationContext, portraitId))
+        imageView?.visibility = View.VISIBLE
+    }
+
     private fun bindIds(holder: LiveMatchesViewHolder, itemData: LiveMatchesItemData) =
             when {
                 itemData.mShowAdditionalInfo -> {
@@ -190,7 +217,7 @@ class LiveMatchesItemData {
 }
 
 data class Player(var currentSteamName: String?, var officialName: String?)
-data class Hero(var name: String?)  // TODO add hero portrait here later
+data class Hero(var name: String?, var id: Int = 0)
 
 class LiveMatchesViewHolder(context: Context, view: View?, private val mAdapter: LiveMatchesAdapter) :
         RecyclerView.ViewHolder(view), LayoutContainer, View.OnClickListener {
@@ -198,7 +225,7 @@ class LiveMatchesViewHolder(context: Context, view: View?, private val mAdapter:
 
     init {
         itemView.setOnClickListener(this)
-        itemView.setOnTouchListener(object : OnSwipeTouchListener(context) {
+        itemView.setOnTouchListener(object : OnSwipeListener(context) {
             override fun onSwipeLeft() {
                 mAdapter.switchShowOfficialNames(adapterPosition)
             }

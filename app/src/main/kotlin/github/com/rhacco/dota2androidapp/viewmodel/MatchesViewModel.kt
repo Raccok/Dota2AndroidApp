@@ -45,9 +45,10 @@ class MatchesViewModel(application: Application) : AndroidViewModel(application)
                                     newItemData.mPlayers.add(Player(it.current_steam_name, it.official_name))
                                 }
                                 if (it.heroes != null)
-                                    HeroesRepository.getNamesByIds(it.heroes).forEach {
-                                        newItemData.mHeroes.add(Hero(it))
-                                    }
+                                    HeroesRepository.getNamesByIds(it.heroes)
+                                            .forEachIndexed { index, heroName ->
+                                                newItemData.mHeroes.add(Hero(heroName, it.heroes[index]))
+                                            }
                                 newLiveMatches.add(newItemData)
                             }
                             mLiveMatchesQuery.value = newLiveMatches

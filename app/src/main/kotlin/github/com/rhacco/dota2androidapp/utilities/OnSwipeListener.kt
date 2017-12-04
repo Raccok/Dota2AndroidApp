@@ -6,7 +6,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 
-open class OnSwipeTouchListener(private val mContext: Context) : View.OnTouchListener {
+open class OnSwipeListener(private val mContext: Context) : View.OnTouchListener {
     private val mGestureDetector: GestureDetector by lazy {
         GestureDetector(mContext, GestureListener(this))
     }
@@ -24,23 +24,23 @@ open class OnSwipeTouchListener(private val mContext: Context) : View.OnTouchLis
 
     open protected fun onSwipeBottom() {}
 
-    private class GestureListener(private val mCaller: OnSwipeTouchListener) :
+    private class GestureListener(private val mParent: OnSwipeListener) :
             GestureDetector.SimpleOnGestureListener() {
         override fun onFling(e1: MotionEvent, e2: MotionEvent, velX: Float, velY: Float): Boolean {
-            if (e1.x - e2.x > 5 && Math.abs(velX) > 5) {
-                mCaller.onSwipeLeft()
+            if (e1.x - e2.x > 1 && Math.abs(velX) > 1) {
+                mParent.onSwipeLeft()
                 return true
             }
-            if (e2.x - e1.x > 5 && Math.abs(velX) > 5) {
-                mCaller.onSwipeRight()
+            if (e2.x - e1.x > 1 && Math.abs(velX) > 1) {
+                mParent.onSwipeRight()
                 return true
             }
-            if (e1.y - e2.y > 5 && Math.abs(velY) > 5) {
-                mCaller.onSwipeTop()
+            if (e1.y - e2.y > 1 && Math.abs(velY) > 1) {
+                mParent.onSwipeTop()
                 return true
             }
-            if (e2.y - e1.y > 5 && Math.abs(velY) > 5) {
-                mCaller.onSwipeBottom()
+            if (e2.y - e1.y > 1 && Math.abs(velY) > 1) {
+                mParent.onSwipeBottom()
                 return true
             }
             return false
