@@ -27,7 +27,8 @@
     </RelativeLayout>
     <RelativeLayout android:id="@+id/header_teams"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_below="@id/header_realtime_stats">
+                    android:layout_below="@id/header_realtime_stats"
+                    android:layout_marginBottom="5dp">
         <TextView android:id="@+id/team_radiant"
                   android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:layout_alignParentLeft="true"
@@ -63,7 +64,7 @@
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_toEndOf="@+id/radiant_player0_hero_portrait"
                           android:layout_toRightOf="@+id/radiant_player0_hero_portrait"/>
-                <TextView android:id="@+id/radiant_player0_hero_name"
+                <TextView android:id="@+id/radiant_player0_score"
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_below="@+id/radiant_player0"
                           android:layout_toEndOf="@+id/radiant_player0_hero_portrait"
@@ -84,7 +85,7 @@
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_toEndOf="@+id/radiant_player1_hero_portrait"
                           android:layout_toRightOf="@+id/radiant_player1_hero_portrait"/>
-                <TextView android:id="@+id/radiant_player1_hero_name"
+                <TextView android:id="@+id/radiant_player1_score"
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_below="@+id/radiant_player1"
                           android:layout_toEndOf="@+id/radiant_player1_hero_portrait"
@@ -105,7 +106,7 @@
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_toEndOf="@+id/radiant_player2_hero_portrait"
                           android:layout_toRightOf="@+id/radiant_player2_hero_portrait"/>
-                <TextView android:id="@+id/radiant_player2_hero_name"
+                <TextView android:id="@+id/radiant_player2_score"
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_below="@+id/radiant_player2"
                           android:layout_toEndOf="@+id/radiant_player2_hero_portrait"
@@ -126,7 +127,7 @@
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_toEndOf="@+id/radiant_player3_hero_portrait"
                           android:layout_toRightOf="@+id/radiant_player3_hero_portrait"/>
-                <TextView android:id="@+id/radiant_player3_hero_name"
+                <TextView android:id="@+id/radiant_player3_score"
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_below="@+id/radiant_player3"
                           android:layout_toEndOf="@+id/radiant_player3_hero_portrait"
@@ -147,7 +148,7 @@
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_toEndOf="@+id/radiant_player4_hero_portrait"
                           android:layout_toRightOf="@+id/radiant_player4_hero_portrait"/>
-                <TextView android:id="@+id/radiant_player4_hero_name"
+                <TextView android:id="@+id/radiant_player4_score"
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_below="@+id/radiant_player4"
                           android:layout_toEndOf="@+id/radiant_player4_hero_portrait"
@@ -173,7 +174,7 @@
                           android:layout_toLeftOf="@+id/dire_player0_hero_portrait"
                           android:layout_toStartOf="@+id/dire_player0_hero_portrait"
                           android:gravity="end"/>
-                <TextView android:id="@+id/dire_player0_hero_name"
+                <TextView android:id="@+id/dire_player0_score"
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_below="@+id/dire_player0"
                           android:layout_toLeftOf="@+id/dire_player0_hero_portrait"
@@ -198,7 +199,7 @@
                           android:layout_toLeftOf="@+id/dire_player1_hero_portrait"
                           android:layout_toStartOf="@+id/dire_player1_hero_portrait"
                           android:gravity="end"/>
-                <TextView android:id="@+id/dire_player1_hero_name"
+                <TextView android:id="@+id/dire_player1_score"
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_below="@+id/dire_player1"
                           android:layout_toLeftOf="@+id/dire_player1_hero_portrait"
@@ -223,7 +224,7 @@
                           android:layout_toLeftOf="@+id/dire_player2_hero_portrait"
                           android:layout_toStartOf="@+id/dire_player2_hero_portrait"
                           android:gravity="end"/>
-                <TextView android:id="@+id/dire_player2_hero_name"
+                <TextView android:id="@+id/dire_player2_score"
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_below="@+id/dire_player2"
                           android:layout_toLeftOf="@+id/dire_player2_hero_portrait"
@@ -248,7 +249,7 @@
                           android:layout_toLeftOf="@+id/dire_player3_hero_portrait"
                           android:layout_toStartOf="@+id/dire_player3_hero_portrait"
                           android:gravity="end"/>
-                <TextView android:id="@+id/dire_player3_hero_name"
+                <TextView android:id="@+id/dire_player3_score"
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_below="@+id/dire_player3"
                           android:layout_toLeftOf="@+id/dire_player3_hero_portrait"
@@ -273,7 +274,7 @@
                           android:layout_toLeftOf="@+id/dire_player4_hero_portrait"
                           android:layout_toStartOf="@+id/dire_player4_hero_portrait"
                           android:gravity="end"/>
-                <TextView android:id="@+id/dire_player4_hero_name"
+                <TextView android:id="@+id/dire_player4_score"
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_below="@+id/dire_player4"
                           android:layout_toLeftOf="@+id/dire_player4_hero_portrait"
@@ -293,9 +294,23 @@
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
-    <TextView android:id="@+id/server_or_match_id"
-              android:layout_width="match_parent" android:layout_height="wrap_content"
+    <TextView android:id="@+id/spectators"
+              android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:layout_below="@+id/players"
+              android:layout_centerInParent="true"
+              android:layout_marginTop="10dp"
+              android:textColor="@color/text_additional_info"
+              android:textSize="@dimen/text_additional_info"/>
+    <TextView android:id="@+id/spectate_command"
+              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:layout_below="@+id/spectators"
+              android:layout_centerInParent="true"
+              android:textColor="@color/text_additional_info"
+              android:textSize="@dimen/text_additional_info"/>
+    <TextView android:id="@+id/post_match_info"
+              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:layout_below="@+id/players"
+              android:layout_centerInParent="true"
               android:layout_marginTop="10dp"
               android:textColor="@color/text_additional_info"
               android:textSize="@dimen/text_additional_info"/>

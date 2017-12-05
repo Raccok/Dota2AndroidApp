@@ -58,59 +58,50 @@ class TopMatchesAdapter(context: Context) : RecyclerView.Adapter<TopMatchesViewH
             holder.average_mmr?.visibility = View.VISIBLE
         }
         bindPlayerName(holder.radiant_player0, itemData.players[0], itemData)
+        bindPlayerScore(holder.radiant_player0_score, itemData.players[0].score, itemData)
         bindPlayerName(holder.radiant_player1, itemData.players[1], itemData)
+        bindPlayerScore(holder.radiant_player1_score, itemData.players[1].score, itemData)
         bindPlayerName(holder.radiant_player2, itemData.players[2], itemData)
+        bindPlayerScore(holder.radiant_player2_score, itemData.players[2].score, itemData)
         bindPlayerName(holder.radiant_player3, itemData.players[3], itemData)
+        bindPlayerScore(holder.radiant_player3_score, itemData.players[3].score, itemData)
         bindPlayerName(holder.radiant_player4, itemData.players[4], itemData)
+        bindPlayerScore(holder.radiant_player4_score, itemData.players[4].score, itemData)
         bindPlayerName(holder.dire_player0, itemData.players[5], itemData)
+        bindPlayerScore(holder.dire_player0_score, itemData.players[5].score, itemData)
         bindPlayerName(holder.dire_player1, itemData.players[6], itemData)
+        bindPlayerScore(holder.dire_player1_score, itemData.players[6].score, itemData)
         bindPlayerName(holder.dire_player2, itemData.players[7], itemData)
+        bindPlayerScore(holder.dire_player2_score, itemData.players[7].score, itemData)
         bindPlayerName(holder.dire_player3, itemData.players[8], itemData)
+        bindPlayerScore(holder.dire_player3_score, itemData.players[8].score, itemData)
         bindPlayerName(holder.dire_player4, itemData.players[9], itemData)
+        bindPlayerScore(holder.dire_player4_score, itemData.players[9].score, itemData)
         if (itemData.showAdditionalInfo && itemData.heroes.size == 10) {
-            bindHeroName(holder.radiant_player0_hero_name, itemData.heroes[0])
             bindHeroPortrait(holder.radiant_player0_hero_portrait, itemData.heroes[0])
-            bindHeroName(holder.radiant_player1_hero_name, itemData.heroes[1])
             bindHeroPortrait(holder.radiant_player1_hero_portrait, itemData.heroes[1])
-            bindHeroName(holder.radiant_player2_hero_name, itemData.heroes[2])
             bindHeroPortrait(holder.radiant_player2_hero_portrait, itemData.heroes[2])
-            bindHeroName(holder.radiant_player3_hero_name, itemData.heroes[3])
             bindHeroPortrait(holder.radiant_player3_hero_portrait, itemData.heroes[3])
-            bindHeroName(holder.radiant_player4_hero_name, itemData.heroes[4])
             bindHeroPortrait(holder.radiant_player4_hero_portrait, itemData.heroes[4])
-            bindHeroName(holder.dire_player0_hero_name, itemData.heroes[5])
             bindHeroPortrait(holder.dire_player0_hero_portrait, itemData.heroes[5])
-            bindHeroName(holder.dire_player1_hero_name, itemData.heroes[6])
             bindHeroPortrait(holder.dire_player1_hero_portrait, itemData.heroes[6])
-            bindHeroName(holder.dire_player2_hero_name, itemData.heroes[7])
             bindHeroPortrait(holder.dire_player2_hero_portrait, itemData.heroes[7])
-            bindHeroName(holder.dire_player3_hero_name, itemData.heroes[8])
             bindHeroPortrait(holder.dire_player3_hero_portrait, itemData.heroes[8])
-            bindHeroName(holder.dire_player4_hero_name, itemData.heroes[9])
             bindHeroPortrait(holder.dire_player4_hero_portrait, itemData.heroes[9])
         } else {
-            holder.radiant_player0_hero_name?.visibility = View.GONE
             holder.radiant_player0_hero_portrait?.visibility = View.GONE
-            holder.radiant_player1_hero_name?.visibility = View.GONE
             holder.radiant_player1_hero_portrait?.visibility = View.GONE
-            holder.radiant_player2_hero_name?.visibility = View.GONE
             holder.radiant_player2_hero_portrait?.visibility = View.GONE
-            holder.radiant_player3_hero_name?.visibility = View.GONE
             holder.radiant_player3_hero_portrait?.visibility = View.GONE
-            holder.radiant_player4_hero_name?.visibility = View.GONE
             holder.radiant_player4_hero_portrait?.visibility = View.GONE
-            holder.dire_player0_hero_name?.visibility = View.GONE
             holder.dire_player0_hero_portrait?.visibility = View.GONE
-            holder.dire_player1_hero_name?.visibility = View.GONE
             holder.dire_player1_hero_portrait?.visibility = View.GONE
-            holder.dire_player2_hero_name?.visibility = View.GONE
             holder.dire_player2_hero_portrait?.visibility = View.GONE
-            holder.dire_player3_hero_name?.visibility = View.GONE
             holder.dire_player3_hero_portrait?.visibility = View.GONE
-            holder.dire_player4_hero_name?.visibility = View.GONE
             holder.dire_player4_hero_portrait?.visibility = View.GONE
         }
-        bindServerOrMatchId(holder, itemData)
+        bindSpectateInfo(holder, itemData)
+        bindPostMatchInfo(holder, itemData)
     }
 
     private fun bindRealtimeStats(holder: TopMatchesViewHolder, itemData: TopMatchesItemData) {
@@ -167,46 +158,64 @@ class TopMatchesAdapter(context: Context) : RecyclerView.Adapter<TopMatchesViewH
                 }
             }
 
-    private fun bindHeroName(textView: TextView?, hero: Hero) {
-        textView?.text = hero.name
-        textView?.visibility = View.VISIBLE
-    }
+    private fun bindPlayerScore(textView: TextView?, score: String, itemData: TopMatchesItemData) =
+            when {
+                itemData.showAdditionalInfo -> {
+                    textView?.text = score
+                    textView?.visibility = View.VISIBLE
+                }
+                else -> {
+                    textView?.visibility = View.GONE
+                }
+            }
 
-    private fun bindHeroPortrait(imageView: ImageView?, hero: Hero) {
-        val file = "hero_portrait_vert_" + hero.id
+    private fun bindHeroPortrait(imageView: ImageView?, heroId: Int) {
+        val file = "hero_portrait_vert_" + heroId
         val id = App.instance.resources.getIdentifier(file, "drawable", App.instance.packageName)
         imageView?.setImageDrawable(ContextCompat.getDrawable(App.instance.applicationContext, id))
         imageView?.visibility = View.VISIBLE
     }
 
-    private fun bindServerOrMatchId(holder: TopMatchesViewHolder, itemData: TopMatchesItemData) =
+    private fun bindSpectateInfo(holder: TopMatchesViewHolder, itemData: TopMatchesItemData) =
             when {
-                itemData.showAdditionalInfo -> {
-                    if (itemData.serverId > 0)
-                        holder.server_or_match_id?.text = App.instance.getString(
-                                R.string.additional_info_server_id, itemData.serverId)
-                    else
-                        holder.server_or_match_id?.text = App.instance.getString(
-                                R.string.additional_info_match_id, itemData.matchId)
-                    holder.server_or_match_id?.visibility = View.VISIBLE
+                itemData.showAdditionalInfo && itemData.spectators >= 0 -> {
+                    holder.spectators?.text =
+                            App.instance.getString(R.string.spectators, itemData.spectators)
+                    holder.spectators?.visibility = View.VISIBLE
+                    holder.spectate_command?.text = App.instance.getString(
+                            R.string.spectate_command, itemData.serverId)
+                    holder.spectate_command?.visibility = View.VISIBLE
                 }
                 else -> {
-                    holder.server_or_match_id?.visibility = View.GONE
+                    holder.spectators?.visibility = View.GONE
+                    holder.spectate_command?.visibility = View.GONE
+                }
+            }
+
+    private fun bindPostMatchInfo(holder: TopMatchesViewHolder, itemData: TopMatchesItemData) =
+            when {
+                itemData.showAdditionalInfo && itemData.spectators < 0 -> {
+                    holder.post_match_info?.text = App.instance.getString(
+                            R.string.post_match_info_match_id, itemData.matchId)
+                    holder.post_match_info?.visibility = View.VISIBLE
+                }
+                else -> {
+                    holder.post_match_info?.visibility = View.GONE
                 }
             }
 }
 
 data class TopMatchesItemData(
         var serverId: Long = 0L, var matchId: Long = 0L, var isTournamentMatch: Boolean = false,
+        var spectators: Int = -1,
         var teamRadiant: String = "", var teamDire: String = "", var averageMMR: Int = 0,
         var goldAdvantage: Int = 0, var elapsedTime: Int = -1,
         var radiantScore: Int = 0, var direScore: Int = 0,
         var players: MutableList<Player> = mutableListOf(),
-        var heroes: MutableList<Hero> = mutableListOf(),
+        var heroes: List<Int> = mutableListOf(),
         var showAdditionalInfo: Boolean = false, var showOfficialNames: Boolean = true)
 
-data class Player(var currentSteamName: String?, var officialName: String?)
-data class Hero(var name: String?, var id: Int = 0)
+data class Player(var currentSteamName: String?, var officialName: String?, var score: String)
 
 class TopMatchesViewHolder(override val containerView: View?) :
         RecyclerView.ViewHolder(containerView), LayoutContainer

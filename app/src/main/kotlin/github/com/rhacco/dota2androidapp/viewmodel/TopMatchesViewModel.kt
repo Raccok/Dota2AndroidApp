@@ -7,11 +7,9 @@ import android.util.Log
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.api.TopMatchesResponse
-import github.com.rhacco.dota2androidapp.lists.Hero
 import github.com.rhacco.dota2androidapp.lists.Player
 import github.com.rhacco.dota2androidapp.lists.TopMatchesItemData
 import github.com.rhacco.dota2androidapp.sources.repos.CustomAPIRepository
-import github.com.rhacco.dota2androidapp.sources.repos.HeroesRepository
 import io.reactivex.disposables.CompositeDisposable
 
 class TopMatchesViewModel(application: Application) : AndroidViewModel(application) {
@@ -50,6 +48,8 @@ class TopMatchesViewModel(application: Application) : AndroidViewModel(applicati
                 newItemData.serverId = it.server_id
             newItemData.matchId = it.match_id
             newItemData.isTournamentMatch = it.is_tournament_match
+            if (it.spectators != null)
+                newItemData.spectators = it.spectators
             if (it.is_tournament_match) {
                 newItemData.teamRadiant = it.team_radiant!!
                 newItemData.teamDire = it.team_dire!!
@@ -72,13 +72,10 @@ class TopMatchesViewModel(application: Application) : AndroidViewModel(applicati
                 newItemData.elapsedTime = it.duration!!
             newItemData.direScore = it.dire_score
             it.players.forEach {
-                newItemData.players.add(Player(it.current_steam_name, it.official_name))
+                newItemData.players.add(Player(it.current_steam_name, it.official_name, it.score_kda))
             }
             if (it.heroes != null)
-                HeroesRepository.getNamesByIds(it.heroes)
-                        .forEachIndexed { index, heroName ->
-                            newItemData.heroes.add(Hero(heroName, it.heroes[index]))
-                        }
+                newItemData.heroes = it.heroes
             listItemsData.add(newItemData)
         }
         return listItemsData
