@@ -307,11 +307,26 @@
               android:layout_centerInParent="true"
               android:textColor="@color/text_additional_info"
               android:textSize="@dimen/text_additional_info"/>
-    <TextView android:id="@+id/post_match_info"
-              android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:layout_below="@+id/players"
-              android:layout_centerInParent="true"
-              android:layout_marginTop="10dp"
-              android:textColor="@color/text_additional_info"
-              android:textSize="@dimen/text_additional_info"/>
+    <RelativeLayout android:id="@+id/post_match_info"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_below="@+id/players"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp">
+        <ImageView android:id="@+id/opendota_link"
+                   android:layout_width="wrap_content"
+                   android:layout_height="@dimen/opendota_dotabuff_logo_height"
+                   android:adjustViewBounds="true"
+                   android:padding="@dimen/opendota_dotabuff_logo_padding"
+                   android:src="@drawable/opendota_logo"
+                   tools:ignore="ContentDescription"/>
+        <ImageView android:id="@+id/dotabuff_link"
+                   android:layout_width="wrap_content"
+                   android:layout_height="@dimen/opendota_dotabuff_logo_height"
+                   android:layout_toEndOf="@+id/opendota_link"
+                   android:layout_toRightOf="@+id/opendota_link"
+                   android:adjustViewBounds="true"
+                   android:padding="@dimen/opendota_dotabuff_logo_padding"
+                   android:src="@drawable/dotabuff_logo"
+                   tools:ignore="ContentDescription"/>
+    </RelativeLayout>
 </RelativeLayout>

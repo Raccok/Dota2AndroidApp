@@ -5,4 +5,6 @@
     <dimen name="text_additional_info">13sp</dimen>
     <dimen name="hero_portrait_vert_height">40dp</dimen>
     <dimen name="hero_portrait_vert_padding">2dp</dimen>
+    <dimen name="opendota_dotabuff_logo_height">35dp</dimen>
+    <dimen name="opendota_dotabuff_logo_padding">5dp</dimen>
 </resources>

@@ -1,6 +1,8 @@
 package github.com.rhacco.dota2androidapp.lists
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -14,8 +16,8 @@ import github.com.rhacco.dota2androidapp.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_top_matches.*
 
-class TopMatchesAdapter(context: Context) : RecyclerView.Adapter<TopMatchesViewHolder>() {
-    private val mInflater: LayoutInflater = LayoutInflater.from(context)
+class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<TopMatchesViewHolder>() {
+    private val mInflater: LayoutInflater = LayoutInflater.from(mContext)
     private var mItemsData: List<TopMatchesItemData> = listOf()
 
     fun update(newTopMatches: List<TopMatchesItemData>) {
@@ -195,14 +197,24 @@ class TopMatchesAdapter(context: Context) : RecyclerView.Adapter<TopMatchesViewH
     private fun bindPostMatchInfo(holder: TopMatchesViewHolder, itemData: TopMatchesItemData) =
             when {
                 itemData.showAdditionalInfo && itemData.spectators < 0 -> {
-                    holder.post_match_info?.text = App.instance.getString(
-                            R.string.post_match_info_match_id, itemData.matchId)
                     holder.post_match_info?.visibility = View.VISIBLE
+                    val odUrl = "https://www.opendota.com/matches/" + itemData.matchId
+                    val dbUrl = "https://www.dotabuff.com/matches/" + itemData.matchId
+                    holder.opendota_link.setOnClickListener(object :
+                            CustomOnClickListener(odUrl, mContext) {})
+                    holder.dotabuff_link.setOnClickListener(object :
+                            CustomOnClickListener(dbUrl, mContext) {})
                 }
                 else -> {
                     holder.post_match_info?.visibility = View.GONE
                 }
             }
+
+    private open class CustomOnClickListener(private val mUrl: String, private val mContext: Context) :
+            View.OnClickListener {
+        override fun onClick(view: View?) =
+                mContext.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(mUrl)))
+    }
 }
 
 data class TopMatchesItemData(
