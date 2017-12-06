@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent" android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp" android:paddingTop="10dp">
     <RelativeLayout android:id="@+id/header_realtime_stats"
                     android:layout_width="match_parent" android:layout_height="wrap_content">
         <TextView android:id="@+id/gold_advantage"
@@ -73,10 +75,10 @@
                           android:textSize="@dimen/text_additional_info"/>
                 <ImageView android:id="@+id/radiant_player0_hero_portrait"
                            android:layout_width="wrap_content"
-                           android:layout_height="@dimen/hero_portrait_vert_height"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
                            android:layout_centerVertical="true"
                            android:adjustViewBounds="true"
-                           android:padding="@dimen/hero_portrait_vert_padding"
+                           android:padding="@dimen/padding_hero_portrait_vert"
                            tools:ignore="ContentDescription"/>
             </RelativeLayout>
             <RelativeLayout android:layout_width="match_parent"
@@ -94,10 +96,10 @@
                           android:textSize="@dimen/text_additional_info"/>
                 <ImageView android:id="@+id/radiant_player1_hero_portrait"
                            android:layout_width="wrap_content"
-                           android:layout_height="@dimen/hero_portrait_vert_height"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
                            android:layout_centerVertical="true"
                            android:adjustViewBounds="true"
-                           android:padding="@dimen/hero_portrait_vert_padding"
+                           android:padding="@dimen/padding_hero_portrait_vert"
                            tools:ignore="ContentDescription"/>
             </RelativeLayout>
             <RelativeLayout android:layout_width="match_parent"
@@ -115,10 +117,10 @@
                           android:textSize="@dimen/text_additional_info"/>
                 <ImageView android:id="@+id/radiant_player2_hero_portrait"
                            android:layout_width="wrap_content"
-                           android:layout_height="@dimen/hero_portrait_vert_height"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
                            android:layout_centerVertical="true"
                            android:adjustViewBounds="true"
-                           android:padding="@dimen/hero_portrait_vert_padding"
+                           android:padding="@dimen/padding_hero_portrait_vert"
                            tools:ignore="ContentDescription"/>
             </RelativeLayout>
             <RelativeLayout android:layout_width="match_parent"
@@ -136,10 +138,10 @@
                           android:textSize="@dimen/text_additional_info"/>
                 <ImageView android:id="@+id/radiant_player3_hero_portrait"
                            android:layout_width="wrap_content"
-                           android:layout_height="@dimen/hero_portrait_vert_height"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
                            android:layout_centerVertical="true"
                            android:adjustViewBounds="true"
-                           android:padding="@dimen/hero_portrait_vert_padding"
+                           android:padding="@dimen/padding_hero_portrait_vert"
                            tools:ignore="ContentDescription"/>
             </RelativeLayout>
             <RelativeLayout android:layout_width="match_parent"
@@ -157,10 +159,10 @@
                           android:textSize="@dimen/text_additional_info"/>
                 <ImageView android:id="@+id/radiant_player4_hero_portrait"
                            android:layout_width="wrap_content"
-                           android:layout_height="@dimen/hero_portrait_vert_height"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
                            android:layout_centerVertical="true"
                            android:adjustViewBounds="true"
-                           android:padding="@dimen/hero_portrait_vert_padding"
+                           android:padding="@dimen/padding_hero_portrait_vert"
                            tools:ignore="ContentDescription"/>
             </RelativeLayout>
         </LinearLayout>
@@ -185,12 +187,12 @@
                           tools:ignore="RtlHardcoded"/>
                 <ImageView android:id="@+id/dire_player0_hero_portrait"
                            android:layout_width="wrap_content"
-                           android:layout_height="@dimen/hero_portrait_vert_height"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
                            android:layout_alignParentEnd="true"
                            android:layout_alignParentRight="true"
                            android:layout_centerVertical="true"
                            android:adjustViewBounds="true"
-                           android:padding="@dimen/hero_portrait_vert_padding"
+                           android:padding="@dimen/padding_hero_portrait_vert"
                            tools:ignore="ContentDescription"/>
             </RelativeLayout>
             <RelativeLayout android:layout_width="match_parent"
@@ -211,12 +213,12 @@
                           tools:ignore="RtlHardcoded"/>
                 <ImageView android:id="@+id/dire_player1_hero_portrait"
                            android:layout_width="wrap_content"
-                           android:layout_height="@dimen/hero_portrait_vert_height"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
                            android:layout_alignParentEnd="true"
                            android:layout_alignParentRight="true"
                            android:layout_centerVertical="true"
                            android:adjustViewBounds="true"
-                           android:padding="@dimen/hero_portrait_vert_padding"
+                           android:padding="@dimen/padding_hero_portrait_vert"
                            tools:ignore="ContentDescription"/>
             </RelativeLayout>
             <RelativeLayout android:layout_width="match_parent"
@@ -237,12 +239,12 @@
                           tools:ignore="RtlHardcoded"/>
                 <ImageView android:id="@+id/dire_player2_hero_portrait"
                            android:layout_width="wrap_content"
-                           android:layout_height="@dimen/hero_portrait_vert_height"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
                            android:layout_alignParentEnd="true"
                            android:layout_alignParentRight="true"
                            android:layout_centerVertical="true"
                            android:adjustViewBounds="true"
-                           android:padding="@dimen/hero_portrait_vert_padding"
+                           android:padding="@dimen/padding_hero_portrait_vert"
                            tools:ignore="ContentDescription"/>
             </RelativeLayout>
             <RelativeLayout android:layout_width="match_parent"
@@ -263,12 +265,12 @@
                           tools:ignore="RtlHardcoded"/>
                 <ImageView android:id="@+id/dire_player3_hero_portrait"
                            android:layout_width="wrap_content"
-                           android:layout_height="@dimen/hero_portrait_vert_height"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
                            android:layout_alignParentEnd="true"
                            android:layout_alignParentRight="true"
                            android:layout_centerVertical="true"
                            android:adjustViewBounds="true"
-                           android:padding="@dimen/hero_portrait_vert_padding"
+                           android:padding="@dimen/padding_hero_portrait_vert"
                            tools:ignore="ContentDescription"/>
             </RelativeLayout>
             <RelativeLayout android:layout_width="match_parent"
@@ -289,12 +291,12 @@
                           tools:ignore="RtlHardcoded"/>
                 <ImageView android:id="@+id/dire_player4_hero_portrait"
                            android:layout_width="wrap_content"
-                           android:layout_height="@dimen/hero_portrait_vert_height"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
                            android:layout_alignParentEnd="true"
                            android:layout_alignParentRight="true"
                            android:layout_centerVertical="true"
                            android:adjustViewBounds="true"
-                           android:padding="@dimen/hero_portrait_vert_padding"
+                           android:padding="@dimen/padding_hero_portrait_vert"
                            tools:ignore="ContentDescription"/>
             </RelativeLayout>
         </LinearLayout>
@@ -319,18 +321,18 @@
                     android:layout_marginTop="10dp">
         <ImageView android:id="@+id/icon_opendota"
                    android:layout_width="wrap_content"
-                   android:layout_height="@dimen/opendota_dotabuff_logo_height"
+                   android:layout_height="@dimen/height_opendota_dotabuff_logo"
                    android:adjustViewBounds="true"
-                   android:padding="@dimen/opendota_dotabuff_logo_padding"
+                   android:padding="@dimen/padding_opendota_dotabuff_logo"
                    android:src="@drawable/opendota_logo"
                    tools:ignore="ContentDescription"/>
         <ImageView android:id="@+id/icon_dotabuff"
                    android:layout_width="wrap_content"
-                   android:layout_height="@dimen/opendota_dotabuff_logo_height"
+                   android:layout_height="@dimen/height_opendota_dotabuff_logo"
                    android:layout_toEndOf="@+id/icon_opendota"
                    android:layout_toRightOf="@+id/icon_opendota"
                    android:adjustViewBounds="true"
-                   android:padding="@dimen/opendota_dotabuff_logo_padding"
+                   android:padding="@dimen/padding_opendota_dotabuff_logo"
                    android:src="@drawable/dotabuff_logo"
                    tools:ignore="ContentDescription"/>
     </RelativeLayout>

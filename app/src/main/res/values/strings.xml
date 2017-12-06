@@ -36,9 +36,10 @@
         recent matches. Click once on a match to show or hide additional information. Press and hold
         on a ranked match to switch between pro players\' official names and current Steam
         names.\n\n
-        Type the command below a live match into your Dota 2 console and press Enter to start
-        spectating the chosen match in your Dota 2 client. Click on the OpenDota or Dotabuff icon
-        below a recent match to view their specific match details in your browser.
+        To spectate a live match, find it in the \"Watch\" tab in your Dota 2 client. Alternatively,
+        type the command below a live match into your Dota 2 console and press Enter.\n\n
+        Click on the OpenDota or Dotabuff icon below a recent match to view their specific match
+        details in your browser.
     </string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>

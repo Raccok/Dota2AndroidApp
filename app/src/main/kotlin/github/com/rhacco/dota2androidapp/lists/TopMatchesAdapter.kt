@@ -21,8 +21,8 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
     private var mItemsData: List<TopMatchesItemData> = listOf()
 
     fun update(newTopMatches: List<TopMatchesItemData>) {
-        mItemsData.forEach { oldTopMatch ->
-            newTopMatches.forEach { newTopMatch ->
+        newTopMatches.forEach { newTopMatch ->
+            mItemsData.forEach { oldTopMatch ->
                 if (newTopMatch.matchId == oldTopMatch.matchId) {
                     newTopMatch.showAdditionalInfo = oldTopMatch.showAdditionalInfo
                     newTopMatch.showOfficialNames = oldTopMatch.showOfficialNames
@@ -30,7 +30,7 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
             }
         }
         mItemsData = newTopMatches
-        notifyItemRangeChanged(0, mItemsData.size)
+        notifyDataSetChanged()
     }
 
     fun switchShowAdditionalInfo(itemPosition: Int) {
