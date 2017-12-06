@@ -43,10 +43,12 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
         notifyItemChanged(itemPosition)
     }
 
+    fun getMatchId(itemPosition: Int) = mItemsData[itemPosition].matchId
+
     override fun getItemCount(): Int = mItemsData.size
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TopMatchesViewHolder =
-            TopMatchesViewHolder(mInflater.inflate(R.layout.item_top_matches, parent, false))
+            TopMatchesViewHolder(mInflater.inflate(R.layout.item_top_matches, parent, false), this, mContext)
 
     override fun onBindViewHolder(holder: TopMatchesViewHolder, position: Int) {
         val itemData = mItemsData[position]
@@ -79,29 +81,16 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
         bindPlayerScore(holder.dire_player3_score, itemData.players[8].score, itemData)
         bindPlayerName(holder.dire_player4, itemData.players[9], itemData)
         bindPlayerScore(holder.dire_player4_score, itemData.players[9].score, itemData)
-        if (itemData.showAdditionalInfo && itemData.heroes.size == 10) {
-            bindHeroPortrait(holder.radiant_player0_hero_portrait, itemData.heroes[0])
-            bindHeroPortrait(holder.radiant_player1_hero_portrait, itemData.heroes[1])
-            bindHeroPortrait(holder.radiant_player2_hero_portrait, itemData.heroes[2])
-            bindHeroPortrait(holder.radiant_player3_hero_portrait, itemData.heroes[3])
-            bindHeroPortrait(holder.radiant_player4_hero_portrait, itemData.heroes[4])
-            bindHeroPortrait(holder.dire_player0_hero_portrait, itemData.heroes[5])
-            bindHeroPortrait(holder.dire_player1_hero_portrait, itemData.heroes[6])
-            bindHeroPortrait(holder.dire_player2_hero_portrait, itemData.heroes[7])
-            bindHeroPortrait(holder.dire_player3_hero_portrait, itemData.heroes[8])
-            bindHeroPortrait(holder.dire_player4_hero_portrait, itemData.heroes[9])
-        } else {
-            holder.radiant_player0_hero_portrait?.visibility = View.GONE
-            holder.radiant_player1_hero_portrait?.visibility = View.GONE
-            holder.radiant_player2_hero_portrait?.visibility = View.GONE
-            holder.radiant_player3_hero_portrait?.visibility = View.GONE
-            holder.radiant_player4_hero_portrait?.visibility = View.GONE
-            holder.dire_player0_hero_portrait?.visibility = View.GONE
-            holder.dire_player1_hero_portrait?.visibility = View.GONE
-            holder.dire_player2_hero_portrait?.visibility = View.GONE
-            holder.dire_player3_hero_portrait?.visibility = View.GONE
-            holder.dire_player4_hero_portrait?.visibility = View.GONE
-        }
+        bindHeroPortrait(holder.radiant_player0_hero_portrait, itemData, 0)
+        bindHeroPortrait(holder.radiant_player1_hero_portrait, itemData, 1)
+        bindHeroPortrait(holder.radiant_player2_hero_portrait, itemData, 2)
+        bindHeroPortrait(holder.radiant_player3_hero_portrait, itemData, 3)
+        bindHeroPortrait(holder.radiant_player4_hero_portrait, itemData, 4)
+        bindHeroPortrait(holder.dire_player0_hero_portrait, itemData, 5)
+        bindHeroPortrait(holder.dire_player1_hero_portrait, itemData, 6)
+        bindHeroPortrait(holder.dire_player2_hero_portrait, itemData, 7)
+        bindHeroPortrait(holder.dire_player3_hero_portrait, itemData, 8)
+        bindHeroPortrait(holder.dire_player4_hero_portrait, itemData, 9)
         bindSpectateInfo(holder, itemData)
         bindPostMatchInfo(holder, itemData)
     }
@@ -141,80 +130,62 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
         holder.score_dire?.text = itemData.direScore.toString()
     }
 
-    private fun bindPlayerName(textView: TextView?, player: Player, itemData: TopMatchesItemData) =
-            when {
-                player.officialName != null &&
-                        (itemData.isTournamentMatch || itemData.showOfficialNames) -> {
-                    textView?.text = player.officialName
-                    if (itemData.isTournamentMatch)
-                        textView?.setTextColor(ContextCompat.getColor(
-                                App.instance.applicationContext, R.color.text_general))
-                    else
-                        textView?.setTextColor(ContextCompat.getColor(
-                                App.instance.applicationContext, R.color.text_pro_player))
-                }
-                else -> {
-                    textView?.text = player.currentSteamName
-                    textView?.setTextColor(ContextCompat.getColor(
-                            App.instance.applicationContext, R.color.text_general))
-                }
-            }
-
-    private fun bindPlayerScore(textView: TextView?, score: String, itemData: TopMatchesItemData) =
-            when {
-                itemData.showAdditionalInfo -> {
-                    textView?.text = score
-                    textView?.visibility = View.VISIBLE
-                }
-                else -> {
-                    textView?.visibility = View.GONE
-                }
-            }
-
-    private fun bindHeroPortrait(imageView: ImageView?, heroId: Int) {
-        val file = "hero_portrait_vert_" + heroId
-        val id = App.instance.resources.getIdentifier(file, "drawable", App.instance.packageName)
-        imageView?.setImageDrawable(ContextCompat.getDrawable(App.instance.applicationContext, id))
-        imageView?.visibility = View.VISIBLE
+    private fun bindPlayerName(textView: TextView?, player: Player, itemData: TopMatchesItemData) {
+        if (player.officialName != null &&
+                (itemData.isTournamentMatch || itemData.showOfficialNames)) {
+            textView?.text = player.officialName
+            if (itemData.isTournamentMatch)
+                textView?.setTextColor(ContextCompat.getColor(
+                        App.instance.applicationContext, R.color.text_general))
+            else
+                textView?.setTextColor(ContextCompat.getColor(
+                        App.instance.applicationContext, R.color.text_pro_player))
+        } else {
+            textView?.text = player.currentSteamName
+            textView?.setTextColor(ContextCompat.getColor(
+                    App.instance.applicationContext, R.color.text_general))
+        }
     }
 
-    private fun bindSpectateInfo(holder: TopMatchesViewHolder, itemData: TopMatchesItemData) =
-            when {
-                itemData.showAdditionalInfo && itemData.spectators >= 0 -> {
-                    holder.spectators?.text =
-                            App.instance.getString(R.string.spectators, itemData.spectators)
-                    holder.spectators?.visibility = View.VISIBLE
-                    holder.spectate_command?.text = App.instance.getString(
-                            R.string.spectate_command, itemData.serverId)
-                    holder.spectate_command?.visibility = View.VISIBLE
-                }
-                else -> {
-                    holder.spectators?.visibility = View.GONE
-                    holder.spectate_command?.visibility = View.GONE
-                }
-            }
-
-    private fun bindPostMatchInfo(holder: TopMatchesViewHolder, itemData: TopMatchesItemData) =
-            when {
-                itemData.showAdditionalInfo && itemData.spectators < 0 -> {
-                    holder.post_match_info?.visibility = View.VISIBLE
-                    val odUrl = "https://www.opendota.com/matches/" + itemData.matchId
-                    val dbUrl = "https://www.dotabuff.com/matches/" + itemData.matchId
-                    holder.opendota_link.setOnClickListener(object :
-                            CustomOnClickListener(odUrl, mContext) {})
-                    holder.dotabuff_link.setOnClickListener(object :
-                            CustomOnClickListener(dbUrl, mContext) {})
-                }
-                else -> {
-                    holder.post_match_info?.visibility = View.GONE
-                }
-            }
-
-    private open class CustomOnClickListener(private val mUrl: String, private val mContext: Context) :
-            View.OnClickListener {
-        override fun onClick(view: View?) =
-                mContext.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(mUrl)))
+    private fun bindPlayerScore(textView: TextView?, score: String, itemData: TopMatchesItemData) {
+        if (itemData.showAdditionalInfo) {
+            textView?.text = score
+            textView?.visibility = View.VISIBLE
+        } else
+            textView?.visibility = View.GONE
     }
+
+    private fun bindHeroPortrait(imageView: ImageView?, itemData: TopMatchesItemData, playerIndex: Int) {
+        if (itemData.showAdditionalInfo && itemData.heroes.size == 10) {
+            val file = "hero_portrait_vert_" + itemData.heroes[playerIndex]
+            val id = App.instance.resources.getIdentifier(file, "drawable", App.instance.packageName)
+            imageView?.setImageDrawable(ContextCompat.getDrawable(App.instance.applicationContext, id))
+            imageView?.visibility = View.VISIBLE
+        } else
+            imageView?.visibility = View.GONE
+    }
+
+    private fun bindSpectateInfo(holder: TopMatchesViewHolder, itemData: TopMatchesItemData) {
+        if (itemData.showAdditionalInfo && itemData.spectators >= 0) {
+            holder.spectators?.text =
+                    App.instance.getString(R.string.spectators, itemData.spectators)
+            holder.spectators?.visibility = View.VISIBLE
+            holder.spectate_command?.text = App.instance.getString(
+                    R.string.spectate_command, itemData.serverId)
+            holder.spectate_command?.visibility = View.VISIBLE
+        } else {
+            holder.spectators?.visibility = View.GONE
+            holder.spectate_command?.visibility = View.GONE
+        }
+    }
+
+    private fun bindPostMatchInfo(holder: TopMatchesViewHolder, itemData: TopMatchesItemData) {
+        if (itemData.showAdditionalInfo && itemData.spectators < 0)
+            holder.post_match_info?.visibility = View.VISIBLE
+        else
+            holder.post_match_info?.visibility = View.GONE
+    }
+
 }
 
 data class TopMatchesItemData(
@@ -229,5 +200,20 @@ data class TopMatchesItemData(
 
 data class Player(var currentSteamName: String?, var officialName: String?, var score: String)
 
-class TopMatchesViewHolder(override val containerView: View?) :
-        RecyclerView.ViewHolder(containerView), LayoutContainer
+class TopMatchesViewHolder(
+        override val containerView: View?,
+        private val mAdapter: TopMatchesAdapter, private val mContext: Context) :
+        RecyclerView.ViewHolder(containerView), LayoutContainer {
+    init {
+        itemView.setOnClickListener { mAdapter.switchShowAdditionalInfo(adapterPosition) }
+        itemView.setOnLongClickListener { mAdapter.switchShowOfficialNames(adapterPosition); true }
+        icon_opendota.setOnClickListener {
+            mContext.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(
+                    "https://www.opendota.com/matches/" + mAdapter.getMatchId(adapterPosition))))
+        }
+        icon_dotabuff.setOnClickListener {
+            mContext.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(
+                    "https://www.dotabuff.com/matches/" + mAdapter.getMatchId(adapterPosition))))
+        }
+    }
+}

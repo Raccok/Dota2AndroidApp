@@ -61,11 +61,11 @@
             <RelativeLayout android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                 <TextView android:id="@+id/radiant_player0"
-                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_toEndOf="@+id/radiant_player0_hero_portrait"
                           android:layout_toRightOf="@+id/radiant_player0_hero_portrait"/>
                 <TextView android:id="@+id/radiant_player0_score"
-                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@+id/radiant_player0"
                           android:layout_toEndOf="@+id/radiant_player0_hero_portrait"
                           android:layout_toRightOf="@+id/radiant_player0_hero_portrait"
@@ -82,11 +82,11 @@
             <RelativeLayout android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                 <TextView android:id="@+id/radiant_player1"
-                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_toEndOf="@+id/radiant_player1_hero_portrait"
                           android:layout_toRightOf="@+id/radiant_player1_hero_portrait"/>
                 <TextView android:id="@+id/radiant_player1_score"
-                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@+id/radiant_player1"
                           android:layout_toEndOf="@+id/radiant_player1_hero_portrait"
                           android:layout_toRightOf="@+id/radiant_player1_hero_portrait"
@@ -103,11 +103,11 @@
             <RelativeLayout android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                 <TextView android:id="@+id/radiant_player2"
-                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_toEndOf="@+id/radiant_player2_hero_portrait"
                           android:layout_toRightOf="@+id/radiant_player2_hero_portrait"/>
                 <TextView android:id="@+id/radiant_player2_score"
-                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@+id/radiant_player2"
                           android:layout_toEndOf="@+id/radiant_player2_hero_portrait"
                           android:layout_toRightOf="@+id/radiant_player2_hero_portrait"
@@ -124,11 +124,11 @@
             <RelativeLayout android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                 <TextView android:id="@+id/radiant_player3"
-                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_toEndOf="@+id/radiant_player3_hero_portrait"
                           android:layout_toRightOf="@+id/radiant_player3_hero_portrait"/>
                 <TextView android:id="@+id/radiant_player3_score"
-                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@+id/radiant_player3"
                           android:layout_toEndOf="@+id/radiant_player3_hero_portrait"
                           android:layout_toRightOf="@+id/radiant_player3_hero_portrait"
@@ -145,11 +145,11 @@
             <RelativeLayout android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                 <TextView android:id="@+id/radiant_player4"
-                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_toEndOf="@+id/radiant_player4_hero_portrait"
                           android:layout_toRightOf="@+id/radiant_player4_hero_portrait"/>
                 <TextView android:id="@+id/radiant_player4_score"
-                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@+id/radiant_player4"
                           android:layout_toEndOf="@+id/radiant_player4_hero_portrait"
                           android:layout_toRightOf="@+id/radiant_player4_hero_portrait"
@@ -173,15 +173,16 @@
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_toLeftOf="@+id/dire_player0_hero_portrait"
                           android:layout_toStartOf="@+id/dire_player0_hero_portrait"
-                          android:gravity="end"/>
+                          android:gravity="right" tools:ignore="RtlHardcoded"/>
                 <TextView android:id="@+id/dire_player0_score"
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_below="@+id/dire_player0"
                           android:layout_toLeftOf="@+id/dire_player0_hero_portrait"
                           android:layout_toStartOf="@+id/dire_player0_hero_portrait"
-                          android:gravity="end"
+                          android:gravity="right"
                           android:textColor="@color/text_additional_info"
-                          android:textSize="@dimen/text_additional_info"/>
+                          android:textSize="@dimen/text_additional_info"
+                          tools:ignore="RtlHardcoded"/>
                 <ImageView android:id="@+id/dire_player0_hero_portrait"
                            android:layout_width="wrap_content"
                            android:layout_height="@dimen/hero_portrait_vert_height"
@@ -198,15 +199,16 @@
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_toLeftOf="@+id/dire_player1_hero_portrait"
                           android:layout_toStartOf="@+id/dire_player1_hero_portrait"
-                          android:gravity="end"/>
+                          android:gravity="right" tools:ignore="RtlHardcoded"/>
                 <TextView android:id="@+id/dire_player1_score"
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_below="@+id/dire_player1"
                           android:layout_toLeftOf="@+id/dire_player1_hero_portrait"
                           android:layout_toStartOf="@+id/dire_player1_hero_portrait"
-                          android:gravity="end"
+                          android:gravity="right"
                           android:textColor="@color/text_additional_info"
-                          android:textSize="@dimen/text_additional_info"/>
+                          android:textSize="@dimen/text_additional_info"
+                          tools:ignore="RtlHardcoded"/>
                 <ImageView android:id="@+id/dire_player1_hero_portrait"
                            android:layout_width="wrap_content"
                            android:layout_height="@dimen/hero_portrait_vert_height"
@@ -223,15 +225,16 @@
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_toLeftOf="@+id/dire_player2_hero_portrait"
                           android:layout_toStartOf="@+id/dire_player2_hero_portrait"
-                          android:gravity="end"/>
+                          android:gravity="right" tools:ignore="RtlHardcoded"/>
                 <TextView android:id="@+id/dire_player2_score"
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_below="@+id/dire_player2"
                           android:layout_toLeftOf="@+id/dire_player2_hero_portrait"
                           android:layout_toStartOf="@+id/dire_player2_hero_portrait"
-                          android:gravity="end"
+                          android:gravity="right"
                           android:textColor="@color/text_additional_info"
-                          android:textSize="@dimen/text_additional_info"/>
+                          android:textSize="@dimen/text_additional_info"
+                          tools:ignore="RtlHardcoded"/>
                 <ImageView android:id="@+id/dire_player2_hero_portrait"
                            android:layout_width="wrap_content"
                            android:layout_height="@dimen/hero_portrait_vert_height"
@@ -248,15 +251,16 @@
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_toLeftOf="@+id/dire_player3_hero_portrait"
                           android:layout_toStartOf="@+id/dire_player3_hero_portrait"
-                          android:gravity="end"/>
+                          android:gravity="right" tools:ignore="RtlHardcoded"/>
                 <TextView android:id="@+id/dire_player3_score"
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_below="@+id/dire_player3"
                           android:layout_toLeftOf="@+id/dire_player3_hero_portrait"
                           android:layout_toStartOf="@+id/dire_player3_hero_portrait"
-                          android:gravity="end"
+                          android:gravity="right"
                           android:textColor="@color/text_additional_info"
-                          android:textSize="@dimen/text_additional_info"/>
+                          android:textSize="@dimen/text_additional_info"
+                          tools:ignore="RtlHardcoded"/>
                 <ImageView android:id="@+id/dire_player3_hero_portrait"
                            android:layout_width="wrap_content"
                            android:layout_height="@dimen/hero_portrait_vert_height"
@@ -273,15 +277,16 @@
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_toLeftOf="@+id/dire_player4_hero_portrait"
                           android:layout_toStartOf="@+id/dire_player4_hero_portrait"
-                          android:gravity="end"/>
+                          android:gravity="right" tools:ignore="RtlHardcoded"/>
                 <TextView android:id="@+id/dire_player4_score"
                           android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:layout_below="@+id/dire_player4"
                           android:layout_toLeftOf="@+id/dire_player4_hero_portrait"
                           android:layout_toStartOf="@+id/dire_player4_hero_portrait"
-                          android:gravity="end"
+                          android:gravity="right"
                           android:textColor="@color/text_additional_info"
-                          android:textSize="@dimen/text_additional_info"/>
+                          android:textSize="@dimen/text_additional_info"
+                          tools:ignore="RtlHardcoded"/>
                 <ImageView android:id="@+id/dire_player4_hero_portrait"
                            android:layout_width="wrap_content"
                            android:layout_height="@dimen/hero_portrait_vert_height"
@@ -312,18 +317,18 @@
                     android:layout_below="@+id/players"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="10dp">
-        <ImageView android:id="@+id/opendota_link"
+        <ImageView android:id="@+id/icon_opendota"
                    android:layout_width="wrap_content"
                    android:layout_height="@dimen/opendota_dotabuff_logo_height"
                    android:adjustViewBounds="true"
                    android:padding="@dimen/opendota_dotabuff_logo_padding"
                    android:src="@drawable/opendota_logo"
                    tools:ignore="ContentDescription"/>
-        <ImageView android:id="@+id/dotabuff_link"
+        <ImageView android:id="@+id/icon_dotabuff"
                    android:layout_width="wrap_content"
                    android:layout_height="@dimen/opendota_dotabuff_logo_height"
-                   android:layout_toEndOf="@+id/opendota_link"
-                   android:layout_toRightOf="@+id/opendota_link"
+                   android:layout_toEndOf="@+id/icon_opendota"
+                   android:layout_toRightOf="@+id/icon_opendota"
                    android:adjustViewBounds="true"
                    android:padding="@dimen/opendota_dotabuff_logo_padding"
                    android:src="@drawable/dotabuff_logo"

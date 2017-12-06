@@ -11,7 +11,6 @@ import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.base.BaseLifecycleFragment
 import github.com.rhacco.dota2androidapp.lists.TopMatchesAdapter
 import github.com.rhacco.dota2androidapp.lists.TopMatchesItemData
-import github.com.rhacco.dota2androidapp.utilities.CustomOnItemTouchListener
 import github.com.rhacco.dota2androidapp.viewmodel.TopMatchesViewModel
 import kotlinx.android.synthetic.main.fragment_top_matches.*
 
@@ -30,15 +29,6 @@ class TopMatchesFragment : BaseLifecycleFragment<TopMatchesViewModel>() {
         list_matches.layoutManager = layoutManager
         list_matches.addItemDecoration(
                 DividerItemDecoration(list_matches.context, layoutManager.orientation))
-        list_matches.addOnItemTouchListener(object : CustomOnItemTouchListener(context, list_matches) {
-            override fun onSingleTap(itemPosition: Int) {
-                mAdapter.switchShowAdditionalInfo(itemPosition)
-            }
-
-            override fun onDoubleTap(itemPosition: Int) {
-                mAdapter.switchShowOfficialNames(itemPosition)
-            }
-        })
         val tabPosition = arguments["tab_position"]
         swipe_refresh_layout.setOnRefreshListener {
             if (tabPosition == 0)
