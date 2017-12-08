@@ -32,24 +32,6 @@ Now you are probably presented with an error "Failed to find target [...]". Clic
 
 Wait for Android Studio to build the project. When it's done, you will see "Gradle build finished [...]" in a status bar at the bottom of Android Studio. This completes building the app.
 
-### Adding your personal Steam Web API key
-
-In order to use your manually built app properly, you have to provide a valid Steam Web API key.
-
-Locate and open the file `Dota2AndroidApp/app/src/main/res/values/strings.xml` in Android Studio or your usual file browser and text editor. Find the following two lines:
-
-```
-<!-- A valid Steam Web API key. Get yours at https://steamcommunity.com/dev/apikey -->
-<string name="api_key"></string>
-```
-
-Go to https://steamcommunity.com/dev/apikey and log in with your Steam account, enter anything into the "Domain" field and request your personal Steam Web API key. Copy the key and enter it in the two lines above so it looks something like this:
-
-```
-<!-- A valid Steam Web API key. Get yours at https://steamcommunity.com/dev/apikey -->
-<string name="api_key">ABCD1234567EFGH89123AB45678CDEFG</string>
-```
-
 ### Running the manually built app on a virtual Android device
 
 In Android Studio, click the green play button in the middle of the toolbar (or press Shift+F10) to run the app. When presented with "Select Deployment Target", you should see an entry under "Available Virtual Devices". If yes, click `OK`. If no, click `Create New Virtual Device`, install missing components, click `Next`, click `Download` to install a recommended system image, click `Next` and click `Finish`. Now you should definitely see an entry under "Available Virtual Devices", then click `OK`.
