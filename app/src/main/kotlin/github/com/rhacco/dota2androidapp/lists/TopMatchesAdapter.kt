@@ -81,16 +81,16 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
         bindPlayerScore(holder.dire_player3_score, itemData.players[8].score, itemData)
         bindPlayerName(holder.dire_player4, itemData.players[9], itemData)
         bindPlayerScore(holder.dire_player4_score, itemData.players[9].score, itemData)
-        bindHeroPortrait(holder.radiant_player0_hero_portrait, itemData, 0)
-        bindHeroPortrait(holder.radiant_player1_hero_portrait, itemData, 1)
-        bindHeroPortrait(holder.radiant_player2_hero_portrait, itemData, 2)
-        bindHeroPortrait(holder.radiant_player3_hero_portrait, itemData, 3)
-        bindHeroPortrait(holder.radiant_player4_hero_portrait, itemData, 4)
-        bindHeroPortrait(holder.dire_player0_hero_portrait, itemData, 5)
-        bindHeroPortrait(holder.dire_player1_hero_portrait, itemData, 6)
-        bindHeroPortrait(holder.dire_player2_hero_portrait, itemData, 7)
-        bindHeroPortrait(holder.dire_player3_hero_portrait, itemData, 8)
-        bindHeroPortrait(holder.dire_player4_hero_portrait, itemData, 9)
+        bindHeroPortrait(holder.radiant_player0_hero_portrait, 0, itemData)
+        bindHeroPortrait(holder.radiant_player1_hero_portrait, 1, itemData)
+        bindHeroPortrait(holder.radiant_player2_hero_portrait, 2, itemData)
+        bindHeroPortrait(holder.radiant_player3_hero_portrait, 3, itemData)
+        bindHeroPortrait(holder.radiant_player4_hero_portrait, 4, itemData)
+        bindHeroPortrait(holder.dire_player0_hero_portrait, 5, itemData)
+        bindHeroPortrait(holder.dire_player1_hero_portrait, 6, itemData)
+        bindHeroPortrait(holder.dire_player2_hero_portrait, 7, itemData)
+        bindHeroPortrait(holder.dire_player3_hero_portrait, 8, itemData)
+        bindHeroPortrait(holder.dire_player4_hero_portrait, 9, itemData)
         bindSpectateInfo(holder, itemData)
         bindPostMatchInfo(holder, itemData)
     }
@@ -155,14 +155,19 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
             textView?.visibility = View.GONE
     }
 
-    private fun bindHeroPortrait(imageView: ImageView?, itemData: TopMatchesItemData, playerIndex: Int) {
+    private fun bindHeroPortrait(imageView: ImageView?, playerIndex: Int, itemData: TopMatchesItemData) {
         if (itemData.showAdditionalInfo && itemData.heroes.size == 10) {
-            val file = "hero_portrait_vert_" + itemData.heroes[playerIndex]
-            val id = App.instance.resources.getIdentifier(file, "drawable", App.instance.packageName)
-            imageView?.setImageDrawable(ContextCompat.getDrawable(App.instance.applicationContext, id))
-            imageView?.visibility = View.VISIBLE
-        } else
-            imageView?.visibility = View.GONE
+            val iconId = App.instance.resources.getIdentifier(
+                    "hero_portrait_vert_" + itemData.heroes[playerIndex],
+                    "drawable", App.instance.packageName)
+            if (iconId > 0) {
+                imageView?.setImageDrawable(
+                        ContextCompat.getDrawable(App.instance.applicationContext, iconId))
+                imageView?.visibility = View.VISIBLE
+                return
+            }
+        }
+        imageView?.visibility = View.GONE
     }
 
     private fun bindSpectateInfo(holder: TopMatchesViewHolder, itemData: TopMatchesItemData) {
