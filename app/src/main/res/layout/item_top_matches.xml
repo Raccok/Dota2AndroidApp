@@ -319,21 +319,17 @@
                     android:layout_below="@+id/players"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="10dp">
-        <ImageView android:id="@+id/icon_opendota"
-                   android:layout_width="wrap_content"
-                   android:layout_height="@dimen/height_opendota_dotabuff_logo"
-                   android:adjustViewBounds="true"
-                   android:padding="@dimen/padding_opendota_dotabuff_logo"
-                   android:src="@drawable/opendota_logo"
-                   tools:ignore="ContentDescription"/>
-        <ImageView android:id="@+id/icon_dotabuff"
-                   android:layout_width="wrap_content"
-                   android:layout_height="@dimen/height_opendota_dotabuff_logo"
-                   android:layout_toEndOf="@+id/icon_opendota"
-                   android:layout_toRightOf="@+id/icon_opendota"
-                   android:adjustViewBounds="true"
-                   android:padding="@dimen/padding_opendota_dotabuff_logo"
-                   android:src="@drawable/dotabuff_logo"
-                   tools:ignore="ContentDescription"/>
+        <Button android:id="@+id/button_opendota"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/height_opendota_dotabuff_button"
+                android:padding="@dimen/padding_opendota_dotabuff_button"
+                android:text="@string/opendota"/>
+        <Button android:id="@+id/button_dotabuff"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/height_opendota_dotabuff_button"
+                android:layout_toEndOf="@+id/button_opendota"
+                android:layout_toRightOf="@+id/button_opendota"
+                android:padding="@dimen/padding_opendota_dotabuff_button"
+                android:text="@string/dotabuff"/>
     </RelativeLayout>
 </RelativeLayout>

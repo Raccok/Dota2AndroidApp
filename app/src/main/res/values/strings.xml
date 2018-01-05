@@ -16,6 +16,8 @@
     <string name="elapsed_time_corrected_sec">%1$d:0%2$d</string>
     <string name="spectate_command">Spectate command: watch_server %d</string>
     <string name="spectators">Spectators: %d</string>
+    <string name="opendota">OpenDota</string>
+    <string name="dotabuff">Dotabuff</string>
     <string name="init_fav_hero_display">Your favorite Dota 2 hero has not been defined yet.
     </string>
     <string name="loaded_fav_hero_display">Your favorite Dota 2 hero is:\n\n%s\n\nWhat a fine
@@ -38,7 +40,7 @@
         names.\n\n
         To spectate a live match, find it in the \"Watch\" tab in your Dota 2 client. Alternatively,
         type the command below a live match into your Dota 2 console and press Enter.\n\n
-        Click on the OpenDota or Dotabuff icon below a recent match to view their specific match
+        Click on the OpenDota or Dotabuff button below a recent match to view their specific match
         details in your browser.
     </string>
     <string name="dialog_ok">OK</string>

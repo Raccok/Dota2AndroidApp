@@ -212,11 +212,11 @@ class TopMatchesViewHolder(
     init {
         itemView.setOnClickListener { mAdapter.switchShowAdditionalInfo(adapterPosition) }
         itemView.setOnLongClickListener { mAdapter.switchShowOfficialNames(adapterPosition); true }
-        icon_opendota.setOnClickListener {
+        button_opendota.setOnClickListener {
             mContext.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(
                     "https://www.opendota.com/matches/" + mAdapter.getMatchId(adapterPosition))))
         }
-        icon_dotabuff.setOnClickListener {
+        button_dotabuff.setOnClickListener {
             mContext.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(
                     "https://www.dotabuff.com/matches/" + mAdapter.getMatchId(adapterPosition))))
         }
