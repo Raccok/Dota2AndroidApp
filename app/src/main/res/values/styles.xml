@@ -21,7 +21,5 @@
         <item name="colorButtonNormal">@color/background_button</item>
     </style>
 
-    <style name="AlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="android:windowBackground">@color/background_general</item>
-    </style>
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert"/>
 </resources>
