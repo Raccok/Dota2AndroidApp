@@ -19,10 +19,7 @@
         <item name="android:textColor">@color/text_general</item>
         <item name="android:editTextColor">@color/text_general</item>
         <item name="colorButtonNormal">@color/background_button</item>
-        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
-    <style name="AlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="android:windowBackground">@color/background_general</item>
-    </style>
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert"/>
 </resources>

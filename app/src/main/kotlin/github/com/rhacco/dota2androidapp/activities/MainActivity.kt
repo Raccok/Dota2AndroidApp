@@ -23,35 +23,25 @@
 package github.com.rhacco.dota2androidapp.activities
 
 import android.app.AlertDialog
-import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.widget.EditText
 import github.com.rhacco.dota2androidapp.R
-import github.com.rhacco.dota2androidapp.base.BaseLifecycleActivity
-import github.com.rhacco.dota2androidapp.entities.HeroEntity
+import github.com.rhacco.dota2androidapp.base.BaseNavigationDrawerActivity
 import github.com.rhacco.dota2androidapp.utilities.SharedPreferencesHelper
 import github.com.rhacco.dota2androidapp.utilities.appIsMissingPermissions
-import github.com.rhacco.dota2androidapp.viewmodel.HeroesViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import xdroid.toaster.Toaster
 
-class MainActivity : BaseLifecycleActivity<HeroesViewModel>() {
-    override val mViewModelClass = HeroesViewModel::class.java
-
+class MainActivity : BaseNavigationDrawerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         super.initNavigationDrawer(drawer_layout)
 
-        if (getString(R.string.api_key).isEmpty()) {
-            Toaster.toastLong(R.string.error_no_api_key)
-            return
-        }
         if (appIsMissingPermissions(applicationContext))
             return
 
         initialDisplay()
-        observeLiveData()
 
         setFavHeroButton.setOnClickListener { setNewFavoriteHero() }
     }
@@ -70,27 +60,14 @@ class MainActivity : BaseLifecycleActivity<HeroesViewModel>() {
         alert.setMessage(getString(R.string.ask_fav_hero))
         val inputField = EditText(this)
         alert.setView(inputField)
-        alert.setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
-            mViewModel.getHero(inputField.text.toString())
-        }
+        alert.setPositiveButton(getString(R.string.dialog_ok)) { _, _ -> saveFavoriteHero(inputField.text.toString()) }
         alert.setNegativeButton(getString(R.string.dialog_cancel)) { _, _ -> }
         alert.show()
     }
 
-    // Check if userInput is a valid (currently available) Dota 2 hero.
-    // If it is, save it to device storage. If it isn't, return to the input dialog.
-    private fun validateUserInput(userInput: String, result: List<HeroEntity>) =
-            if (result.isNotEmpty()) {
-                SharedPreferencesHelper(applicationContext).setFavoriteHero(userInput)
-                Toaster.toastLong(R.string.saved_fav_hero, userInput)
-                favHeroText.text = getString(R.string.loaded_fav_hero_display, userInput)
-            } else {
-                Toaster.toastLong(R.string.error_invalid_hero, userInput)
-                setNewFavoriteHero()
-            }
-
-    override fun observeLiveData() =
-            mViewModel.mHeroQuery.observe(this, Observer<Pair<String, List<HeroEntity>>> {
-                it?.let { (userInput, result) -> validateUserInput(userInput, result) }
-            })
+    private fun saveFavoriteHero(userInput: String) {
+        SharedPreferencesHelper(applicationContext).setFavoriteHero(userInput)
+        Toaster.toastLong(R.string.saved_fav_hero, userInput)
+        favHeroText.text = getString(R.string.loaded_fav_hero_display, userInput)
+    }
 }

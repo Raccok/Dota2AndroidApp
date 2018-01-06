@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp" android:paddingTop="10dp">
+    <RelativeLayout android:id="@+id/header_realtime_stats"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:id="@+id/gold_advantage"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textColor="@color/in_game_gold"/>
+        <TextView android:id="@+id/score_radiant"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_toLeftOf="@+id/elapsed_time"
+                  android:layout_toStartOf="@+id/elapsed_time"
+                  android:textSize="@dimen/text_subtitle"
+                  tools:ignore="RelativeOverlap"/>
+        <TextView android:id="@+id/elapsed_time"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                  android:layout_marginLeft="10dp"
+                  android:layout_marginRight="10dp"/>
+        <TextView android:id="@+id/score_dire"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_toEndOf="@+id/elapsed_time"
+                  android:layout_toRightOf="@+id/elapsed_time"
+                  android:textSize="@dimen/text_subtitle"/>
+    </RelativeLayout>
+    <RelativeLayout android:id="@+id/header_teams"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_below="@id/header_realtime_stats"
+                    android:layout_marginBottom="5dp">
+        <TextView android:id="@+id/team_radiant"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_alignParentLeft="true"
+                  android:layout_alignParentStart="true"
+                  android:textColor="@color/team_radiant"
+                  android:textSize="@dimen/text_subtitle"
+                  tools:text="@string/team_radiant"/>
+        <TextView android:id="@+id/average_mmr"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"/>
+        <TextView android:id="@+id/team_dire"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_alignParentEnd="true"
+                  android:layout_alignParentRight="true"
+                  android:textColor="@color/team_dire"
+                  android:textSize="@dimen/text_subtitle"
+                  tools:ignore="RelativeOverlap"
+                  tools:text="@string/team_dire"/>
+    </RelativeLayout>
+    <LinearLayout android:id="@+id/players"
+                  android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:layout_below="@id/header_teams"
+                  android:baselineAligned="false"
+                  android:orientation="horizontal"
+                  android:weightSum="2">
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:orientation="vertical">
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                <TextView android:id="@+id/radiant_player0"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_toEndOf="@+id/radiant_player0_hero_portrait"
+                          android:layout_toRightOf="@+id/radiant_player0_hero_portrait"/>
+                <TextView android:id="@+id/radiant_player0_score"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@+id/radiant_player0"
+                          android:layout_toEndOf="@+id/radiant_player0_hero_portrait"
+                          android:layout_toRightOf="@+id/radiant_player0_hero_portrait"
+                          android:textColor="@color/text_additional_info"
+                          android:textSize="@dimen/text_additional_info"/>
+                <ImageView android:id="@+id/radiant_player0_hero_portrait"
+                           android:layout_width="wrap_content"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
+                           android:layout_centerVertical="true"
+                           android:adjustViewBounds="true"
+                           android:padding="@dimen/padding_hero_portrait_vert"
+                           tools:ignore="ContentDescription"/>
+            </RelativeLayout>
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                <TextView android:id="@+id/radiant_player1"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_toEndOf="@+id/radiant_player1_hero_portrait"
+                          android:layout_toRightOf="@+id/radiant_player1_hero_portrait"/>
+                <TextView android:id="@+id/radiant_player1_score"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@+id/radiant_player1"
+                          android:layout_toEndOf="@+id/radiant_player1_hero_portrait"
+                          android:layout_toRightOf="@+id/radiant_player1_hero_portrait"
+                          android:textColor="@color/text_additional_info"
+                          android:textSize="@dimen/text_additional_info"/>
+                <ImageView android:id="@+id/radiant_player1_hero_portrait"
+                           android:layout_width="wrap_content"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
+                           android:layout_centerVertical="true"
+                           android:adjustViewBounds="true"
+                           android:padding="@dimen/padding_hero_portrait_vert"
+                           tools:ignore="ContentDescription"/>
+            </RelativeLayout>
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                <TextView android:id="@+id/radiant_player2"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_toEndOf="@+id/radiant_player2_hero_portrait"
+                          android:layout_toRightOf="@+id/radiant_player2_hero_portrait"/>
+                <TextView android:id="@+id/radiant_player2_score"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@+id/radiant_player2"
+                          android:layout_toEndOf="@+id/radiant_player2_hero_portrait"
+                          android:layout_toRightOf="@+id/radiant_player2_hero_portrait"
+                          android:textColor="@color/text_additional_info"
+                          android:textSize="@dimen/text_additional_info"/>
+                <ImageView android:id="@+id/radiant_player2_hero_portrait"
+                           android:layout_width="wrap_content"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
+                           android:layout_centerVertical="true"
+                           android:adjustViewBounds="true"
+                           android:padding="@dimen/padding_hero_portrait_vert"
+                           tools:ignore="ContentDescription"/>
+            </RelativeLayout>
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                <TextView android:id="@+id/radiant_player3"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_toEndOf="@+id/radiant_player3_hero_portrait"
+                          android:layout_toRightOf="@+id/radiant_player3_hero_portrait"/>
+                <TextView android:id="@+id/radiant_player3_score"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@+id/radiant_player3"
+                          android:layout_toEndOf="@+id/radiant_player3_hero_portrait"
+                          android:layout_toRightOf="@+id/radiant_player3_hero_portrait"
+                          android:textColor="@color/text_additional_info"
+                          android:textSize="@dimen/text_additional_info"/>
+                <ImageView android:id="@+id/radiant_player3_hero_portrait"
+                           android:layout_width="wrap_content"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
+                           android:layout_centerVertical="true"
+                           android:adjustViewBounds="true"
+                           android:padding="@dimen/padding_hero_portrait_vert"
+                           tools:ignore="ContentDescription"/>
+            </RelativeLayout>
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                <TextView android:id="@+id/radiant_player4"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_toEndOf="@+id/radiant_player4_hero_portrait"
+                          android:layout_toRightOf="@+id/radiant_player4_hero_portrait"/>
+                <TextView android:id="@+id/radiant_player4_score"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@+id/radiant_player4"
+                          android:layout_toEndOf="@+id/radiant_player4_hero_portrait"
+                          android:layout_toRightOf="@+id/radiant_player4_hero_portrait"
+                          android:textColor="@color/text_additional_info"
+                          android:textSize="@dimen/text_additional_info"/>
+                <ImageView android:id="@+id/radiant_player4_hero_portrait"
+                           android:layout_width="wrap_content"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
+                           android:layout_centerVertical="true"
+                           android:adjustViewBounds="true"
+                           android:padding="@dimen/padding_hero_portrait_vert"
+                           tools:ignore="ContentDescription"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:orientation="vertical">
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                <TextView android:id="@+id/dire_player0"
+                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_toLeftOf="@+id/dire_player0_hero_portrait"
+                          android:layout_toStartOf="@+id/dire_player0_hero_portrait"
+                          android:gravity="right" tools:ignore="RtlHardcoded"/>
+                <TextView android:id="@+id/dire_player0_score"
+                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_below="@+id/dire_player0"
+                          android:layout_toLeftOf="@+id/dire_player0_hero_portrait"
+                          android:layout_toStartOf="@+id/dire_player0_hero_portrait"
+                          android:gravity="right"
+                          android:textColor="@color/text_additional_info"
+                          android:textSize="@dimen/text_additional_info"
+                          tools:ignore="RtlHardcoded"/>
+                <ImageView android:id="@+id/dire_player0_hero_portrait"
+                           android:layout_width="wrap_content"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
+                           android:layout_alignParentEnd="true"
+                           android:layout_alignParentRight="true"
+                           android:layout_centerVertical="true"
+                           android:adjustViewBounds="true"
+                           android:padding="@dimen/padding_hero_portrait_vert"
+                           tools:ignore="ContentDescription"/>
+            </RelativeLayout>
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                <TextView android:id="@+id/dire_player1"
+                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_toLeftOf="@+id/dire_player1_hero_portrait"
+                          android:layout_toStartOf="@+id/dire_player1_hero_portrait"
+                          android:gravity="right" tools:ignore="RtlHardcoded"/>
+                <TextView android:id="@+id/dire_player1_score"
+                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_below="@+id/dire_player1"
+                          android:layout_toLeftOf="@+id/dire_player1_hero_portrait"
+                          android:layout_toStartOf="@+id/dire_player1_hero_portrait"
+                          android:gravity="right"
+                          android:textColor="@color/text_additional_info"
+                          android:textSize="@dimen/text_additional_info"
+                          tools:ignore="RtlHardcoded"/>
+                <ImageView android:id="@+id/dire_player1_hero_portrait"
+                           android:layout_width="wrap_content"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
+                           android:layout_alignParentEnd="true"
+                           android:layout_alignParentRight="true"
+                           android:layout_centerVertical="true"
+                           android:adjustViewBounds="true"
+                           android:padding="@dimen/padding_hero_portrait_vert"
+                           tools:ignore="ContentDescription"/>
+            </RelativeLayout>
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                <TextView android:id="@+id/dire_player2"
+                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_toLeftOf="@+id/dire_player2_hero_portrait"
+                          android:layout_toStartOf="@+id/dire_player2_hero_portrait"
+                          android:gravity="right" tools:ignore="RtlHardcoded"/>
+                <TextView android:id="@+id/dire_player2_score"
+                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_below="@+id/dire_player2"
+                          android:layout_toLeftOf="@+id/dire_player2_hero_portrait"
+                          android:layout_toStartOf="@+id/dire_player2_hero_portrait"
+                          android:gravity="right"
+                          android:textColor="@color/text_additional_info"
+                          android:textSize="@dimen/text_additional_info"
+                          tools:ignore="RtlHardcoded"/>
+                <ImageView android:id="@+id/dire_player2_hero_portrait"
+                           android:layout_width="wrap_content"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
+                           android:layout_alignParentEnd="true"
+                           android:layout_alignParentRight="true"
+                           android:layout_centerVertical="true"
+                           android:adjustViewBounds="true"
+                           android:padding="@dimen/padding_hero_portrait_vert"
+                           tools:ignore="ContentDescription"/>
+            </RelativeLayout>
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                <TextView android:id="@+id/dire_player3"
+                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_toLeftOf="@+id/dire_player3_hero_portrait"
+                          android:layout_toStartOf="@+id/dire_player3_hero_portrait"
+                          android:gravity="right" tools:ignore="RtlHardcoded"/>
+                <TextView android:id="@+id/dire_player3_score"
+                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_below="@+id/dire_player3"
+                          android:layout_toLeftOf="@+id/dire_player3_hero_portrait"
+                          android:layout_toStartOf="@+id/dire_player3_hero_portrait"
+                          android:gravity="right"
+                          android:textColor="@color/text_additional_info"
+                          android:textSize="@dimen/text_additional_info"
+                          tools:ignore="RtlHardcoded"/>
+                <ImageView android:id="@+id/dire_player3_hero_portrait"
+                           android:layout_width="wrap_content"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
+                           android:layout_alignParentEnd="true"
+                           android:layout_alignParentRight="true"
+                           android:layout_centerVertical="true"
+                           android:adjustViewBounds="true"
+                           android:padding="@dimen/padding_hero_portrait_vert"
+                           tools:ignore="ContentDescription"/>
+            </RelativeLayout>
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                <TextView android:id="@+id/dire_player4"
+                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_toLeftOf="@+id/dire_player4_hero_portrait"
+                          android:layout_toStartOf="@+id/dire_player4_hero_portrait"
+                          android:gravity="right" tools:ignore="RtlHardcoded"/>
+                <TextView android:id="@+id/dire_player4_score"
+                          android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:layout_below="@+id/dire_player4"
+                          android:layout_toLeftOf="@+id/dire_player4_hero_portrait"
+                          android:layout_toStartOf="@+id/dire_player4_hero_portrait"
+                          android:gravity="right"
+                          android:textColor="@color/text_additional_info"
+                          android:textSize="@dimen/text_additional_info"
+                          tools:ignore="RtlHardcoded"/>
+                <ImageView android:id="@+id/dire_player4_hero_portrait"
+                           android:layout_width="wrap_content"
+                           android:layout_height="@dimen/height_hero_portrait_vert"
+                           android:layout_alignParentEnd="true"
+                           android:layout_alignParentRight="true"
+                           android:layout_centerVertical="true"
+                           android:adjustViewBounds="true"
+                           android:padding="@dimen/padding_hero_portrait_vert"
+                           tools:ignore="ContentDescription"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <TextView android:id="@+id/spectators"
+              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:layout_below="@+id/players"
+              android:layout_centerInParent="true"
+              android:layout_marginTop="10dp"
+              android:textColor="@color/text_additional_info"
+              android:textSize="@dimen/text_additional_info"/>
+    <TextView android:id="@+id/spectate_command"
+              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:layout_below="@+id/spectators"
+              android:layout_centerInParent="true"
+              android:textColor="@color/text_additional_info"
+              android:textSize="@dimen/text_additional_info"/>
+    <RelativeLayout android:id="@+id/post_match_info"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_below="@+id/players"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp">
+        <Button android:id="@+id/button_opendota"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/height_opendota_dotabuff_button"
+                android:padding="@dimen/padding_opendota_dotabuff_button"
+                android:text="@string/opendota"/>
+        <Button android:id="@+id/button_dotabuff"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/height_opendota_dotabuff_button"
+                android:layout_toEndOf="@+id/button_opendota"
+                android:layout_toRightOf="@+id/button_opendota"
+                android:padding="@dimen/padding_opendota_dotabuff_button"
+                android:text="@string/dotabuff"/>
+    </RelativeLayout>
+</RelativeLayout>
