@@ -32,7 +32,7 @@ import github.com.rhacco.dota2androidapp.utilities.appIsMissingPermissions
 import kotlinx.android.synthetic.main.activity_main.*
 import xdroid.toaster.Toaster
 
-class MainActivity : BaseNavigationDrawerActivity() {
+class AboutActivity : BaseNavigationDrawerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

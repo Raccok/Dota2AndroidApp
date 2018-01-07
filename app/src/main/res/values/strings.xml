@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Dota 2 Android App</string>
-    <string name="activity_main">Home</string>
     <string name="activity_top_matches">Top Matches</string>
+    <string name="activity_about">About</string>
 
     <string name="log_msg_debug">dota2androidapp.Debug</string>
 
