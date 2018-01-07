@@ -16,13 +16,18 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,AllowBackup">
         <activity
-            android:name="github.com.rhacco.dota2androidapp.activities.TopMatchesActivity"
+            android:name="github.com.rhacco.dota2androidapp.activities.MainActivity"
             android:label="@string/activity_top_matches"
-            android:parentActivityName="github.com.rhacco.dota2androidapp.activities.TopMatchesActivity">
+            android:parentActivityName="github.com.rhacco.dota2androidapp.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name="github.com.rhacco.dota2androidapp.activities.TopMatchesActivity"
+            android:label="@string/activity_top_matches"
+            android:parentActivityName="github.com.rhacco.dota2androidapp.activities.TopMatchesActivity">
         </activity>
         <activity
             android:name="github.com.rhacco.dota2androidapp.activities.AboutActivity"

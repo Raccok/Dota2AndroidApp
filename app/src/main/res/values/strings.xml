@@ -51,6 +51,7 @@
         <a href="https://github.com/Rhacco/Dota2AndroidApp/issues">here</a>
         by creating a new issue.
     </string>
+    <string name="dialog_ok">OK</string>
     <string name="error_permission_network_state">App needs permission to access the current network
         state!
     </string>
