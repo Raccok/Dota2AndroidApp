@@ -11,6 +11,7 @@ import android.view.MenuItem
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.base.BaseNavigationDrawerActivity
 import github.com.rhacco.dota2androidapp.fragments.TopMatchesFragment
+import github.com.rhacco.dota2androidapp.utilities.appIsMissingPermissions
 import kotlinx.android.synthetic.main.activity_top_matches.*
 
 class TopMatchesActivity : BaseNavigationDrawerActivity() {
@@ -18,6 +19,10 @@ class TopMatchesActivity : BaseNavigationDrawerActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_matches)
         super.initNavigationDrawer(drawer_layout)
+
+        if (appIsMissingPermissions(applicationContext))
+            return
+
         view_pager.adapter = CustomPagerAdapter(supportFragmentManager)
     }
 

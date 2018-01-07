@@ -22,52 +22,19 @@
 
 package github.com.rhacco.dota2androidapp.activities
 
-import android.app.AlertDialog
 import android.os.Bundle
-import android.widget.EditText
+import android.text.method.LinkMovementMethod
 import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.base.BaseNavigationDrawerActivity
-import github.com.rhacco.dota2androidapp.utilities.SharedPreferencesHelper
-import github.com.rhacco.dota2androidapp.utilities.appIsMissingPermissions
-import kotlinx.android.synthetic.main.activity_main.*
-import xdroid.toaster.Toaster
+import kotlinx.android.synthetic.main.activity_about.*
 
 class AboutActivity : BaseNavigationDrawerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_about)
         super.initNavigationDrawer(drawer_layout)
-
-        if (appIsMissingPermissions(applicationContext))
-            return
-
-        initialDisplay()
-
-        setFavHeroButton.setOnClickListener { setNewFavoriteHero() }
-    }
-
-    private fun initialDisplay() {
-        val favoriteHero = SharedPreferencesHelper(applicationContext).getFavoriteHero()
-        if (favoriteHero.isNotEmpty()) {
-            Toaster.toastLong(R.string.loaded_fav_hero, favoriteHero)
-            favHeroText.text = getString(R.string.loaded_fav_hero_display, favoriteHero)
-        } else
-            favHeroText.text = getString(R.string.init_fav_hero_display)
-    }
-
-    private fun setNewFavoriteHero() {
-        val alert = AlertDialog.Builder(this)
-        alert.setMessage(getString(R.string.ask_fav_hero))
-        val inputField = EditText(this)
-        alert.setView(inputField)
-        alert.setPositiveButton(getString(R.string.dialog_ok)) { _, _ -> saveFavoriteHero(inputField.text.toString()) }
-        alert.setNegativeButton(getString(R.string.dialog_cancel)) { _, _ -> }
-        alert.show()
-    }
-
-    private fun saveFavoriteHero(userInput: String) {
-        SharedPreferencesHelper(applicationContext).setFavoriteHero(userInput)
-        Toaster.toastLong(R.string.saved_fav_hero, userInput)
-        favHeroText.text = getString(R.string.loaded_fav_hero_display, userInput)
+        paragraph0.movementMethod = LinkMovementMethod.getInstance()
+        paragraph1.movementMethod = LinkMovementMethod.getInstance()
+        paragraph2.movementMethod = LinkMovementMethod.getInstance()
     }
 }
