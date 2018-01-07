@@ -4,6 +4,10 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.support.v4.content.ContextCompat
+import android.text.SpannableString
+import android.text.TextPaint
+import android.text.style.URLSpan
+import android.widget.TextView
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
 import xdroid.toaster.Toaster
@@ -31,4 +35,24 @@ fun deviceIsOnline(): Boolean {
     if (!isOnline)
         Toaster.toastLong(R.string.error_no_internet)
     return isOnline
+}
+
+fun stripUnderlines(textView: TextView) {
+    val s = SpannableString(textView.text)
+    val spans = s.getSpans(0, s.length, URLSpan::class.java)
+    for (span in spans) {
+        val start = s.getSpanStart(span)
+        val end = s.getSpanEnd(span)
+        s.removeSpan(span)
+        val spanNoUnderline = URLSpanNoUnderline(span.url)
+        s.setSpan(spanNoUnderline, start, end, 0)
+    }
+    textView.text = s
+}
+
+private class URLSpanNoUnderline(url: String) : URLSpan(url) {
+    override fun updateDrawState(ds: TextPaint) {
+        super.updateDrawState(ds)
+        ds.isUnderlineText = false
+    }
 }
