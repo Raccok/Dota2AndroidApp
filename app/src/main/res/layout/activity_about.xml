@@ -9,9 +9,18 @@
         android:layout_height="match_parent"
         android:layout_margin="15dp">
         <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_about"
+            android:textSize="@dimen/text_title"
+            android:textStyle="bold"/>
+        <TextView
             android:id="@+id/paragraph0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_marginTop="@dimen/margin_paragraph"
             android:text="@string/paragraph_about0"/>
         <TextView
             android:id="@+id/paragraph1"

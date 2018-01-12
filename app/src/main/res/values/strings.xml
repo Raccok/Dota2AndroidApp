@@ -33,6 +33,7 @@
         Click on the OpenDota or Dotabuff button below a recent match to view their specific match
         details in your browser.
     </string>
+    <string name="title_about">About us</string>
     <string name="paragraph_about0">
         This app is being developed and maintained by a small group of amateur and professional
         developers. We came together through a post on
