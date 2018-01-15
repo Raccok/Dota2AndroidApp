@@ -12,8 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_tabs"
-            android:paddingLeft="@dimen/padding_top_matches_side"
-            android:paddingRight="@dimen/padding_top_matches_side"
+            android:padding="5dp"
             android:textSize="@dimen/text_title"/>
     </android.support.v4.view.ViewPager>
     <include layout="@layout/navigation_drawer"/>

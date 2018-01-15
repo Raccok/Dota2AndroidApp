@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Dota 2 Android App</string>
-    <string name="activity_main">Home</string>
     <string name="activity_top_matches">Top Matches</string>
+    <string name="activity_about">About</string>
 
     <string name="log_msg_debug">dota2androidapp.Debug</string>
 
@@ -18,16 +18,6 @@
     <string name="spectators">Spectators: %d</string>
     <string name="opendota">OpenDota</string>
     <string name="dotabuff">Dotabuff</string>
-    <string name="init_fav_hero_display">Your favorite Dota 2 hero has not been defined yet.
-    </string>
-    <string name="loaded_fav_hero_display">Your favorite Dota 2 hero is:\n\n%s\n\nWhat a fine
-        choice!
-    </string>
-    <string name="button_set_fav_hero">Set Favorite Hero</string>
-    <string name="ask_fav_hero">What is your favorite Dota 2 hero?</string>
-    <string name="saved_fav_hero">Saved your favorite hero \'%s\' to device storage</string>
-    <string name="loaded_fav_hero">Loaded your favorite Dota 2 hero \'%s\' from device storage
-    </string>
     <string name="info_top_matches">
         Overviews of top tournament and ranked matches currently being played and recently finished.
         Live matches are delayed just like in the Dota 2 spectator client.\n\n
@@ -43,8 +33,26 @@
         Click on the OpenDota or Dotabuff button below a recent match to view their specific match
         details in your browser.
     </string>
+    <string name="title_about">About us</string>
+    <string name="paragraph_about0">
+        This app is being developed and maintained by a small group of amateur and professional
+        developers. We came together through a post on
+        <a href="https://reddit.com/r/dota2/">/r/dota2</a>. You can follow the development and see
+        the whole source code
+        <a href="https://github.com/Rhacco/Dota2AndroidApp/">here</a>.
+    </string>
+    <string name="paragraph_about1">
+        We started this app in the hopes of learning more about Android development. It has been
+        quite a journey already and we are always looking to learn more by implementing new things.
+    </string>
+    <string name="paragraph_about2">
+        The current state of the app is not the final result of this project. We are always looking
+        for feedback, especially related to the UI. If you have any suggestions or bug reports,
+        please let us know
+        <a href="https://github.com/Rhacco/Dota2AndroidApp/issues">here</a>
+        by creating a new issue.
+    </string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_cancel">Cancel</string>
     <string name="error_permission_network_state">App needs permission to access the current network
         state!
     </string>
