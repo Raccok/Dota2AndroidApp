@@ -1,5 +1,6 @@
 package github.com.rhacco.dota2androidapp.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -31,11 +32,13 @@ class TopMatchesActivity : BaseNavigationDrawerActivity() {
         return true
     }
 
+    @SuppressLint("InflateParams")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.button_info) {
             val alertDialog = AlertDialog.Builder(
                     ContextThemeWrapper(this, R.style.AlertDialogTheme)).create()
-            alertDialog.setMessage(getString(R.string.info_top_matches))
+            val view = layoutInflater.inflate(R.layout.info_top_matches, null)
+            alertDialog.setView(view)
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.dialog_ok),
                     { dialog, _ -> dialog.dismiss() })
             alertDialog.show()

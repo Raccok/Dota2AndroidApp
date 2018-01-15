@@ -26,6 +26,7 @@
         </activity>
         <activity
             android:name="github.com.rhacco.dota2androidapp.activities.TopMatchesActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/activity_top_matches"
             android:parentActivityName="github.com.rhacco.dota2androidapp.activities.TopMatchesActivity">
         </activity>

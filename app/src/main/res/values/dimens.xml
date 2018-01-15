@@ -3,6 +3,7 @@
     <dimen name="text_title">18sp</dimen>
     <dimen name="text_subtitle">17sp</dimen>
     <dimen name="text_additional_info">13sp</dimen>
+    <dimen name="general_gap_to_sides">10dp</dimen>
     <dimen name="margin_paragraph">10dp</dimen>
     <dimen name="height_hero_portrait_vert">40dp</dimen>
     <dimen name="padding_hero_portrait_vert">2dp</dimen>
