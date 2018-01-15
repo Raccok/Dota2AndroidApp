@@ -18,20 +18,31 @@
     <string name="spectators">Spectators: %d</string>
     <string name="opendota">OpenDota</string>
     <string name="dotabuff">Dotabuff</string>
-    <string name="info_top_matches">
-        Overviews of top tournament and ranked matches currently being played and recently finished.
-        Live matches are delayed just like in the Dota 2 spectator client.\n\n
-        Tournament matches show the pro teams\' names instead of \"Radiant\" and \"Dire\". Live
-        ranked matches are sorted by average MMR and pro players are highlighted with a distinct
-        color. Recent matches are sorted by time finished (most recent at the top of the list).\n\n
-        Swipe down to refresh the according list. Swipe left and right to switch between live and
-        recent matches. Click once on a match to show or hide additional information. Press and hold
-        on a ranked match to switch between pro players\' official names and current Steam
-        names.\n\n
+    <string name="title_info_top_matches">Navigating Top Matches</string>
+    <string name="info_top_matches0">
+        This is an overview of top tournament and ranked matches currently being played (Live tab)
+        and recently finished (Recent tab).
+    </string>
+    <string name="info_top_matches1">Swipe left and right to switch between live and recent matches
+    </string>
+    <string name="info_top_matches2">Swipe down to refresh the according list</string>
+    <string name="info_top_matches3">Click once on a match to show or hide a detailed match view
+    </string>
+    <string name="info_top_matches4">
+        Press and hold on a ranked match to switch between pro players\' official names (highlighted
+        in yellow) and current Steam names
+    </string>
+    <string name="info_top_matches5">
+        Tournament matches show the pro teams\' names instead of \"Radiant\" and \"Dire\"
+    </string>
+    <string name="info_top_matches6">Live ranked matches are sorted by average MMR</string>
+    <string name="info_top_matches7">
+        Recent matches are sorted by time finished (most recent at the top of the list)
+    </string>
+    <string name="info_top_matches8">
         To spectate a live match, find it in the \"Watch\" tab in your Dota 2 client. Alternatively,
-        type the command below a live match into your Dota 2 console and press Enter.\n\n
-        Click on the OpenDota or Dotabuff button below a recent match to view their specific match
-        details in your browser.
+        type the command given in the detailed match view of a live match into your Dota 2 console
+        and press Enter.
     </string>
     <string name="title_about">About us</string>
     <string name="paragraph_about0">
@@ -53,6 +64,7 @@
         by creating a new issue.
     </string>
     <string name="dialog_ok">OK</string>
+    <string name="bullet_point">\u2022</string>
     <string name="error_permission_network_state">App needs permission to access the current network
         state!
     </string>

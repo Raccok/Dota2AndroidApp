@@ -6,7 +6,7 @@
               android:orientation="vertical">
     <TextView android:id="@+id/activity_name"
               android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:padding="10dp"
+              android:padding="@dimen/general_gap_to_sides"
               android:textSize="20sp"
               android:textStyle="bold"
               tools:text="Activity Name"/>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:padding="@dimen/general_gap_to_sides">
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/title_info_top_matches"
+                  android:textSize="@dimen/text_title"
+                  android:textStyle="bold"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="@dimen/margin_paragraph"
+                  android:text="@string/info_top_matches0"/>
+        <RelativeLayout android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_paragraph">
+            <TextView android:id="@+id/bullet_point0"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+                      android:text="@string/bullet_point"/>
+            <TextView android:id="@+id/bullet_point0_text"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_toEndOf="@id/bullet_point0"
+                      android:layout_toRightOf="@id/bullet_point0"
+                      android:text="@string/info_top_matches1"/>
+            <TextView android:id="@+id/bullet_point1"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_below="@id/bullet_point0_text"
+                      android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+                      android:text="@string/bullet_point"/>
+            <TextView android:id="@+id/bullet_point1_text"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_below="@id/bullet_point0_text"
+                      android:layout_toEndOf="@id/bullet_point1"
+                      android:layout_toRightOf="@id/bullet_point1"
+                      android:text="@string/info_top_matches2"/>
+            <TextView android:id="@+id/bullet_point2"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_below="@id/bullet_point1_text"
+                      android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+                      android:text="@string/bullet_point"/>
+            <TextView android:id="@+id/bullet_point2_text"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_below="@id/bullet_point1_text"
+                      android:layout_toEndOf="@id/bullet_point2"
+                      android:layout_toRightOf="@id/bullet_point2"
+                      android:text="@string/info_top_matches3"/>
+            <TextView android:id="@+id/bullet_point3"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_below="@id/bullet_point2_text"
+                      android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+                      android:text="@string/bullet_point"/>
+            <TextView android:id="@+id/bullet_point3_text"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_below="@id/bullet_point2_text"
+                      android:layout_toEndOf="@id/bullet_point3"
+                      android:layout_toRightOf="@id/bullet_point3"
+                      android:text="@string/info_top_matches4"/>
+            <TextView android:id="@+id/bullet_point4"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_below="@id/bullet_point3_text"
+                      android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+                      android:text="@string/bullet_point"/>
+            <TextView android:id="@+id/bullet_point4_text"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_below="@id/bullet_point3_text"
+                      android:layout_toEndOf="@id/bullet_point4"
+                      android:layout_toRightOf="@id/bullet_point4"
+                      android:text="@string/info_top_matches5"/>
+            <TextView android:id="@+id/bullet_point5"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_below="@id/bullet_point4_text"
+                      android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+                      android:text="@string/bullet_point"/>
+            <TextView android:id="@+id/bullet_point5_text"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_below="@id/bullet_point4_text"
+                      android:layout_toEndOf="@id/bullet_point5"
+                      android:layout_toRightOf="@id/bullet_point5"
+                      android:text="@string/info_top_matches6"/>
+            <TextView android:id="@+id/bullet_point6"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_below="@id/bullet_point5_text"
+                      android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
+                      android:text="@string/bullet_point"/>
+            <TextView android:id="@+id/bullet_point6_text"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_below="@id/bullet_point5_text"
+                      android:layout_toEndOf="@id/bullet_point6"
+                      android:layout_toRightOf="@id/bullet_point6"
+                      android:text="@string/info_top_matches7"/>
+        </RelativeLayout>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="@dimen/margin_paragraph"
+                  android:text="@string/info_top_matches8"/>
+    </LinearLayout>
+</ScrollView>
