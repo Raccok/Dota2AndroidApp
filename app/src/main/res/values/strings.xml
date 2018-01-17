@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Dota 2 Android App</string>
     <string name="activity_top_matches">Top Matches</string>
+    <string name="activity_leaderboards">Leaderboards</string>
     <string name="activity_about">About</string>
 
     <string name="log_msg_debug">dota2androidapp.Debug</string>

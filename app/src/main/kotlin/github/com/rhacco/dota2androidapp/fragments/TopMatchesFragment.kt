@@ -12,7 +12,7 @@ import github.com.rhacco.dota2androidapp.base.BaseLifecycleFragment
 import github.com.rhacco.dota2androidapp.lists.TopMatchesAdapter
 import github.com.rhacco.dota2androidapp.lists.TopMatchesItemData
 import github.com.rhacco.dota2androidapp.viewmodel.TopMatchesViewModel
-import kotlinx.android.synthetic.main.fragment_top_matches.*
+import kotlinx.android.synthetic.main.recycler_view_swipe_refresh.*
 
 class TopMatchesFragment : BaseLifecycleFragment<TopMatchesViewModel>() {
     override val mViewModelClass = TopMatchesViewModel::class.java
@@ -20,15 +20,15 @@ class TopMatchesFragment : BaseLifecycleFragment<TopMatchesViewModel>() {
 
     override fun onCreateView(
             inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater?.inflate(R.layout.fragment_top_matches, container, false)
+            inflater?.inflate(R.layout.recycler_view_swipe_refresh, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         mAdapter = TopMatchesAdapter(context)
-        list_matches.adapter = mAdapter
+        recycler_view.adapter = mAdapter
         val layoutManager = LinearLayoutManager(context)
-        list_matches.layoutManager = layoutManager
-        list_matches.addItemDecoration(
-                DividerItemDecoration(list_matches.context, layoutManager.orientation))
+        recycler_view.layoutManager = layoutManager
+        recycler_view.addItemDecoration(
+                DividerItemDecoration(recycler_view.context, layoutManager.orientation))
         val tabPosition = arguments["tab_position"]
         swipe_refresh_layout.setOnRefreshListener {
             if (tabPosition == 0)
