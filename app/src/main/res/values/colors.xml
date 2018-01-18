@@ -9,4 +9,5 @@
     <color name="team_radiant">#598307</color>
     <color name="team_dire">#A83806</color>
     <color name="in_game_gold">#DAA520</color>
+    <color name="leaderboard_top_position">#DCE775</color>
 </resources>

@@ -13,12 +13,12 @@ import github.com.rhacco.dota2androidapp.R
 import github.com.rhacco.dota2androidapp.base.BaseNavigationDrawerActivity
 import github.com.rhacco.dota2androidapp.fragments.TopMatchesFragment
 import github.com.rhacco.dota2androidapp.utilities.appIsMissingPermissions
-import kotlinx.android.synthetic.main.activity_top_matches.*
+import kotlinx.android.synthetic.main.view_pager.*
 
 class TopMatchesActivity : BaseNavigationDrawerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_top_matches)
+        setContentView(R.layout.view_pager)
         super.initNavigationDrawer(drawer_layout)
 
         if (appIsMissingPermissions(applicationContext))
@@ -48,34 +48,20 @@ class TopMatchesActivity : BaseNavigationDrawerActivity() {
     }
 
     private class CustomPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
-        override fun getItem(position: Int): Fragment? =
-                when (position) {
-                    0 -> {
-                        val fragment = TopMatchesFragment()
-                        val bundle = Bundle()
-                        bundle.putInt("tab_position", 0)
-                        fragment.arguments = bundle
-                        fragment
-                    }
-                    else -> {
-                        val fragment = TopMatchesFragment()
-                        val bundle = Bundle()
-                        bundle.putInt("tab_position", 1)
-                        fragment.arguments = bundle
-                        fragment
-                    }
-                }
+        override fun getItem(position: Int): Fragment? {
+            val fragment = TopMatchesFragment()
+            val bundle = Bundle()
+            bundle.putInt("tab_position", position)
+            fragment.arguments = bundle
+            return fragment
+        }
 
         override fun getCount(): Int = 2
 
         override fun getPageTitle(position: Int): CharSequence =
                 when (position) {
-                    0 -> {
-                        "Live"
-                    }
-                    else -> {
-                        "Recent"
-                    }
+                    0 -> "Live"
+                    else -> "Recent"
                 }
     }
 }
