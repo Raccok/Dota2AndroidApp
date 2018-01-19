@@ -2,15 +2,57 @@ package github.com.rhacco.dota2androidapp.utilities
 
 import android.content.Context
 import android.preference.PreferenceManager
+import android.text.TextUtils
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SharedPreferencesHelper(context: Context) {
     private val defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    private val mSimpleDataFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH)
 
     fun getIsFirstAppStart() = defaultSharedPreferences.getBoolean(IS_FIRST_APP_START, true)
 
     fun setIsFirstAppStart() = defaultSharedPreferences.edit().putBoolean(IS_FIRST_APP_START, false).apply()
 
+    fun getLeaderboard(region: String): List<String> {
+        if (dateNow().after(getDate(leaderboardValidDateKey(region))))
+            return listOf()
+        return TextUtils.split(defaultSharedPreferences.getString(
+                leaderboardKey(region), ""), UNIQUE_SYMBOL_SEQUENCE).toList()
+    }
+
+    fun storeLeaderboard(region: String, entries: List<String>) {
+        defaultSharedPreferences.edit().putString(
+                leaderboardKey(region), TextUtils.join(UNIQUE_SYMBOL_SEQUENCE, entries)).apply()
+        val validDate = dateNow()
+        validDate.add(Calendar.DAY_OF_MONTH, 1)
+        defaultSharedPreferences.edit().putString(
+                leaderboardValidDateKey(region), validDate.time.toString()).apply()
+    }
+
+    private fun leaderboardKey(region: String) = "leaderboard_" + region
+
+    private fun leaderboardValidDateKey(region: String) = "leaderboard_" + region + "_valid"
+
+    private fun dateNow(): Calendar = Calendar.getInstance(Locale.ENGLISH)
+
+    private fun getDate(key: String): Calendar {
+        val dateString = defaultSharedPreferences.getString(key, "")
+        val date = dateNow()
+        try {
+            date.time = mSimpleDataFormat.parse(dateString)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            val invalidDate = dateNow()
+            invalidDate.add(Calendar.YEAR, 100)
+            return invalidDate
+        }
+        return date
+    }
+
     companion object {
-        private const val IS_FIRST_APP_START = "IS_FIRST_APP_START"
+        private const val UNIQUE_SYMBOL_SEQUENCE = "⁶⁰�₇₄"
+        private const val IS_FIRST_APP_START = "is_first_app_start"
     }
 }
