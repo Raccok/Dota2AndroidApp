@@ -1,6 +1,7 @@
 package github.com.rhacco.dota2androidapp
 
 import android.app.Application
+import github.com.rhacco.dota2androidapp.utilities.SharedPreferencesHelper
 
 class App : Application() {
     init {
@@ -9,5 +10,6 @@ class App : Application() {
 
     companion object {
         lateinit var instance: App
+        val sSharedPreferences by lazy { SharedPreferencesHelper(instance.applicationContext) }
     }
 }
