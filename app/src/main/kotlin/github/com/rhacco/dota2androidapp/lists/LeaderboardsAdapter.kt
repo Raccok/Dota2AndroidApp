@@ -42,7 +42,20 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
                     App.instance.applicationContext, R.color.text_general))
             holder.rank.setTypeface(null, Typeface.NORMAL)
         }
-        holder.player.text = mItemsData[position].name
+        holder.name.text = mItemsData[position].name
+        val iconId = when {
+            mItemsData[position].rank_change == "up" ->
+                App.instance.resources.getIdentifier(
+                        "green_triangle_up", "drawable", App.instance.packageName)
+            mItemsData[position].rank_change == "down" ->
+                App.instance.resources.getIdentifier(
+                        "red_triangle_down", "drawable", App.instance.packageName)
+            else ->
+                App.instance.resources.getIdentifier(
+                        "yellow_circle", "drawable", App.instance.packageName)
+        }
+        holder.rank_change.setImageDrawable(
+                ContextCompat.getDrawable(App.instance.applicationContext, iconId))
     }
 }
 

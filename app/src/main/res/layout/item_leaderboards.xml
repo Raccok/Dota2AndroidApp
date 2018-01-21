@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="4dp"
@@ -7,7 +8,14 @@
     <TextView android:id="@+id/rank"
               android:layout_width="50dp" android:layout_height="wrap_content"
               android:gravity="center"/>
-    <TextView android:id="@+id/player"
+    <TextView android:id="@+id/name"
               android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:layout_toEndOf="@+id/rank" android:layout_toRightOf="@+id/rank"/>
+              android:layout_toEndOf="@+id/rank" android:layout_toRightOf="@+id/rank"
+              tools:ignore="RelativeOverlap"/>
+    <ImageView android:id="@+id/rank_change"
+               android:layout_width="10dp" android:layout_height="10dp"
+               android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
+               android:layout_centerVertical="true"
+               android:layout_marginLeft="15dp" android:layout_marginRight="15dp"
+               tools:ignore="ContentDescription"/>
 </RelativeLayout>
