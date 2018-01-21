@@ -50,12 +50,17 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
             mItemsData[position].rank_change == "down" ->
                 App.instance.resources.getIdentifier(
                         "red_triangle_down", "drawable", App.instance.packageName)
-            else ->
+            mItemsData[position].rank_change == "same" ->
                 App.instance.resources.getIdentifier(
                         "yellow_circle", "drawable", App.instance.packageName)
+            else -> 0
         }
-        holder.rank_change.setImageDrawable(
-                ContextCompat.getDrawable(App.instance.applicationContext, iconId))
+        if (iconId > 0) {
+            holder.rank_change.setImageDrawable(
+                    ContextCompat.getDrawable(App.instance.applicationContext, iconId))
+            holder.rank_change.visibility = View.VISIBLE
+        } else
+            holder.rank_change.visibility = View.GONE
     }
 }
 
