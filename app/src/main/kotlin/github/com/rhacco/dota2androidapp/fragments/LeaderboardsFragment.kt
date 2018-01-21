@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import github.com.rhacco.dota2androidapp.R
+import github.com.rhacco.dota2androidapp.api.LeaderboardsResponse
 import github.com.rhacco.dota2androidapp.base.BaseLifecycleFragment
 import github.com.rhacco.dota2androidapp.lists.LeaderboardsAdapter
 import github.com.rhacco.dota2androidapp.viewmodel.LeaderboardsViewModel
@@ -39,7 +40,7 @@ class LeaderboardsFragment : BaseLifecycleFragment<LeaderboardsViewModel>() {
     }
 
     override fun observeLiveData() {
-        mViewModel.mGetLeaderboard.observe(this, Observer<List<String>> {
+        mViewModel.mGetLeaderboard.observe(this, Observer<List<LeaderboardsResponse.Entry>> {
             it?.let { leaderboard -> mAdapter.update(leaderboard) }
         })
     }

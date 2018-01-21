@@ -9,16 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
+import github.com.rhacco.dota2androidapp.api.LeaderboardsResponse
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_leaderboards.*
 
 class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsViewHolder>() {
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val mTopRanksToHighlight: List<Int> = listOf(10, 50, 100, 500, 1000)
-    private var mItemsData: List<String> = listOf()
+    private var mItemsData: List<LeaderboardsResponse.Entry> = listOf()
 
-    fun update(leaderboard: List<String>) {
+    fun update(leaderboard: List<LeaderboardsResponse.Entry>) {
         mItemsData = leaderboard
+        if (mItemsData.size > 500)
+            mItemsData = mItemsData.dropLast(mItemsData.size - 500)
         notifyDataSetChanged()
     }
 
@@ -39,7 +42,7 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
                     App.instance.applicationContext, R.color.text_general))
             holder.rank.setTypeface(null, Typeface.NORMAL)
         }
-        holder.player.text = mItemsData[position]
+        holder.player.text = mItemsData[position].name
     }
 }
 
