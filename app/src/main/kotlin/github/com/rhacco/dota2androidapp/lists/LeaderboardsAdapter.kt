@@ -9,16 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
+import github.com.rhacco.dota2androidapp.api.LeaderboardsResponse
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_leaderboards.*
 
 class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsViewHolder>() {
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val mTopRanksToHighlight: List<Int> = listOf(10, 50, 100, 500, 1000)
-    private var mItemsData: List<String> = listOf()
+    private var mItemsData: List<LeaderboardsResponse.Entry> = listOf()
 
-    fun update(leaderboard: List<String>) {
+    fun update(leaderboard: List<LeaderboardsResponse.Entry>) {
         mItemsData = leaderboard
+        if (mItemsData.size > 500)
+            mItemsData = mItemsData.dropLast(mItemsData.size - 500)
         notifyDataSetChanged()
     }
 
@@ -39,7 +42,25 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
                     App.instance.applicationContext, R.color.text_general))
             holder.rank.setTypeface(null, Typeface.NORMAL)
         }
-        holder.player.text = mItemsData[position]
+        holder.name.text = mItemsData[position].name
+        val iconId = when {
+            mItemsData[position].rank_change == "up" ->
+                App.instance.resources.getIdentifier(
+                        "green_triangle_up", "drawable", App.instance.packageName)
+            mItemsData[position].rank_change == "down" ->
+                App.instance.resources.getIdentifier(
+                        "red_triangle_down", "drawable", App.instance.packageName)
+            mItemsData[position].rank_change == "same" ->
+                App.instance.resources.getIdentifier(
+                        "yellow_circle", "drawable", App.instance.packageName)
+            else -> 0
+        }
+        if (iconId > 0) {
+            holder.rank_change.setImageDrawable(
+                    ContextCompat.getDrawable(App.instance.applicationContext, iconId))
+            holder.rank_change.visibility = View.VISIBLE
+        } else
+            holder.rank_change.visibility = View.GONE
     }
 }
 

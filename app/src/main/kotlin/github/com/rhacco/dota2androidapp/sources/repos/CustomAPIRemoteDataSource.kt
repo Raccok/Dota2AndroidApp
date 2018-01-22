@@ -1,5 +1,6 @@
 package github.com.rhacco.dota2androidapp.sources.repos
 
+import github.com.rhacco.dota2androidapp.api.LeaderboardsResponse
 import github.com.rhacco.dota2androidapp.api.TopMatchesResponse
 import github.com.rhacco.dota2androidapp.sources.remote.CustomAPIService
 import io.reactivex.Single
@@ -19,6 +20,16 @@ object CustomAPIRemoteDataSource {
             Single.create(
                     { subscriber ->
                         CustomAPIService.get()?.fetchTopRecentMatches()?.subscribe(
+                                { result -> subscriber.onSuccess(result) },
+                                { error -> subscriber.onError(error) }
+                        )
+                    }
+            )
+
+    fun getLeaderboard(region: String): Single<List<LeaderboardsResponse.Entry>> =
+            Single.create(
+                    { subscriber ->
+                        CustomAPIService.get()?.fetchLeaderboard(region)?.subscribe(
                                 { result -> subscriber.onSuccess(result) },
                                 { error -> subscriber.onError(error) }
                         )

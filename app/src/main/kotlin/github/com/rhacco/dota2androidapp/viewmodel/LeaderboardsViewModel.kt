@@ -6,17 +6,18 @@ import android.arch.lifecycle.MediatorLiveData
 import android.util.Log
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
-import github.com.rhacco.dota2androidapp.sources.repos.Dota2APIRepository
+import github.com.rhacco.dota2androidapp.api.LeaderboardsResponse
+import github.com.rhacco.dota2androidapp.sources.repos.CustomAPIRepository
 import io.reactivex.disposables.CompositeDisposable
 
 class LeaderboardsViewModel(application: Application) : AndroidViewModel(application) {
     private val mDisposables = CompositeDisposable()
-    val mGetLeaderboard = MediatorLiveData<List<String>>()
+    val mGetLeaderboard = MediatorLiveData<List<LeaderboardsResponse.Entry>>()
 
     override fun onCleared() = mDisposables.clear()
 
     fun getLeaderboard(region: String) {
-        mDisposables.add(Dota2APIRepository.getLeaderboard(region)
+        mDisposables.add(CustomAPIRepository.getLeaderboard(region)
                 .subscribe(
                         { result -> mGetLeaderboard.value = result },
                         { error ->

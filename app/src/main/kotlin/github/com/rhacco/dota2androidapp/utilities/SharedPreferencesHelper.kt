@@ -2,7 +2,6 @@ package github.com.rhacco.dota2androidapp.utilities
 
 import android.content.Context
 import android.preference.PreferenceManager
-import android.text.TextUtils
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -15,23 +14,15 @@ class SharedPreferencesHelper(context: Context) {
 
     fun setIsFirstAppStart() = defaultSharedPreferences.edit().putBoolean(IS_FIRST_APP_START, false).apply()
 
-    fun getLeaderboard(region: String): List<String> {
-        if (dateNow().after(getDate(leaderboardValidDateKey(region))))
-            return listOf()
-        return TextUtils.split(defaultSharedPreferences.getString(
-                leaderboardKey(region), ""), UNIQUE_SYMBOL_SEQUENCE).toList()
-    }
+    fun getLeaderboardValid(region: String): Boolean =
+            !(dateNow().after(getDate(leaderboardValidDateKey(region))))
 
-    fun storeLeaderboard(region: String, entries: List<String>) {
-        defaultSharedPreferences.edit().putString(
-                leaderboardKey(region), TextUtils.join(UNIQUE_SYMBOL_SEQUENCE, entries)).apply()
+    fun setLeaderboardValid(region: String) {
         val validDate = dateNow()
-        validDate.add(Calendar.DAY_OF_MONTH, 1)
+        validDate.add(Calendar.DATE, 1)
         defaultSharedPreferences.edit().putString(
                 leaderboardValidDateKey(region), validDate.time.toString()).apply()
     }
-
-    private fun leaderboardKey(region: String) = "leaderboard_" + region
 
     private fun leaderboardValidDateKey(region: String) = "leaderboard_" + region + "_valid"
 
@@ -52,7 +43,6 @@ class SharedPreferencesHelper(context: Context) {
     }
 
     companion object {
-        private const val UNIQUE_SYMBOL_SEQUENCE = "⁶⁰�₇₄"
         private const val IS_FIRST_APP_START = "is_first_app_start"
     }
 }

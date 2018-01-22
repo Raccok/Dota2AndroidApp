@@ -1,5 +1,6 @@
 package github.com.rhacco.dota2androidapp.sources.remote
 
+import github.com.rhacco.dota2androidapp.api.LeaderboardsResponse
 import github.com.rhacco.dota2androidapp.api.TopMatchesResponse
 import github.com.rhacco.dota2androidapp.utilities.deviceIsOnline
 import io.reactivex.Observable
@@ -7,6 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface CustomAPIService {
     @GET("TopLiveMatches")
@@ -14,6 +16,9 @@ interface CustomAPIService {
 
     @GET("TopRecentMatches")
     fun fetchTopRecentMatches(): Observable<List<TopMatchesResponse.Match>>
+
+    @GET("Leaderboard")
+    fun fetchLeaderboard(@Query("region") region: String): Observable<List<LeaderboardsResponse.Entry>>
 
     companion object {
         private val sService by lazy { create() }
