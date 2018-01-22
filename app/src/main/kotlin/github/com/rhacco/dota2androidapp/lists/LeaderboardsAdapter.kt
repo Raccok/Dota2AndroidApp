@@ -29,7 +29,9 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
     }
 
     fun handleSearchQuery(query: String) {
-        mShownItemsData = mItemsData.filter { it.name.contains(query, true) }
+        mShownItemsData = mItemsData.filter {
+            it.name.contains(query, true) || it.rank.toString() == query
+        }
         notifyDataSetChanged()
     }
 
