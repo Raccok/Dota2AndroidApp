@@ -46,7 +46,7 @@
         type the command given in the detailed match view of a live match into your Dota 2 console
         and press Enter.
     </string>
-    <string name="search_hint_leaderboards">Search player or team</string>
+    <string name="search_hint_leaderboards">Find player/team/rank</string>
     <string name="title_about">About us</string>
     <string name="paragraph_about0">
         This app is being developed and maintained by a small group of amateur and professional

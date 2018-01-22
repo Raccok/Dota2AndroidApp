@@ -44,7 +44,8 @@ class LeaderboardsActivity : BaseNavigationDrawerActivity() {
         val searchMenuItem = menu?.findItem(R.id.search)
         val searchView = searchMenuItem?.actionView as SearchView
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        searchView.isIconified = false
+        searchView.setPadding(-30, 15, 20, 15)
+        searchView.setIconifiedByDefault(false)
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.setOnCloseListener { handleSearchClosed() }
         searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
