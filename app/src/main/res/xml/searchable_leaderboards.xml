@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <searchable xmlns:android="http://schemas.android.com/apk/res/android"
-            android:label="@string/activity_leaderboards"
-            android:hint="@string/search_hint_leaderboards"/>
+            android:hint="@string/search_hint_leaderboards"
+            android:label="@string/activity_leaderboards"/>
