@@ -34,8 +34,10 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
     }
 
     fun showAllEntries() {
-        mShownItemsData = mItemsData
-        notifyDataSetChanged()
+        if (mShownItemsData != mItemsData) {
+            mShownItemsData = mItemsData
+            notifyDataSetChanged()
+        }
     }
 
     override fun getItemCount(): Int = mShownItemsData.size
