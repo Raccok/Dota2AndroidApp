@@ -17,21 +17,34 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val mTopRanksToHighlight: List<Int> = listOf(10, 50, 100, 500, 1000)
     private var mItemsData: List<LeaderboardsResponse.Entry> = listOf()
+    private var mShownItemsData: List<LeaderboardsResponse.Entry> = listOf()
 
     fun update(leaderboard: List<LeaderboardsResponse.Entry>) {
-        mItemsData = leaderboard
-        if (mItemsData.size > 500)
-            mItemsData = mItemsData.dropLast(mItemsData.size - 500)
+        mItemsData =
+                if (leaderboard.size > 2000)
+                    leaderboard.dropLast(leaderboard.size - 2000)
+                else
+                    leaderboard
+        showAllEntries()
+    }
+
+    fun handleSearchQuery(query: String) {
+        mShownItemsData = mItemsData.filter { it.name.contains(query, true) }
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = mItemsData.size
+    fun showAllEntries() {
+        mShownItemsData = mItemsData
+        notifyDataSetChanged()
+    }
+
+    override fun getItemCount(): Int = mShownItemsData.size
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): LeaderboardsViewHolder =
             LeaderboardsViewHolder(mInflater.inflate(R.layout.item_leaderboards, parent, false))
 
     override fun onBindViewHolder(holder: LeaderboardsViewHolder, position: Int) {
-        val rank = position + 1
+        val rank = mShownItemsData[position].rank
         holder.rank.text = rank.toString()
         if (mTopRanksToHighlight.contains(rank)) {
             holder.rank.setTextColor(ContextCompat.getColor(
@@ -42,15 +55,15 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
                     App.instance.applicationContext, R.color.text_general))
             holder.rank.setTypeface(null, Typeface.NORMAL)
         }
-        holder.name.text = mItemsData[position].name
+        holder.name.text = mShownItemsData[position].name
         val iconId = when {
-            mItemsData[position].rank_change == "up" ->
+            mShownItemsData[position].rank_change == "up" ->
                 App.instance.resources.getIdentifier(
                         "green_triangle_up", "drawable", App.instance.packageName)
-            mItemsData[position].rank_change == "down" ->
+            mShownItemsData[position].rank_change == "down" ->
                 App.instance.resources.getIdentifier(
                         "red_triangle_down", "drawable", App.instance.packageName)
-            mItemsData[position].rank_change == "same" ->
+            mShownItemsData[position].rank_change == "same" ->
                 App.instance.resources.getIdentifier(
                         "yellow_circle", "drawable", App.instance.packageName)
             else -> 0

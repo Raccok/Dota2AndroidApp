@@ -33,7 +33,13 @@
         <activity
             android:name="github.com.rhacco.dota2androidapp.activities.LeaderboardsActivity"
             android:label="@string/activity_leaderboards"
+            android:launchMode="singleTop"
             android:parentActivityName="github.com.rhacco.dota2androidapp.activities.LeaderboardsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                       android:resource="@xml/searchable_leaderboards"/>
         </activity>
         <activity
             android:name="github.com.rhacco.dota2androidapp.activities.AboutActivity"
