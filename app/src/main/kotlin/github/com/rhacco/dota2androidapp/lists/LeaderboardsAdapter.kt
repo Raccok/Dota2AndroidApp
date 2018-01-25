@@ -61,23 +61,29 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
         }
         holder.name.text = mShownItemsData[position].name
         val iconId = when {
-            mShownItemsData[position].rank_change == "up" ->
+            mShownItemsData[position].last_rank == null -> 0
+            mShownItemsData[position].rank < mShownItemsData[position].last_rank!! ->
                 App.instance.resources.getIdentifier(
                         "green_triangle_up", "drawable", App.instance.packageName)
-            mShownItemsData[position].rank_change == "down" ->
+            mShownItemsData[position].rank > mShownItemsData[position].last_rank!! ->
                 App.instance.resources.getIdentifier(
                         "red_triangle_down", "drawable", App.instance.packageName)
-            mShownItemsData[position].rank_change == "same" ->
+            else ->
                 App.instance.resources.getIdentifier(
                         "yellow_circle", "drawable", App.instance.packageName)
-            else -> 0
         }
         if (iconId > 0) {
             holder.rank_change.setImageDrawable(
                     ContextCompat.getDrawable(App.instance.applicationContext, iconId))
             holder.rank_change.visibility = View.VISIBLE
-        } else
+            holder.last_rank_text.visibility = View.VISIBLE
+            holder.last_rank.text = mShownItemsData[position].last_rank.toString()
+            holder.last_rank.visibility = View.VISIBLE
+        } else {
             holder.rank_change.visibility = View.GONE
+            holder.last_rank_text.visibility = View.GONE
+            holder.last_rank.visibility = View.GONE
+        }
     }
 }
 

@@ -69,28 +69,28 @@ abstract class AppDatabase : RoomDatabase() {
             "americas" -> {
                 val converted: MutableList<LeaderboardEntryAmericas> = mutableListOf()
                 leaderboard.forEach {
-                    converted.add(LeaderboardEntryAmericas(it.rank, it.name, it.rank_change))
+                    converted.add(LeaderboardEntryAmericas(it.rank, it.name, it.last_rank))
                 }
                 leaderboardsDao().storeLeaderboardAmericas(converted)
             }
             "europe" -> {
                 val converted: MutableList<LeaderboardEntryEurope> = mutableListOf()
                 leaderboard.forEach {
-                    converted.add(LeaderboardEntryEurope(it.rank, it.name, it.rank_change))
+                    converted.add(LeaderboardEntryEurope(it.rank, it.name, it.last_rank))
                 }
                 leaderboardsDao().storeLeaderboardEurope(converted)
             }
             "se_asia" -> {
                 val converted: MutableList<LeaderboardEntrySEAsia> = mutableListOf()
                 leaderboard.forEach {
-                    converted.add(LeaderboardEntrySEAsia(it.rank, it.name, it.rank_change))
+                    converted.add(LeaderboardEntrySEAsia(it.rank, it.name, it.last_rank))
                 }
                 leaderboardsDao().storeLeaderboardSEAsia(converted)
             }
             "china" -> {
                 val converted: MutableList<LeaderboardEntryChina> = mutableListOf()
                 leaderboard.forEach {
-                    converted.add(LeaderboardEntryChina(it.rank, it.name, it.rank_change))
+                    converted.add(LeaderboardEntryChina(it.rank, it.name, it.last_rank))
                 }
                 leaderboardsDao().storeLeaderboardChina(converted)
             }
@@ -99,7 +99,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     private fun convert(leaderboard: List<LeaderboardEntryEntity>): List<LeaderboardsResponse.Entry> {
         val converted: MutableList<LeaderboardsResponse.Entry> = mutableListOf()
-        leaderboard.forEach { converted.add(LeaderboardsResponse.Entry(it.rank, it.name, it.rank_change)) }
+        leaderboard.forEach { converted.add(LeaderboardsResponse.Entry(it.rank, it.name, it.last_rank)) }
         return converted
     }
 

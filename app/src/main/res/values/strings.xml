@@ -47,6 +47,7 @@
         and press Enter.
     </string>
     <string name="search_hint_leaderboards">Find player/team/rank</string>
+    <string name="last_rank_text">Last:</string>
     <string name="title_about">About us</string>
     <string name="paragraph_about0">
         This app is being developed and maintained by a small group of amateur and professional
