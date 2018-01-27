@@ -48,7 +48,8 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
             LeaderboardsViewHolder(mInflater.inflate(R.layout.item_leaderboards, parent, false))
 
     override fun onBindViewHolder(holder: LeaderboardsViewHolder, position: Int) {
-        val rank = mShownItemsData[position].rank
+        val itemData = mShownItemsData[position]
+        val rank = itemData.rank
         holder.rank.text = rank.toString()
         if (mTopRanksToHighlight.contains(rank)) {
             holder.rank.setTextColor(ContextCompat.getColor(
@@ -59,13 +60,14 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
                     App.instance.applicationContext, R.color.text_general))
             holder.rank.setTypeface(null, Typeface.NORMAL)
         }
-        holder.name.text = mShownItemsData[position].name
+        holder.name.text = itemData.name
         val iconId = when {
-            mShownItemsData[position].last_rank == null -> 0
-            mShownItemsData[position].rank < mShownItemsData[position].last_rank!! ->
+            (itemData.last_rank != null && itemData.rank < itemData.last_rank) ||
+                    (itemData.new_in_top_100 != null && itemData.new_in_top_100) ->
                 App.instance.resources.getIdentifier(
                         "green_triangle_up", "drawable", App.instance.packageName)
-            mShownItemsData[position].rank > mShownItemsData[position].last_rank!! ->
+            itemData.last_rank == null -> 0
+            itemData.rank > itemData.last_rank ->
                 App.instance.resources.getIdentifier(
                         "red_triangle_down", "drawable", App.instance.packageName)
             else ->
@@ -76,8 +78,13 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
             holder.rank_change.setImageDrawable(
                     ContextCompat.getDrawable(App.instance.applicationContext, iconId))
             holder.rank_change.visibility = View.VISIBLE
+            if (itemData.last_rank != null) {
+                holder.last_rank.text = itemData.last_rank.toString()
+            } else {
+                holder.last_rank_text.text = ""
+                holder.last_rank.text = ""
+            }
             holder.last_rank_text.visibility = View.VISIBLE
-            holder.last_rank.text = mShownItemsData[position].last_rank.toString()
             holder.last_rank.visibility = View.VISIBLE
         } else {
             holder.rank_change.visibility = View.GONE

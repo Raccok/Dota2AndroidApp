@@ -20,7 +20,7 @@
                android:layout_toStartOf="@+id/last_rank_text"
                tools:ignore="ContentDescription"/>
     <TextView android:id="@+id/last_rank_text"
-              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:layout_width="30dp" android:layout_height="wrap_content"
               android:layout_centerVertical="true"
               android:layout_toLeftOf="@id/last_rank" android:layout_toStartOf="@id/last_rank"
               android:text="@string/last_rank_text"
