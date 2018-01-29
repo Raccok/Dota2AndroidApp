@@ -79,6 +79,7 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
                     ContextCompat.getDrawable(App.instance.applicationContext, iconId))
             holder.rank_change.visibility = View.VISIBLE
             if (itemData.last_rank != null) {
+                holder.last_rank_text.text = App.instance.getString(R.string.last_rank_text)
                 holder.last_rank.text = itemData.last_rank.toString()
             } else {
                 holder.last_rank_text.text = ""
