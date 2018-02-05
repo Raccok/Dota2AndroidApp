@@ -2,6 +2,7 @@ package github.com.rhacco.dota2androidapp.sources.remote
 
 import github.com.rhacco.dota2androidapp.api.LeaderboardsResponse
 import github.com.rhacco.dota2androidapp.api.TopMatchesResponse
+import github.com.rhacco.dota2androidapp.sources.databases.entities.HeroEntity
 import github.com.rhacco.dota2androidapp.utilities.deviceIsOnline
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -16,6 +17,9 @@ interface CustomAPIService {
 
     @GET("TopRecentMatches")
     fun fetchTopRecentMatches(): Observable<List<TopMatchesResponse.Match>>
+
+    @GET("Heroes")
+    fun fetchHeroes(): Observable<List<HeroEntity>>
 
     @GET("Leaderboard")
     fun fetchLeaderboard(@Query("region") region: String): Observable<List<LeaderboardsResponse.Entry>>

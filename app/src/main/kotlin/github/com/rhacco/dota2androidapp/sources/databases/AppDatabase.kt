@@ -5,14 +5,21 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import github.com.rhacco.dota2androidapp.api.LeaderboardsResponse
+import github.com.rhacco.dota2androidapp.sources.databases.daos.HeroesDao
 import github.com.rhacco.dota2androidapp.sources.databases.daos.LeaderboardsDao
 import github.com.rhacco.dota2androidapp.sources.databases.entities.*
 import io.reactivex.Single
 
-@Database(entities = [(LeaderboardEntryAmericas::class), (LeaderboardEntryEurope::class),
-    (LeaderboardEntrySEAsia::class), (LeaderboardEntryChina::class)], version = 1)
+@Database(entities = [HeroEntity::class,
+    LeaderboardEntryAmericas::class, LeaderboardEntryEurope::class,
+    LeaderboardEntrySEAsia::class, LeaderboardEntryChina::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
+    abstract fun heroesDao(): HeroesDao
     abstract fun leaderboardsDao(): LeaderboardsDao
+
+    fun getHeroes(): Single<List<HeroEntity>> = heroesDao().getHeroes()
+
+    fun storeHeroes(heroes: List<HeroEntity>) = heroesDao().storeHeroes(heroes)
 
     fun getLeaderboard(region: String): Single<List<LeaderboardsResponse.Entry>> =
             when (region) {
