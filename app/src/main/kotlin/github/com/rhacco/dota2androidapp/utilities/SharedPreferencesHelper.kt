@@ -19,7 +19,7 @@ class SharedPreferencesHelper(context: Context) {
 
     fun setLeaderboardValid(region: String) {
         val validDate = dateNow()
-        validDate.add(Calendar.DATE, 1)
+        validDate.add(Calendar.HOUR, 1)
         defaultSharedPreferences.edit().putString(
                 leaderboardValidDateKey(region), validDate.time.toString()).apply()
     }

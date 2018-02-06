@@ -1,5 +1,6 @@
 package github.com.rhacco.dota2androidapp.lists
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Typeface
 import android.support.v4.content.ContextCompat
@@ -47,6 +48,7 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): LeaderboardsViewHolder =
             LeaderboardsViewHolder(mInflater.inflate(R.layout.item_leaderboards, parent, false))
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: LeaderboardsViewHolder, position: Int) {
         val itemData = mShownItemsData[position]
         val rank = itemData.rank
@@ -70,27 +72,26 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
             itemData.rank > itemData.last_rank ->
                 App.instance.resources.getIdentifier(
                         "red_triangle_down", "drawable", App.instance.packageName)
-            else ->
-                App.instance.resources.getIdentifier(
-                        "yellow_circle", "drawable", App.instance.packageName)
+            else -> 0
         }
         if (iconId > 0) {
-            holder.rank_change.setImageDrawable(
+            holder.rank_change_icon.setImageDrawable(
                     ContextCompat.getDrawable(App.instance.applicationContext, iconId))
-            holder.rank_change.visibility = View.VISIBLE
+            holder.rank_change_icon.visibility = View.VISIBLE
             if (itemData.last_rank != null) {
-                holder.last_rank_text.text = App.instance.getString(R.string.last_rank_text)
-                holder.last_rank.text = itemData.last_rank.toString()
-            } else {
-                holder.last_rank_text.text = ""
-                holder.last_rank.text = ""
-            }
-            holder.last_rank_text.visibility = View.VISIBLE
-            holder.last_rank.visibility = View.VISIBLE
+                val rankChange = itemData.last_rank - itemData.rank
+                if (rankChange > 0)
+                    holder.rank_change.text =
+                            App.instance.getString(R.string.sign_plus) + rankChange
+                else
+                    holder.rank_change.text =
+                            App.instance.getString(R.string.sign_minus) + (-rankChange)
+            } else
+                holder.rank_change.text = "new"
+            holder.rank_change.visibility = View.VISIBLE
         } else {
+            holder.rank_change_icon.visibility = View.GONE
             holder.rank_change.visibility = View.GONE
-            holder.last_rank_text.visibility = View.GONE
-            holder.last_rank.visibility = View.GONE
         }
     }
 }

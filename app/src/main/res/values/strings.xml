@@ -47,7 +47,6 @@
         and press Enter.
     </string>
     <string name="search_hint_leaderboards">Find player/team/rank</string>
-    <string name="last_rank_text">Last:</string>
     <string name="title_about">About us</string>
     <string name="paragraph_about0">
         This app is being developed and maintained by a small group of amateur and professional
@@ -68,7 +67,9 @@
         by creating a new issue.
     </string>
     <string name="dialog_ok">OK</string>
-    <string name="bullet_point">\u2022</string>
+    <string name="sign_bullet_point">\u2022</string>
+    <string name="sign_plus">\u002B</string>
+    <string name="sign_minus">"\u2212"</string>
     <string name="error_permission_network_state">App needs permission to access the current network
         state!
     </string>

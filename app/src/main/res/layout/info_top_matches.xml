@@ -21,7 +21,7 @@
             <TextView android:id="@+id/bullet_point0"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
-                      android:text="@string/bullet_point"/>
+                      android:text="@string/sign_bullet_point"/>
             <TextView android:id="@+id/bullet_point0_text"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:layout_toEndOf="@id/bullet_point0"
@@ -31,7 +31,7 @@
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:layout_below="@id/bullet_point0_text"
                       android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
-                      android:text="@string/bullet_point"/>
+                      android:text="@string/sign_bullet_point"/>
             <TextView android:id="@+id/bullet_point1_text"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:layout_below="@id/bullet_point0_text"
@@ -42,7 +42,7 @@
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:layout_below="@id/bullet_point1_text"
                       android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
-                      android:text="@string/bullet_point"/>
+                      android:text="@string/sign_bullet_point"/>
             <TextView android:id="@+id/bullet_point2_text"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:layout_below="@id/bullet_point1_text"
@@ -53,7 +53,7 @@
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:layout_below="@id/bullet_point2_text"
                       android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
-                      android:text="@string/bullet_point"/>
+                      android:text="@string/sign_bullet_point"/>
             <TextView android:id="@+id/bullet_point3_text"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:layout_below="@id/bullet_point2_text"
@@ -64,7 +64,7 @@
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:layout_below="@id/bullet_point3_text"
                       android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
-                      android:text="@string/bullet_point"/>
+                      android:text="@string/sign_bullet_point"/>
             <TextView android:id="@+id/bullet_point4_text"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:layout_below="@id/bullet_point3_text"
@@ -75,7 +75,7 @@
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:layout_below="@id/bullet_point4_text"
                       android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
-                      android:text="@string/bullet_point"/>
+                      android:text="@string/sign_bullet_point"/>
             <TextView android:id="@+id/bullet_point5_text"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:layout_below="@id/bullet_point4_text"
@@ -86,7 +86,7 @@
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:layout_below="@id/bullet_point5_text"
                       android:layout_marginLeft="4dp" android:layout_marginRight="4dp"
-                      android:text="@string/bullet_point"/>
+                      android:text="@string/sign_bullet_point"/>
             <TextView android:id="@+id/bullet_point6_text"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:layout_below="@id/bullet_point5_text"
