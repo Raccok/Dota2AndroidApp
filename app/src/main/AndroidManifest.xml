@@ -37,6 +37,12 @@
             android:parentActivityName="github.com.rhacco.dota2androidapp.activities.HeroesActivity">
         </activity>
         <activity
+            android:name="github.com.rhacco.dota2androidapp.activities.HeroInfoActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/activity_heroes"
+            android:parentActivityName="github.com.rhacco.dota2androidapp.activities.HeroesActivity">
+        </activity>
+        <activity
             android:name="github.com.rhacco.dota2androidapp.activities.LeaderboardsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/activity_leaderboards"

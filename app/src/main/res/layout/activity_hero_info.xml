@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/general_gap_to_sides">
+    <ScrollView android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+        <RelativeLayout android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+            <LinearLayout android:id="@+id/header"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          tools:ignore="UseCompoundDrawables">
+                <ImageView android:id="@+id/portrait"
+                           android:layout_width="wrap_content" android:layout_height="60dp"
+                           android:adjustViewBounds="true"
+                           tools:ignore="ContentDescription"/>
+                <TextView android:id="@+id/name"
+                          android:layout_width="wrap_content" android:layout_height="60dp"
+                          android:layout_marginLeft="10dp"
+                          android:layout_marginStart="10dp"
+                          android:gravity="center"
+                          android:textSize="22sp"/>
+            </LinearLayout>
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@id/header">
+                <TextView android:id="@+id/basic_keywords"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_marginTop="5dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/base_stats"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/basic_keywords"
+                          android:layout_marginTop="20dp"
+                          android:text="Base Stats"
+                          android:textSize="@dimen/text_title"
+                          tools:ignore="HardcodedText"/>
+                <TextView android:id="@+id/strength"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/base_stats"
+                          android:layout_marginTop="10dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/agility"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/strength"
+                          android:layout_marginTop="2dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/intelligence"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/agility"
+                          android:layout_marginTop="2dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/health"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/base_stats"
+                          android:layout_marginLeft="25dp"
+                          android:layout_marginTop="10dp"
+                          android:layout_toRightOf="@id/strength"
+                          android:textSize="@dimen/text_hero_info"
+                          tools:ignore="RtlHardcoded"/>
+                <TextView android:id="@+id/armor"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/strength"
+                          android:layout_marginLeft="25dp"
+                          android:layout_marginTop="2dp"
+                          android:layout_toRightOf="@id/agility"
+                          android:textSize="@dimen/text_hero_info"
+                          tools:ignore="RtlHardcoded"/>
+                <TextView android:id="@+id/mana"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@+id/agility"
+                          android:layout_marginLeft="25dp"
+                          android:layout_marginTop="2dp"
+                          android:layout_toRightOf="@id/intelligence"
+                          android:textSize="@dimen/text_hero_info"
+                          tools:ignore="RtlHardcoded"/>
+                <TextView android:id="@+id/damage"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/intelligence"
+                          android:layout_marginTop="10dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/attack_rate"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/damage"
+                          android:layout_marginTop="2dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/attack_range"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/attack_rate"
+                          android:layout_marginTop="2dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/projectile_speed"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/attack_range"
+                          android:layout_marginTop="2dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/magic_resistance"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/projectile_speed"
+                          android:layout_marginTop="10dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/movement_speed"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/magic_resistance"
+                          android:layout_marginTop="10dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/turn_rate"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/movement_speed"
+                          android:layout_marginTop="2dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/abilities_title"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/turn_rate"
+                          android:layout_marginTop="20dp"
+                          android:text="Abilities"
+                          android:textSize="@dimen/text_title"
+                          tools:ignore="HardcodedText"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/abilities"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/abilities_title">
+                </android.support.v7.widget.RecyclerView>
+                <TextView android:id="@+id/talents_title"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/abilities"
+                          android:layout_marginTop="20dp"
+                          android:text="Talents"
+                          android:textSize="@dimen/text_title"
+                          tools:ignore="HardcodedText"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/talents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/talents_title">
+                </android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+    <include layout="@layout/navigation_drawer"/>
+</android.support.v4.widget.DrawerLayout>

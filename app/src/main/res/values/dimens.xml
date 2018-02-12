@@ -9,4 +9,5 @@
     <dimen name="padding_hero_portrait_vert">2dp</dimen>
     <dimen name="height_opendota_dotabuff_button">35dp</dimen>
     <dimen name="padding_opendota_dotabuff_button">5dp</dimen>
+    <dimen name="text_hero_info">16sp</dimen>
 </resources>

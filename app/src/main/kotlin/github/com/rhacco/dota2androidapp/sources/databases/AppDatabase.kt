@@ -3,16 +3,19 @@ package github.com.rhacco.dota2androidapp.sources.databases
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.TypeConverters
 import android.content.Context
 import github.com.rhacco.dota2androidapp.api.LeaderboardsResponse
 import github.com.rhacco.dota2androidapp.sources.databases.daos.HeroesDao
 import github.com.rhacco.dota2androidapp.sources.databases.daos.LeaderboardsDao
 import github.com.rhacco.dota2androidapp.sources.databases.entities.*
+import github.com.rhacco.dota2androidapp.utilities.CustomTypeConverters
 import io.reactivex.Single
 
 @Database(entities = [HeroEntity::class,
     LeaderboardEntryAmericas::class, LeaderboardEntryEurope::class,
     LeaderboardEntrySEAsia::class, LeaderboardEntryChina::class], version = 1)
+@TypeConverters(CustomTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun heroesDao(): HeroesDao
     abstract fun leaderboardsDao(): LeaderboardsDao
