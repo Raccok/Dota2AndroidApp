@@ -40,6 +40,7 @@
                           android:layout_marginTop="20dp"
                           android:text="Base Stats"
                           android:textSize="@dimen/text_title"
+                          android:textStyle="bold"
                           tools:ignore="HardcodedText"/>
                 <TextView android:id="@+id/strength"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -121,6 +122,7 @@
                           android:layout_marginTop="20dp"
                           android:text="Abilities"
                           android:textSize="@dimen/text_title"
+                          android:textStyle="bold"
                           tools:ignore="HardcodedText"/>
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/abilities"
@@ -134,6 +136,7 @@
                           android:layout_marginTop="20dp"
                           android:text="Talents"
                           android:textSize="@dimen/text_title"
+                          android:textStyle="bold"
                           tools:ignore="HardcodedText"/>
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/talents"

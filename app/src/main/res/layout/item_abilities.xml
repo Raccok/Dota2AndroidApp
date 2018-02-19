@@ -2,11 +2,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent" android:layout_height="wrap_content">
     <TextView android:id="@+id/name"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content" android:layout_marginTop="10dp"
-              android:textSize="@dimen/text_hero_info"/>
-    <TextView android:id="@+id/description"
+              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:textSize="17sp"/>
+    <TextView android:id="@+id/behavior"
               android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:layout_below="@id/name"
-              android:layout_marginTop="2dp"/>
+              android:layout_marginTop="2dp"
+              android:textSize="@dimen/text_hero_info"/>
+    <TextView android:id="@+id/dmg_type"
+              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:layout_below="@id/behavior"
+              android:layout_marginTop="2dp"
+              android:textSize="@dimen/text_hero_info"/>
+    <TextView android:id="@+id/pierces_spell_immunity"
+              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:layout_below="@id/dmg_type"
+              android:layout_marginTop="2dp"
+              android:textSize="@dimen/text_hero_info"/>
+    <TextView android:id="@+id/cooldown"
+              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:layout_below="@id/pierces_spell_immunity"
+              android:layout_marginTop="2dp"
+              android:textSize="@dimen/text_hero_info"/>
+    <TextView android:id="@+id/mana_cost"
+              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:layout_below="@id/cooldown"
+              android:layout_marginTop="2dp"
+              android:textSize="@dimen/text_hero_info"/>
 </RelativeLayout>
