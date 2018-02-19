@@ -65,6 +65,7 @@ class HeroInfoActivity : BaseNavigationDrawerActivity() {
         val abilitiesAdapter = AbilitiesAdapter(this)
         abilities.adapter = abilitiesAdapter
         abilities.layoutManager = LinearLayoutManager(this)
+        abilities.isNestedScrollingEnabled = false
         abilitiesAdapter.update(hero.abilities)
     }
 }

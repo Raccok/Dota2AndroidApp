@@ -6,10 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/general_gap_to_sides">
-    <ScrollView android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <RelativeLayout android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:focusableInTouchMode="true">
             <LinearLayout android:id="@+id/header"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
@@ -146,6 +148,6 @@
                 </android.support.v7.widget.RecyclerView>
             </RelativeLayout>
         </RelativeLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
     <include layout="@layout/navigation_drawer"/>
 </android.support.v4.widget.DrawerLayout>
