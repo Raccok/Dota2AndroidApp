@@ -46,6 +46,12 @@ class AbilitiesAdapter(context: Context) : RecyclerView.Adapter<AbilitiesViewHol
             holder.mana_cost.text = "Mana Cost: " + itemData.mc
         else
             holder.mana_cost.visibility = View.GONE
+        if (itemData.attrib.isNotEmpty()) {
+            var attributes = ""
+            itemData.attrib.forEach { attributes += it.header + " " + it.value + "\n" }
+            holder.attributes.text = attributes.removeSuffix("\n")
+        } else
+            holder.attributes.visibility = View.GONE
     }
 }
 

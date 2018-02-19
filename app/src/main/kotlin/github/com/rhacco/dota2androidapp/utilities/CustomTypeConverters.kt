@@ -11,6 +11,7 @@ class CustomTypeConverters {
     private val mDivider1 = "#_#"
     private val mDivider2 = "~_~"
     private val mDivider3 = "§_§"
+    private val mDivider4 = "%_%"
 
     @TypeConverter
     fun stringListToString(strings: List<String>): String = mGson.toJson(strings)
@@ -27,7 +28,7 @@ class CustomTypeConverters {
         abilities.forEach {
             string += it.dname + mDivider1 + it.desc + mDivider1 + it.behavior +
                     mDivider1 + it.dmg_type + mDivider1 + it.bkbpierce + mDivider1 +
-                    attributesToString(it.attrib) + mDivider1 + it.cd + mDivider1 + it.mc +
+                    it.cd + mDivider1 + it.mc + mDivider1 + attributesToString(it.attrib) +
                     mDivider2
         }
         return string.removeSuffix(mDivider2)
@@ -41,23 +42,28 @@ class CustomTypeConverters {
             val values = it.split(mDivider1)
             abilities.add(Ability(
                     values[0], values[1], values[2], values[3], values[4],
-                    stringToAttributes(values[5]), values[6], values[7]))
+                    values[5], values[6], stringToAttributes(values[7])))
         }
         return abilities
     }
 
     private fun attributesToString(attributes: List<Attribute>): String {
+        if (attributes.isEmpty())
+            return " "
         var string = ""
-        attributes.forEach {
-            string += it.header + mDivider3
-        }
-        return string.removeSuffix(mDivider3)
+        attributes.forEach { string += it.header + mDivider3 + it.value + mDivider4 }
+        return string.removeSuffix(mDivider4)
     }
 
     private fun stringToAttributes(string: String): List<Attribute> {
         val attributes: MutableList<Attribute> = mutableListOf()
-        val entries = string.split(mDivider3)
-        entries.forEach { attributes.add(Attribute(it)) }
+        if (string == " ")
+            return attributes
+        val entries = string.split(mDivider4)
+        entries.forEach {
+            val values = it.split(mDivider3)
+            attributes.add(Attribute(values[0], values[1]))
+        }
         return attributes
     }
 }
