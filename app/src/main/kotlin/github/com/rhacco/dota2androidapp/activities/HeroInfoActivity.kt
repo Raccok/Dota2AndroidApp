@@ -31,13 +31,12 @@ class HeroInfoActivity : BaseNavigationDrawerActivity() {
         basicKeywords += " - " + hero.attack_type + " - "
         hero.roles.forEach { basicKeywords += it + ", " }
         basic_keywords.text = basicKeywords.removeSuffix(", ")
-        strength.text = "Str:\t" + hero.base_str + " + " + hero.str_gain + " per level"
-        agility.text = "Agi:\t" + hero.base_agi + " + " + hero.agi_gain + " per level"
-        intelligence.text = "Int:\t\t" + hero.base_int + " + " + hero.int_gain + " per level"
-        health.text = "Health:\t" + (hero.base_health + hero.base_str * 20)
-        armor.text = "Armor:\t" +
-                DecimalFormat("#.0").format(hero.base_armor + hero.base_agi * 0.16470588235)
-        mana.text = "Mana:\t\t" + (hero.base_mana + hero.base_int * 12)
+        str_and_str_per_lvl.text = hero.base_str.toString() + " + " + hero.str_gain + " per level"
+        agi_and_agi_per_lvl.text = hero.base_agi.toString() + " + " + hero.agi_gain + " per level"
+        int_and_int_per_lvl.text = hero.base_int.toString() + " + " + hero.int_gain + " per level"
+        health.text = (hero.base_health + hero.base_str * 20).toString()
+        armor.text = DecimalFormat("#.0").format(hero.base_armor + hero.base_agi * 0.16470588235)
+        mana.text = (hero.base_mana + hero.base_int * 12).toString()
         var attackMin = hero.base_attack_min
         var attackMax = hero.base_attack_max
         when (hero.primary_attr) {
