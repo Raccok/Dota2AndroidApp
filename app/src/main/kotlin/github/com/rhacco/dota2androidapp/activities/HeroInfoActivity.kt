@@ -40,10 +40,10 @@ class HeroInfoActivity : BaseNavigationDrawerActivity() {
         var attackMin = hero.base_attack_min
         var attackMax = hero.base_attack_max
         when (hero.primary_attr) {
-            "str" -> {
+            "Strength" -> {
                 attackMin += hero.base_str; attackMax += hero.base_str
             }
-            "agi" -> {
+            "Agility" -> {
                 attackMin += hero.base_agi; attackMax += hero.base_agi
             }
             else -> {
