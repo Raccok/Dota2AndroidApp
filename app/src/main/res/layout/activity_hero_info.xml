@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="@dimen/general_gap_to_sides">
+    android:layout_height="match_parent">
     <android.support.v4.widget.NestedScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <RelativeLayout android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:focusableInTouchMode="true">
+                        android:focusableInTouchMode="true"
+                        android:padding="@dimen/general_gap_to_sides">
             <LinearLayout android:id="@+id/header"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
@@ -52,11 +52,12 @@
                           android:textSize="@dimen/text_hero_info"
                           tools:ignore="HardcodedText"/>
                 <TextView android:id="@+id/str_and_str_per_lvl"
-                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_width="130dp" android:layout_height="wrap_content"
                           android:layout_below="@id/base_stats"
                           android:layout_marginTop="10dp"
                           android:layout_toEndOf="@+id/str_intro"
                           android:layout_toRightOf="@+id/str_intro"
+                          android:gravity="end"
                           android:textSize="@dimen/text_hero_info"/>
                 <TextView android:id="@+id/agi_intro"
                           android:layout_width="31dp" android:layout_height="wrap_content"
@@ -66,11 +67,12 @@
                           android:textSize="@dimen/text_hero_info"
                           tools:ignore="HardcodedText"/>
                 <TextView android:id="@+id/agi_and_agi_per_lvl"
-                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_width="130dp" android:layout_height="wrap_content"
                           android:layout_below="@id/str_and_str_per_lvl"
                           android:layout_marginTop="2dp"
                           android:layout_toEndOf="@id/agi_intro"
                           android:layout_toRightOf="@id/agi_intro"
+                          android:gravity="end"
                           android:textSize="@dimen/text_hero_info"/>
                 <TextView android:id="@+id/int_intro"
                           android:layout_width="31dp" android:layout_height="wrap_content"
@@ -80,14 +82,15 @@
                           android:textSize="@dimen/text_hero_info"
                           tools:ignore="HardcodedText"/>
                 <TextView android:id="@+id/int_and_int_per_lvl"
-                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_width="130dp" android:layout_height="wrap_content"
                           android:layout_below="@id/agi_and_agi_per_lvl"
                           android:layout_marginTop="2dp"
                           android:layout_toEndOf="@id/int_intro"
                           android:layout_toRightOf="@id/int_intro"
+                          android:gravity="end"
                           android:textSize="@dimen/text_hero_info"/>
                 <TextView android:id="@+id/health_intro"
-                          android:layout_width="55dp" android:layout_height="wrap_content"
+                          android:layout_width="56dp" android:layout_height="wrap_content"
                           android:layout_below="@id/base_stats"
                           android:layout_marginLeft="25dp"
                           android:layout_marginTop="10dp"
@@ -103,7 +106,7 @@
                           android:textSize="@dimen/text_hero_info"
                           tools:ignore="RtlHardcoded"/>
                 <TextView android:id="@+id/armor_intro"
-                          android:layout_width="55dp" android:layout_height="wrap_content"
+                          android:layout_width="56dp" android:layout_height="wrap_content"
                           android:layout_below="@id/health_intro"
                           android:layout_marginLeft="25dp"
                           android:layout_marginTop="2dp"
@@ -119,7 +122,7 @@
                           android:textSize="@dimen/text_hero_info"
                           tools:ignore="RtlHardcoded"/>
                 <TextView android:id="@+id/mana_intro"
-                          android:layout_width="55dp" android:layout_height="wrap_content"
+                          android:layout_width="56dp" android:layout_height="wrap_content"
                           android:layout_below="@id/armor_intro"
                           android:layout_marginLeft="25dp"
                           android:layout_marginTop="2dp"
@@ -157,12 +160,12 @@
                 <TextView android:id="@+id/magic_resistance"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/projectile_speed"
-                          android:layout_marginTop="10dp"
+                          android:layout_marginTop="2dp"
                           android:textSize="@dimen/text_hero_info"/>
                 <TextView android:id="@+id/movement_speed"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/magic_resistance"
-                          android:layout_marginTop="10dp"
+                          android:layout_marginTop="2dp"
                           android:textSize="@dimen/text_hero_info"/>
                 <TextView android:id="@+id/turn_rate"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
