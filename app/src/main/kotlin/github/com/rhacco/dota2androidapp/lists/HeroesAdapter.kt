@@ -17,28 +17,46 @@ import kotlinx.android.synthetic.main.item_heroes.*
 class HeroesAdapter(private val mContext: Context) : RecyclerView.Adapter<HeroesViewHolder>() {
     private val mInflater: LayoutInflater = LayoutInflater.from(mContext)
     private var mItemsData: List<HeroEntity> = listOf()
+    private var mShownItemsData: List<HeroEntity> = listOf()
 
     fun update(heroes: List<HeroEntity>) {
         mItemsData = heroes
+        showAllEntries()
+    }
+
+    fun handleSearchQuery(query: String) {
+        mShownItemsData = mItemsData.filter {
+            it.localized_name.contains(query, true) ||
+                    it.attack_type.contains(query, true) ||
+                    it.roles.contains(query, true) ||
+                    it.primary_attr.contains(query, true)
+        }
         notifyDataSetChanged()
     }
 
-    fun getHero(position: Int): HeroEntity = mItemsData[position]
+    fun showAllEntries() {
+        if (mShownItemsData != mItemsData) {
+            mShownItemsData = mItemsData
+            notifyDataSetChanged()
+        }
+    }
 
-    override fun getItemCount(): Int = mItemsData.size
+    fun getHero(position: Int): HeroEntity = mShownItemsData[position]
+
+    override fun getItemCount(): Int = mShownItemsData.size
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): HeroesViewHolder =
             HeroesViewHolder(mInflater.inflate(R.layout.item_heroes, parent, false), this, mContext)
 
     override fun onBindViewHolder(holder: HeroesViewHolder, position: Int) {
         val iconId = App.instance.resources.getIdentifier(
-                "hero_portrait_vert_" + mItemsData[position].id,
+                "hero_portrait_vert_" + mShownItemsData[position].id,
                 "drawable", App.instance.packageName)
         if (iconId > 0) {
             holder.portrait.setImageDrawable(
                     ContextCompat.getDrawable(App.instance.applicationContext, iconId))
         }
-        holder.name.text = mItemsData[position].localized_name
+        holder.name.text = mShownItemsData[position].localized_name
     }
 }
 

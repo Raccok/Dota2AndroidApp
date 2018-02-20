@@ -5,7 +5,7 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "heroes")
 data class HeroEntity(@PrimaryKey val localized_name: String, val id: Int,
-                      val primary_attr: String, val attack_type: String, val roles: List<String>,
+                      val primary_attr: String, val attack_type: String, val roles: String,
                       val base_str: Int, val base_agi: Int, val base_int: Int,
                       val str_gain: Float, val agi_gain: Float, val int_gain: Float,
                       val base_health: Int, val base_armor: Float, val base_mana: Int,

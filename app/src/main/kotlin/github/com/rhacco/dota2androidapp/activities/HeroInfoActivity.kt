@@ -24,14 +24,7 @@ class HeroInfoActivity : BaseNavigationDrawerActivity() {
         portrait.setImageDrawable(ContextCompat.getDrawable(applicationContext,
                 resources.getIdentifier("hero_portrait_vert_" + hero.id, "drawable", packageName)))
         name.text = hero.localized_name
-        var basicKeywords = when (hero.primary_attr) {
-            "str" -> "Strength"
-            "agi" -> "Agility"
-            else -> "Intelligence"
-        }
-        basicKeywords += " - " + hero.attack_type + " - "
-        hero.roles.forEach { basicKeywords += it + ", " }
-        basic_keywords.text = basicKeywords.removeSuffix(", ")
+        basic_keywords.text = hero.primary_attr + " - " + hero.attack_type + " - " + hero.roles
         str_and_str_per_lvl.text = hero.base_str.toString() + " + " +
                 DecimalFormat("0.0").format(hero.str_gain + 0.0001) + " per level"
         agi_and_agi_per_lvl.text = hero.base_agi.toString() + " + " +
