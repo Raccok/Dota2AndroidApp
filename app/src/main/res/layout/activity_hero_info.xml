@@ -194,12 +194,102 @@
                           android:textSize="@dimen/text_title"
                           android:textStyle="bold"
                           tools:ignore="HardcodedText"/>
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/talents"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/talents_title">
-                </android.support.v7.widget.RecyclerView>
+                <TextView android:id="@+id/lvl_25_intro"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/talents_title"
+                          android:layout_marginTop="10dp"
+                          android:text="Level 25:"
+                          android:textSize="17sp"
+                          tools:ignore="HardcodedText"/>
+                <TextView android:id="@+id/talent7"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/lvl_25_intro"
+                          android:layout_marginTop="4dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/or1"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/talent7"
+                          android:layout_marginTop="2dp"
+                          android:text="or"
+                          android:textSize="15sp"
+                          tools:ignore="HardcodedText"/>
+                <TextView android:id="@+id/talent6"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/or1"
+                          android:layout_marginTop="2dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/lvl_20_intro"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/talent6"
+                          android:layout_marginTop="8dp"
+                          android:text="Level 20:"
+                          android:textSize="17sp"
+                          tools:ignore="HardcodedText"/>
+                <TextView android:id="@+id/talent5"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/lvl_20_intro"
+                          android:layout_marginTop="4dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/or2"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/talent5"
+                          android:layout_marginTop="2dp"
+                          android:text="or"
+                          android:textSize="15sp"
+                          tools:ignore="HardcodedText"/>
+                <TextView android:id="@+id/talent4"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/or2"
+                          android:layout_marginTop="2dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/lvl_15_intro"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/talent4"
+                          android:layout_marginTop="8dp"
+                          android:text="Level 15:"
+                          android:textSize="17sp"
+                          tools:ignore="HardcodedText"/>
+                <TextView android:id="@+id/talent3"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/lvl_15_intro"
+                          android:layout_marginTop="4dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/or3"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/talent3"
+                          android:layout_marginTop="2dp"
+                          android:text="or"
+                          android:textSize="15sp"
+                          tools:ignore="HardcodedText"/>
+                <TextView android:id="@+id/talent2"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/or3"
+                          android:layout_marginTop="2dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/lvl_10_intro"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/talent2"
+                          android:layout_marginTop="8dp"
+                          android:text="Level 10:"
+                          android:textSize="17sp"
+                          tools:ignore="HardcodedText"/>
+                <TextView android:id="@+id/talent1"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/lvl_10_intro"
+                          android:layout_marginTop="4dp"
+                          android:textSize="@dimen/text_hero_info"/>
+                <TextView android:id="@+id/or4"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/talent1"
+                          android:layout_marginTop="2dp"
+                          android:text="or"
+                          android:textSize="15sp"
+                          tools:ignore="HardcodedText"/>
+                <TextView android:id="@+id/talent0"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/or4"
+                          android:layout_marginTop="2dp"
+                          android:textSize="@dimen/text_hero_info"/>
             </RelativeLayout>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>

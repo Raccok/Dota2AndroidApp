@@ -12,7 +12,7 @@ data class HeroEntity(@PrimaryKey val localized_name: String, val id: Int,
                       val base_attack_min: Int, val base_attack_max: Int,
                       val attack_rate: Float, val attack_range: Int, val projectile_speed: Int,
                       val base_mr: Int, val move_speed: Int, val turn_rate: Float,
-                      val abilities: List<Ability>)
+                      val abilities: List<Ability>, val talents: List<String>)
 
 data class Ability(val dname: String, val desc: String, val behavior: String, val dmg_type: String?,
                    val bkbpierce: String?, val cd: String?, val mc: String?, val attrib: List<Attribute>)

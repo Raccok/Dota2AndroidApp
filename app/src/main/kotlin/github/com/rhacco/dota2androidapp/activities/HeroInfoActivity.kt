@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
@@ -72,5 +73,18 @@ class HeroInfoActivity : BaseNavigationDrawerActivity() {
         abilities.layoutManager = LinearLayoutManager(this)
         abilities.isNestedScrollingEnabled = false
         abilitiesAdapter.update(hero.abilities)
+
+        if (hero.talents.size == 8) {
+            talent0.text = hero.talents[0]
+            talent1.text = hero.talents[1]
+            talent2.text = hero.talents[2]
+            talent3.text = hero.talents[3]
+            talent4.text = hero.talents[4]
+            talent5.text = hero.talents[5]
+            talent6.text = hero.talents[6]
+            talent7.text = hero.talents[7]
+        } else
+            Log.d(getString(R.string.log_msg_debug),
+                    "Hero " + hero.localized_name + " does not have exactly 8 talents")
     }
 }
