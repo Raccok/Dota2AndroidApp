@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background_tabs">#262628</color>
     <color name="background_general">#303035</color>
+    <color name="background_general_darker">#262628</color>
     <color name="background_button">#505050</color>
     <color name="text_general">#F5F5F5</color>
     <color name="text_additional_info">#BDBDBD</color>
