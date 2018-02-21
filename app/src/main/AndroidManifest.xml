@@ -31,6 +31,24 @@
             android:parentActivityName="github.com.rhacco.dota2androidapp.activities.TopMatchesActivity">
         </activity>
         <activity
+            android:name="github.com.rhacco.dota2androidapp.activities.HeroesActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/activity_heroes"
+            android:launchMode="singleTop"
+            android:parentActivityName="github.com.rhacco.dota2androidapp.activities.HeroesActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                       android:resource="@xml/searchable_heroes"/>
+        </activity>
+        <activity
+            android:name="github.com.rhacco.dota2androidapp.activities.HeroInfoActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/activity_heroes"
+            android:parentActivityName="github.com.rhacco.dota2androidapp.activities.HeroesActivity">
+        </activity>
+        <activity
             android:name="github.com.rhacco.dota2androidapp.activities.LeaderboardsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/activity_leaderboards"
