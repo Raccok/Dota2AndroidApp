@@ -8,11 +8,12 @@
     <dimen name="margin_paragraph">10dp</dimen>
     <dimen name="margin_paragraph_larger">15dp</dimen>
     <dimen name="margin_paragraph_large">20dp</dimen>
+    <dimen name="margin_paragraph_smaller">5dp</dimen>
     <dimen name="margin_paragraph_small">2dp</dimen>
     <dimen name="height_hero_portrait_vert">40dp</dimen>
     <dimen name="padding_hero_portrait_vert">2dp</dimen>
     <dimen name="height_opendota_dotabuff_button">35dp</dimen>
     <dimen name="padding_opendota_dotabuff_button">5dp</dimen>
-    <dimen name="text_hero_info">16sp</dimen>
+    <dimen name="text_hero_item_info">16sp</dimen>
     <dimen name="text_hero_info_smaller">15sp</dimen>
 </resources>

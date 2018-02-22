@@ -21,8 +21,9 @@ class HeroInfoActivity : BaseNavigationDrawerActivity() {
         super.initNavigationDrawer(drawer_layout)
         val hero = App.sCurrentHeroToDisplay
 
-        portrait.setImageDrawable(ContextCompat.getDrawable(applicationContext,
-                resources.getIdentifier("hero_portrait_vert_" + hero.id, "drawable", packageName)))
+        val iconId = resources.getIdentifier("hero_portrait_vert_" + hero.id, "drawable", packageName)
+        if (iconId > 0)
+            portrait.setImageDrawable(ContextCompat.getDrawable(applicationContext, iconId))
         name.text = hero.localized_name
         basic_keywords.text = hero.primary_attr + " - " + hero.attack_type + " - " + hero.roles
         str_and_str_per_lvl.text = hero.base_str.toString() + " + " +

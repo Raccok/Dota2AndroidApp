@@ -61,6 +61,12 @@
                        android:resource="@xml/searchable_items"/>
         </activity>
         <activity
+            android:name="github.com.rhacco.dota2androidapp.activities.ItemInfoActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/activity_items"
+            android:parentActivityName="github.com.rhacco.dota2androidapp.activities.ItemsActivity">
+        </activity>
+        <activity
             android:name="github.com.rhacco.dota2androidapp.activities.LeaderboardsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/activity_leaderboards"
