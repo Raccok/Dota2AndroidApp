@@ -22,6 +22,14 @@ class SharedPreferencesHelper(context: Context) {
         defaultSharedPreferences.edit().putString(HEROES_VALID, validDate.time.toString()).apply()
     }
 
+    fun getItemsValid(): Boolean = !(dateNow().after(getDate(ITEMS_VALID)))
+
+    fun setItemsValid() {
+        val validDate = dateNow()
+        validDate.add(Calendar.DATE, 14)
+        defaultSharedPreferences.edit().putString(ITEMS_VALID, validDate.time.toString()).apply()
+    }
+
     fun getLeaderboardValid(region: String): Boolean =
             !(dateNow().after(getDate(leaderboardValidDateKey(region))))
 
@@ -53,5 +61,6 @@ class SharedPreferencesHelper(context: Context) {
     companion object {
         private const val IS_FIRST_APP_START = "is_first_app_start"
         private const val HEROES_VALID = "heroes_valid"
+        private const val ITEMS_VALID = "items_valid"
     }
 }

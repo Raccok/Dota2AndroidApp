@@ -8,10 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import github.com.rhacco.dota2androidapp.App
 import github.com.rhacco.dota2androidapp.R
-import github.com.rhacco.dota2androidapp.activities.AboutActivity
-import github.com.rhacco.dota2androidapp.activities.HeroesActivity
-import github.com.rhacco.dota2androidapp.activities.LeaderboardsActivity
-import github.com.rhacco.dota2androidapp.activities.TopMatchesActivity
+import github.com.rhacco.dota2androidapp.activities.*
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_navigation_drawer.*
 
@@ -24,6 +21,7 @@ class BaseNavigationDrawerAdapter(context: Context) :
     init {
         mActivityNames.add(App.instance.getString(R.string.activity_top_matches))
         mActivityNames.add(App.instance.getString(R.string.activity_heroes))
+        mActivityNames.add(App.instance.getString(R.string.activity_items))
         mActivityNames.add(App.instance.getString(R.string.activity_leaderboards))
         mActivityNames.add(App.instance.getString(R.string.activity_about))
     }
@@ -33,8 +31,9 @@ class BaseNavigationDrawerAdapter(context: Context) :
         when (itemPosition) {
             0 -> intent = Intent(mContext, TopMatchesActivity::class.java)
             1 -> intent = Intent(mContext, HeroesActivity::class.java)
-            2 -> intent = Intent(mContext, LeaderboardsActivity::class.java)
-            3 -> intent = Intent(mContext, AboutActivity::class.java)
+            2 -> intent = Intent(mContext, ItemsActivity::class.java)
+            3 -> intent = Intent(mContext, LeaderboardsActivity::class.java)
+            4 -> intent = Intent(mContext, AboutActivity::class.java)
         }
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         mContext.startActivity(intent)

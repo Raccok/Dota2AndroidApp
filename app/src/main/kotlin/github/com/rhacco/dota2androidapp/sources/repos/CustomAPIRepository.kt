@@ -3,6 +3,7 @@ package github.com.rhacco.dota2androidapp.sources.repos
 import github.com.rhacco.dota2androidapp.api.LeaderboardsResponse
 import github.com.rhacco.dota2androidapp.api.TopMatchesResponse
 import github.com.rhacco.dota2androidapp.sources.databases.entities.HeroEntity
+import github.com.rhacco.dota2androidapp.sources.databases.entities.ItemEntity
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -20,6 +21,11 @@ object CustomAPIRepository {
 
     fun getHeroes(): Single<List<HeroEntity>> =
             CustomAPILocalDataSource.getHeroes()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+
+    fun getItems(): Single<List<ItemEntity>> =
+            CustomAPILocalDataSource.getItems()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
 
