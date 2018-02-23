@@ -1,4 +1,4 @@
-# Dota2AndroidApp
+# DotaScoop
 
 A community project aiming to provide convenient features and content to the Dota 2 community.
 
@@ -10,7 +10,7 @@ The app is not yet available on the Play Store. However, you can still easily in
 
 On your device, go to `Settings > Security > Unknown sources` and enable "Allow installation of apps from unknown sources". On Android 8 or higher, go to `Settings > Apps & notifications > Advanced > Special app access > Install unknown apps` and allow your device's browser (most likely Chrome) to install unknown apps. Then, in your device's browser, click the following link to download the latest version:
 
-https://sourceforge.net/projects/dota2androidapp/files/Dota2AndroidApp.apk/download
+https://sourceforge.net/projects/dotascoop/files/DotaScoop.apk/download
 
 Open the downloaded file and follow the installation instructions, then you should be able to use this app like any other. For security reasons, disable "Allow installation of apps from unknown sources" again.
 
@@ -26,7 +26,7 @@ Download Android Studio from [here](https://developer.android.com/studio/index.h
 
 Start the installer and install Android Studio with the Android SDK and the recommended preconfigured virtual Android device. When this installation is finished and you start Android Studio for the first time, strangely enough another installation starts. Click `Next`, select "Custom" installation instead of "Standard" and click `Next`. Select your UI theme, click `Next`, select "Android Virtual Device", click `Next`, click `Next` and click `Finish`.
 
-In Android Studio, choose `Open an existing Android Studio project` and open the `Dota2AndroidApp` folder which you received by cloning this repository earlier. When presented with a window titled "Gradle Sync", click `OK`. When presented with a Windows Firewall window, click `Allow access`. When presented with the "Tip of the Day" window, click `Close`.
+In Android Studio, choose `Open an existing Android Studio project` and open the `DotaScoop` folder which you received by cloning this repository earlier. When presented with a window titled "Gradle Sync", click `OK`. When presented with a Windows Firewall window, click `Allow access`. When presented with the "Tip of the Day" window, click `Close`.
 
 Now you are probably presented with an error "Failed to find target [...]". Click `Install missing platform(s) and sync project`. Accept the agreement and click `Next`, when it's done click `Finish`. If you are presented with other errors like this, proceed the same way to install all missing components.
 

@@ -13,9 +13,9 @@ In the following, replace `YourUsername` with your actual GitHub username. Provi
 - Create your own fork of this project
 - On your system, inside the directory of your choice, use
 ```
-git clone https://github.com/YourUsername/Dota2AndroidApp.git
+git clone https://github.com/YourUsername/DotaScoop.git
 ```
-(or `git clone git@github.com:YourUsername/Dota2AndroidApp.git` if you set up SSH authentication)
+(or `git clone git@github.com:YourUsername/DotaScoop.git` if you set up SSH authentication)
 - Recommended: Set up Android Studio with a virtual Android device as described in `README.md`. Other setups are not officially tested/supported
 
 ### Implementing code changes

@@ -75,7 +75,7 @@
                            android:layout_marginTop="@dimen/margin_paragraph_large"
                            android:layout_toEndOf="@id/notes"
                            android:layout_toRightOf="@id/notes"
-                           android:src="@drawable/info_24dp"
+                           android:src="@drawable/ic_info_white_24dp"
                            tools:ignore="ContentDescription"/>
                 <TextView android:id="@+id/lore"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"

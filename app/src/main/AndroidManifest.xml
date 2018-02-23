@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="github.com.rhacco.dota2androidapp">
+          package="github.com.rhacco.dotascoop">
 
     <!-- All Android permissions that the app makes use of -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -10,32 +10,32 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@drawable/dota2logo"
+        android:icon="@drawable/app_logo_launcher"
         android:label="@string/app_name"
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,AllowBackup">
         <activity
-            android:name="github.com.rhacco.dota2androidapp.activities.MainActivity"
+            android:name="github.com.rhacco.dotascoop.activities.MainActivity"
             android:label="@string/app_name"
-            android:parentActivityName="github.com.rhacco.dota2androidapp.activities.MainActivity">
+            android:parentActivityName="github.com.rhacco.dotascoop.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name="github.com.rhacco.dota2androidapp.activities.TopMatchesActivity"
+            android:name="github.com.rhacco.dotascoop.activities.TopMatchesActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/activity_top_matches"
-            android:parentActivityName="github.com.rhacco.dota2androidapp.activities.TopMatchesActivity">
+            android:parentActivityName="github.com.rhacco.dotascoop.activities.TopMatchesActivity">
         </activity>
         <activity
-            android:name="github.com.rhacco.dota2androidapp.activities.HeroesActivity"
+            android:name="github.com.rhacco.dotascoop.activities.HeroesActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/activity_heroes"
             android:launchMode="singleTop"
-            android:parentActivityName="github.com.rhacco.dota2androidapp.activities.HeroesActivity">
+            android:parentActivityName="github.com.rhacco.dotascoop.activities.HeroesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
@@ -43,17 +43,17 @@
                        android:resource="@xml/searchable_heroes"/>
         </activity>
         <activity
-            android:name="github.com.rhacco.dota2androidapp.activities.HeroInfoActivity"
+            android:name="github.com.rhacco.dotascoop.activities.HeroInfoActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/activity_heroes"
-            android:parentActivityName="github.com.rhacco.dota2androidapp.activities.HeroesActivity">
+            android:parentActivityName="github.com.rhacco.dotascoop.activities.HeroesActivity">
         </activity>
         <activity
-            android:name="github.com.rhacco.dota2androidapp.activities.ItemsActivity"
+            android:name="github.com.rhacco.dotascoop.activities.ItemsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/activity_items"
             android:launchMode="singleTop"
-            android:parentActivityName="github.com.rhacco.dota2androidapp.activities.ItemsActivity">
+            android:parentActivityName="github.com.rhacco.dotascoop.activities.ItemsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
@@ -61,17 +61,17 @@
                        android:resource="@xml/searchable_items"/>
         </activity>
         <activity
-            android:name="github.com.rhacco.dota2androidapp.activities.ItemInfoActivity"
+            android:name="github.com.rhacco.dotascoop.activities.ItemInfoActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/activity_items"
-            android:parentActivityName="github.com.rhacco.dota2androidapp.activities.ItemsActivity">
+            android:parentActivityName="github.com.rhacco.dotascoop.activities.ItemsActivity">
         </activity>
         <activity
-            android:name="github.com.rhacco.dota2androidapp.activities.LeaderboardsActivity"
+            android:name="github.com.rhacco.dotascoop.activities.LeaderboardsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/activity_leaderboards"
             android:launchMode="singleTop"
-            android:parentActivityName="github.com.rhacco.dota2androidapp.activities.LeaderboardsActivity">
+            android:parentActivityName="github.com.rhacco.dotascoop.activities.LeaderboardsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
@@ -79,9 +79,9 @@
                        android:resource="@xml/searchable_leaderboards"/>
         </activity>
         <activity
-            android:name="github.com.rhacco.dota2androidapp.activities.AboutActivity"
+            android:name="github.com.rhacco.dotascoop.activities.AboutActivity"
             android:label="@string/activity_about"
-            android:parentActivityName="github.com.rhacco.dota2androidapp.activities.AboutActivity">
+            android:parentActivityName="github.com.rhacco.dotascoop.activities.AboutActivity">
         </activity>
     </application>
 </manifest>

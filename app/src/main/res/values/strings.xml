@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Dota 2 Android App</string>
+    <string name="app_name">DotaScoop</string>
     <string name="activity_top_matches">Top Matches</string>
     <string name="activity_heroes">Heroes</string>
     <string name="activity_items">Items</string>
     <string name="activity_leaderboards">Leaderboards</string>
     <string name="activity_about">About</string>
 
-    <string name="log_msg_debug">dota2androidapp.Debug</string>
+    <string name="log_target_debug">dotascoop.Debug</string>
 
     <string name="description_open_drawer">Open Menu</string>
     <string name="description_close_drawer">Close Menu</string>
@@ -57,7 +57,7 @@
         developers. We came together through a post on
         <a href="https://reddit.com/r/dota2/">/r/dota2</a>. You can follow the development and see
         the whole source code
-        <a href="https://github.com/Rhacco/Dota2AndroidApp/">here</a>.
+        <a href="https://github.com/Rhacco/DotaScoop/">here</a>.
     </string>
     <string name="paragraph_about1">
         We started this app in the hopes of learning more about Android development. It has been
@@ -67,7 +67,7 @@
         The current state of the app is not the final result of this project. We are always looking
         for feedback, especially related to the UI. If you have any suggestions or bug reports,
         please let us know
-        <a href="https://github.com/Rhacco/Dota2AndroidApp/issues">here</a>
+        <a href="https://github.com/Rhacco/DotaScoop/issues">here</a>
         by creating a new issue.
     </string>
     <string name="dialog_ok">OK</string>
