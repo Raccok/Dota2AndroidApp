@@ -4,7 +4,8 @@ import android.arch.persistence.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import github.com.rhacco.dota2androidapp.sources.databases.entities.Ability
-import github.com.rhacco.dota2androidapp.sources.databases.entities.Attribute
+import github.com.rhacco.dota2androidapp.sources.databases.entities.AbilityAttribute
+import github.com.rhacco.dota2androidapp.sources.databases.entities.ItemAttribute
 
 class CustomTypeConverters {
     private val mGson = Gson()
@@ -28,7 +29,7 @@ class CustomTypeConverters {
         abilities.forEach {
             string += it.dname + mDivider1 + it.desc + mDivider1 + it.behavior +
                     mDivider1 + it.dmg_type + mDivider1 + it.bkbpierce + mDivider1 +
-                    it.cd + mDivider1 + it.mc + mDivider1 + attributesToString(it.attrib) +
+                    it.cd + mDivider1 + it.mc + mDivider1 + abilityAttributesToString(it.attrib) +
                     mDivider2
         }
         return string.removeSuffix(mDivider2)
@@ -42,12 +43,12 @@ class CustomTypeConverters {
             val values = it.split(mDivider1)
             abilities.add(Ability(
                     values[0], values[1], values[2], values[3], values[4],
-                    values[5], values[6], stringToAttributes(values[7])))
+                    values[5], values[6], stringToAbilityAttributes(values[7])))
         }
         return abilities
     }
 
-    private fun attributesToString(attributes: List<Attribute>): String {
+    private fun abilityAttributesToString(attributes: List<AbilityAttribute>): String {
         if (attributes.isEmpty())
             return " "
         var string = ""
@@ -55,14 +56,38 @@ class CustomTypeConverters {
         return string.removeSuffix(mDivider4)
     }
 
-    private fun stringToAttributes(string: String): List<Attribute> {
-        val attributes: MutableList<Attribute> = mutableListOf()
+    private fun stringToAbilityAttributes(string: String): List<AbilityAttribute> {
+        val attributes: MutableList<AbilityAttribute> = mutableListOf()
         if (string == " ")
             return attributes
         val entries = string.split(mDivider4)
         entries.forEach {
             val values = it.split(mDivider3)
-            attributes.add(Attribute(values[0], values[1]))
+            attributes.add(AbilityAttribute(values[0], values[1]))
+        }
+        return attributes
+    }
+
+    @TypeConverter
+    fun itemAttributesToString(attributes: List<ItemAttribute>): String {
+        if (attributes.isEmpty())
+            return " "
+        var string = ""
+        attributes.forEach {
+            string += it.header + mDivider1 + it.value + mDivider1 + it.footer + mDivider2
+        }
+        return string.removeSuffix(mDivider2)
+    }
+
+    @TypeConverter
+    fun stringToItemAttributes(string: String): List<ItemAttribute> {
+        val attributes: MutableList<ItemAttribute> = mutableListOf()
+        if (string == " ")
+            return attributes
+        val entries = string.split(mDivider2)
+        entries.forEach {
+            val values = it.split(mDivider1)
+            attributes.add(ItemAttribute(values[0], values[1], values[2]))
         }
         return attributes
     }

@@ -15,6 +15,7 @@ data class HeroEntity(@PrimaryKey val localized_name: String, val id: Int,
                       val abilities: List<Ability>, val talents: List<String>)
 
 data class Ability(val dname: String, val desc: String, val behavior: String, val dmg_type: String?,
-                   val bkbpierce: String?, val cd: String?, val mc: String?, val attrib: List<Attribute>)
+                   val bkbpierce: String?, val cd: String?, val mc: String?,
+                   val attrib: List<AbilityAttribute>)
 
-data class Attribute(val header: String, val value: String)
+data class AbilityAttribute(val header: String, val value: String)
