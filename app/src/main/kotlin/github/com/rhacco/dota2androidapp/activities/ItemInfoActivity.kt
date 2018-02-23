@@ -27,8 +27,12 @@ class ItemInfoActivity : BaseNavigationDrawerActivity() {
         if (iconId > 0)
             portrait.setImageDrawable(ContextCompat.getDrawable(applicationContext, iconId))
         name.text = item.dname
+        if (item.components != null && item.components != "null")
+            components.text = "Built from: " + item.components
+        else
+            components.visibility = View.GONE
         if (item.cost > 0)
-            cost.text = "Gold Cost: " + item.cost
+            cost.text = "Cost: " + item.cost
         if (item.attrib.isNotEmpty()) {
             var attributesVal = ""
             item.attrib.forEach {

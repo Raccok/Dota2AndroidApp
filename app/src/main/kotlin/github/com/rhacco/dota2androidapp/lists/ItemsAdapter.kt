@@ -25,7 +25,10 @@ class ItemsAdapter(private val mContext: Context) : RecyclerView.Adapter<ItemsVi
     }
 
     fun handleSearchQuery(query: String) {
-        mShownItemsData = mItemsData.filter { it.dname.contains(query, true) }
+        mShownItemsData = mItemsData.filter {
+            it.dname.contains(query, true) ||
+                    (it.components != null && it.components.contains(query, true))
+        }
         notifyDataSetChanged()
     }
 

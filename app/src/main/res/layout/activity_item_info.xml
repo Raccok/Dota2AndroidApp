@@ -31,8 +31,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_below="@id/header">
+                <TextView android:id="@+id/components"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_marginTop="@dimen/margin_paragraph_smaller"
+                          android:textSize="@dimen/text_hero_item_info"/>
                 <TextView android:id="@+id/cost"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/components"
                           android:layout_marginTop="@dimen/margin_paragraph_smaller"
                           android:textSize="@dimen/text_hero_item_info"/>
                 <TextView android:id="@+id/attributes"
