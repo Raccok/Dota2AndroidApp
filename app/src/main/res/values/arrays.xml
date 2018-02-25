@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Remember to sync MainActivity and BaseNavigationDrawerAdapter -->
+    <string-array name="activities">
+        <item>@string/activity_top_matches</item>
+        <item>@string/activity_heroes</item>
+        <item>@string/activity_items</item>
+        <item>@string/activity_leaderboards</item>
+        <item>@string/activity_settings</item>
+        <item>@string/activity_about</item>
+    </string-array>
+
+    <string-array name="leaderboards">
+        <item>@string/region_americas</item>
+        <item>@string/region_europe</item>
+        <item>@string/region_se_asia</item>
+        <item>@string/region_china</item>
+    </string-array>
+</resources>

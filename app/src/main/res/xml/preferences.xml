@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:defaultValue="@string/activity_top_matches"
+        android:dialogTitle="@string/pref_start_screen"
+        android:entries="@array/activities"
+        android:entryValues="@array/activities"
+        android:key="pref_start_screen"
+        android:summary="@string/pref_start_screen_summary"
+        android:title="@string/pref_start_screen"/>
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="pref_expand_matches"
+        android:summary="@string/pref_expand_matches_summary"
+        android:title="@string/pref_expand_matches"/>
+    <ListPreference
+        android:defaultValue="@string/region_americas"
+        android:dialogTitle="@string/pref_default_leaderboard"
+        android:entries="@array/leaderboards"
+        android:entryValues="@array/leaderboards"
+        android:key="pref_default_leaderboard"
+        android:summary="@string/pref_default_leaderboard_summary"
+        android:title="@string/pref_default_leaderboard"/>
+</PreferenceScreen>

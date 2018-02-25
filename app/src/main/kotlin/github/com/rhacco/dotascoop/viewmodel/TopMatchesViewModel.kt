@@ -76,6 +76,7 @@ class TopMatchesViewModel(application: Application) : AndroidViewModel(applicati
             }
             if (it.heroes != null)
                 newItemData.heroes = it.heroes
+            newItemData.showAdditionalInfo = App.sSharedPreferences.getExpandMatches()
             listItemsData.add(newItemData)
         }
         return listItemsData

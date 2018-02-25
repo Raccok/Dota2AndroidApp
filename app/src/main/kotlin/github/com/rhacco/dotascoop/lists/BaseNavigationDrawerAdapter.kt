@@ -19,11 +19,9 @@ class BaseNavigationDrawerAdapter(context: Context) :
     private val mActivityNames: MutableList<String> = mutableListOf()
 
     init {
-        mActivityNames.add(App.instance.getString(R.string.activity_top_matches))
-        mActivityNames.add(App.instance.getString(R.string.activity_heroes))
-        mActivityNames.add(App.instance.getString(R.string.activity_items))
-        mActivityNames.add(App.instance.getString(R.string.activity_leaderboards))
-        mActivityNames.add(App.instance.getString(R.string.activity_about))
+        App.instance.resources.getStringArray(R.array.activities).forEach {
+            mActivityNames.add(it)
+        }
     }
 
     fun switchToActivity(itemPosition: Int) {
@@ -33,7 +31,8 @@ class BaseNavigationDrawerAdapter(context: Context) :
             1 -> intent = Intent(mContext, HeroesActivity::class.java)
             2 -> intent = Intent(mContext, ItemsActivity::class.java)
             3 -> intent = Intent(mContext, LeaderboardsActivity::class.java)
-            4 -> intent = Intent(mContext, AboutActivity::class.java)
+            4 -> intent = Intent(mContext, SettingsActivity::class.java)
+            5 -> intent = Intent(mContext, AboutActivity::class.java)
         }
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         mContext.startActivity(intent)
@@ -51,13 +50,11 @@ class BaseNavigationDrawerAdapter(context: Context) :
 }
 
 class BaseNavigationDrawerViewHolder(view: View?, adapter: BaseNavigationDrawerAdapter) :
-        RecyclerView.ViewHolder(view), LayoutContainer, View.OnClickListener {
+        RecyclerView.ViewHolder(view), LayoutContainer {
     override val containerView: View? = view
     private val mAdapter = adapter
 
     init {
-        itemView.setOnClickListener(this)
+        itemView.setOnClickListener { mAdapter.switchToActivity(adapterPosition) }
     }
-
-    override fun onClick(view: View?) = mAdapter.switchToActivity(adapterPosition)
 }

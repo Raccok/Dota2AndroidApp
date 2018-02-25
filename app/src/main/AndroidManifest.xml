@@ -79,6 +79,11 @@
                        android:resource="@xml/searchable_leaderboards"/>
         </activity>
         <activity
+            android:name="github.com.rhacco.dotascoop.activities.SettingsActivity"
+            android:label="@string/activity_settings"
+            android:parentActivityName="github.com.rhacco.dotascoop.activities.SettingsActivity">
+        </activity>
+        <activity
             android:name="github.com.rhacco.dotascoop.activities.AboutActivity"
             android:label="@string/activity_about"
             android:parentActivityName="github.com.rhacco.dotascoop.activities.AboutActivity">
