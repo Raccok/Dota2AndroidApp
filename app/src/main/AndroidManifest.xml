@@ -30,6 +30,11 @@
             android:label="@string/activity_top_matches"
             android:launchMode="singleTop"
             android:parentActivityName="github.com.rhacco.dotascoop.activities.TopMatchesActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                       android:resource="@xml/searchable_top_matches"/>
         </activity>
         <activity
             android:name="github.com.rhacco.dotascoop.activities.LeaderboardsActivity"

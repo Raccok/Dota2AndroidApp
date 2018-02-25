@@ -19,6 +19,8 @@ import kotlinx.android.synthetic.main.item_top_matches.*
 class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<TopMatchesViewHolder>() {
     private val mInflater: LayoutInflater = LayoutInflater.from(mContext)
     private var mItemsData: List<TopMatchesItemData> = listOf()
+    private var mShownItemsData: List<TopMatchesItemData> = listOf()
+    private var mCurrentQuery: String = ""
 
     fun update(newTopMatches: List<TopMatchesItemData>) {
         newTopMatches.forEach { newTopMatch ->
@@ -30,28 +32,60 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
             }
         }
         mItemsData = newTopMatches
+        if (mCurrentQuery.isEmpty())
+            showAllEntries()
+        else
+            handleSearchQuery(mCurrentQuery)
+    }
+
+    fun showAllEntries() {
+        if (mShownItemsData != mItemsData) {
+            mShownItemsData = mItemsData
+            notifyDataSetChanged()
+        }
+        mCurrentQuery = ""
+    }
+
+    fun handleSearchQuery(query: String) {
+        mShownItemsData = mItemsData.filter {
+            queryPlayers(it, query) ||
+                    it.teamRadiant.contains(query, true) ||
+                    it.teamDire.contains(query, true) ||
+                    it.heroNames.contains(query, true)
+        }
         notifyDataSetChanged()
+        mCurrentQuery = query
+    }
+
+    private fun queryPlayers(itemData: TopMatchesItemData, query: String): Boolean {
+        itemData.players.forEach {
+            if (it.officialName.contains(query, true) || it.currentSteamName.contains(query, true))
+                return true
+        }
+        return false
     }
 
     fun switchShowAdditionalInfo(itemPosition: Int) {
-        mItemsData[itemPosition].showAdditionalInfo = !mItemsData[itemPosition].showAdditionalInfo
+        mShownItemsData[itemPosition].showAdditionalInfo =
+                !mShownItemsData[itemPosition].showAdditionalInfo
         notifyItemChanged(itemPosition)
     }
 
     fun switchShowOfficialNames(itemPosition: Int) {
-        mItemsData[itemPosition].showOfficialNames = !mItemsData[itemPosition].showOfficialNames
+        mShownItemsData[itemPosition].showOfficialNames =
+                !mShownItemsData[itemPosition].showOfficialNames
         notifyItemChanged(itemPosition)
     }
 
-    fun getMatchId(itemPosition: Int) = mItemsData[itemPosition].matchId
+    fun getMatchId(itemPosition: Int) = mShownItemsData[itemPosition].matchId
 
-    override fun getItemCount(): Int = mItemsData.size
+    override fun getItemCount(): Int = mShownItemsData.size
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TopMatchesViewHolder =
             TopMatchesViewHolder(mInflater.inflate(R.layout.item_top_matches, parent, false), this, mContext)
 
     override fun onBindViewHolder(holder: TopMatchesViewHolder, position: Int) {
-        val itemData = mItemsData[position]
+        val itemData = mShownItemsData[position]
         bindRealtimeStats(holder, itemData)
         holder.team_radiant?.text = itemData.teamRadiant
         holder.team_dire?.text = itemData.teamDire
@@ -96,7 +130,7 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
     }
 
     private fun bindRealtimeStats(holder: TopMatchesViewHolder, itemData: TopMatchesItemData) {
-        if (itemData.heroes.isNotEmpty()) {
+        if (itemData.heroIds.isNotEmpty()) {
             val goldAdvantageThousands = Math.floor(Math.abs(itemData.goldAdvantage) / 1000.0).toInt()
             val goldAdvantageHundreds = Math.round(Math.abs(itemData.goldAdvantage) / 100.0) % 10
             holder.gold_advantage?.text = App.instance.getString(R.string.gold_advantage,
@@ -117,7 +151,7 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
         holder.score_radiant?.text = itemData.radiantScore.toString()
         var elapsedTimeMin = 0
         var elapsedTimeSec = 0
-        if (itemData.heroes.isNotEmpty() && itemData.elapsedTime > 0) {
+        if (itemData.heroIds.isNotEmpty() && itemData.elapsedTime > 0) {
             elapsedTimeMin = Math.floor(itemData.elapsedTime / 60.0).toInt()
             elapsedTimeSec = itemData.elapsedTime % 60
         }
@@ -131,7 +165,7 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
     }
 
     private fun bindPlayerName(textView: TextView?, player: Player, itemData: TopMatchesItemData) {
-        if (player.officialName != null &&
+        if (player.officialName.isNotEmpty() &&
                 (itemData.isTournamentMatch || itemData.showOfficialNames)) {
             textView?.text = player.officialName
             if (itemData.isTournamentMatch)
@@ -156,9 +190,9 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
     }
 
     private fun bindHeroPortrait(imageView: ImageView?, playerIndex: Int, itemData: TopMatchesItemData) {
-        if (itemData.showAdditionalInfo && itemData.heroes.size == 10) {
+        if (itemData.showAdditionalInfo && itemData.heroIds.size == 10) {
             val iconId = App.instance.resources.getIdentifier(
-                    "hero_portrait_vert_" + itemData.heroes[playerIndex],
+                    "hero_portrait_vert_" + itemData.heroIds[playerIndex],
                     "drawable", App.instance.packageName)
             if (iconId > 0) {
                 imageView?.setImageDrawable(
@@ -200,10 +234,10 @@ data class TopMatchesItemData(
         var goldAdvantage: Int = 0, var elapsedTime: Int = -1,
         var radiantScore: Int = 0, var direScore: Int = 0,
         var players: MutableList<Player> = mutableListOf(),
-        var heroes: List<Int> = mutableListOf(),
+        var heroIds: List<Int> = mutableListOf(), var heroNames: String = "",
         var showAdditionalInfo: Boolean = false, var showOfficialNames: Boolean = true)
 
-data class Player(var currentSteamName: String?, var officialName: String?, var score: String)
+data class Player(var currentSteamName: String, var officialName: String, var score: String)
 
 class TopMatchesViewHolder(
         override val containerView: View?,

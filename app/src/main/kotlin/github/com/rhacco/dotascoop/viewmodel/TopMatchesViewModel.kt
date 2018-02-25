@@ -40,7 +40,8 @@ class TopMatchesViewModel(application: Application) : AndroidViewModel(applicati
                 ))
     }
 
-    private fun buildListItemsData(remoteResult: List<TopMatchesResponse.Match>): List<TopMatchesItemData> {
+    private fun buildListItemsData(remoteResult: List<TopMatchesResponse.Match>):
+            List<TopMatchesItemData> {
         val listItemsData: MutableList<TopMatchesItemData> = mutableListOf()
         remoteResult.forEach {
             val newItemData = TopMatchesItemData()
@@ -72,10 +73,13 @@ class TopMatchesViewModel(application: Application) : AndroidViewModel(applicati
                 newItemData.elapsedTime = it.duration!!
             newItemData.direScore = it.dire_score
             it.players.forEach {
-                newItemData.players.add(Player(it.current_steam_name, it.official_name, it.score_kda))
+                newItemData.players.add(
+                        Player(it.current_steam_name, it.official_name, it.score_kda))
             }
-            if (it.heroes != null)
-                newItemData.heroes = it.heroes
+            if (it.hero_ids != null)
+                newItemData.heroIds = it.hero_ids
+            if (it.hero_names != null)
+                newItemData.heroNames = it.hero_names
             newItemData.showAdditionalInfo = App.sSharedPreferences.getExpandMatches()
             listItemsData.add(newItemData)
         }
