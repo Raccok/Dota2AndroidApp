@@ -28,11 +28,12 @@ class BaseNavigationDrawerAdapter(context: Context) :
         var intent = Intent()
         when (itemPosition) {
             0 -> intent = Intent(mContext, TopMatchesActivity::class.java)
-            1 -> intent = Intent(mContext, HeroesActivity::class.java)
-            2 -> intent = Intent(mContext, ItemsActivity::class.java)
-            3 -> intent = Intent(mContext, LeaderboardsActivity::class.java)
-            4 -> intent = Intent(mContext, SettingsActivity::class.java)
-            5 -> intent = Intent(mContext, AboutActivity::class.java)
+            1 -> intent = Intent(mContext, LeaderboardsActivity::class.java)
+            2 -> intent = Intent(mContext, HeroesActivity::class.java)
+            3 -> intent = Intent(mContext, ItemsActivity::class.java)
+            4 -> intent = Intent(mContext, PatchesActivity::class.java)
+            5 -> intent = Intent(mContext, SettingsActivity::class.java)
+            6 -> intent = Intent(mContext, AboutActivity::class.java)
         }
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         mContext.startActivity(intent)
@@ -45,7 +46,11 @@ class BaseNavigationDrawerAdapter(context: Context) :
                     parent, false), this)
 
     override fun onBindViewHolder(holder: BaseNavigationDrawerViewHolder, position: Int) {
-        holder.activity_name?.text = mActivityNames[position]
+        holder.activity_name.text = mActivityNames[position]
+        if (mActivityNames[position] == App.instance.getString(R.string.activity_patches))
+            holder.info.text = App.instance.getString(R.string.info_patches)
+        else
+            holder.info.visibility = View.GONE
     }
 }
 
