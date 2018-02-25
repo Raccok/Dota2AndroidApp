@@ -91,6 +91,7 @@
     <string name="error_no_internet">Network error. Please check your internet connection</string>
 
     <string name="title_search">Search</string>
+    <string name="search_hint_top_matches">Find player/team/hero</string>
     <string name="search_hint_leaderboards">Find player/team/rank</string>
     <string name="search_hint_heroes">Find hero/attribute/role</string>
     <string name="search_hint_items">Find item</string>

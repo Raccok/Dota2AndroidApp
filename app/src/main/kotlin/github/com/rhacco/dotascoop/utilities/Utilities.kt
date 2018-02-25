@@ -12,7 +12,7 @@ import github.com.rhacco.dotascoop.App
 import github.com.rhacco.dotascoop.R
 import xdroid.toaster.Toaster
 
-fun appIsMissingPermissions(context: Context): Boolean {
+fun checkPermissions(context: Context): Boolean {
     val prefix = "android.permission."
     if (!appHasPermission(context, prefix + "ACCESS_NETWORK_STATE")) {
         Toaster.toastLong(R.string.error_permission_network_state)
