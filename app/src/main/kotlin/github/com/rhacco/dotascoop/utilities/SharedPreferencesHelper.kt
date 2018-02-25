@@ -14,6 +14,12 @@ class SharedPreferencesHelper(context: Context) {
 
     fun setIsFirstAppStart() = defaultSharedPreferences.edit().putBoolean(IS_FIRST_APP_START, false).apply()
 
+    fun getStartScreen() = defaultSharedPreferences.getString("pref_start_screen", "")!!
+
+    fun getExpandMatches() = defaultSharedPreferences.getBoolean("pref_expand_matches", false)
+
+    fun getDefaultLeaderboard() = defaultSharedPreferences.getString("pref_default_leaderboard", "")!!
+
     fun getHeroesValid(): Boolean = !(dateNow().after(getDate(HEROES_VALID)))
 
     fun setHeroesValid() {

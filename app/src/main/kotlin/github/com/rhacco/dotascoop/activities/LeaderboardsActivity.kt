@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
+import github.com.rhacco.dotascoop.App
 import github.com.rhacco.dotascoop.R
 import github.com.rhacco.dotascoop.base.BaseNavigationDrawerActivity
 import github.com.rhacco.dotascoop.fragments.LeaderboardsFragment
@@ -40,6 +41,11 @@ class LeaderboardsActivity : BaseNavigationDrawerActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        when (App.sSharedPreferences.getDefaultLeaderboard()) {
+            getString(R.string.region_europe) -> view_pager.setCurrentItem(1, false)
+            getString(R.string.region_se_asia) -> view_pager.setCurrentItem(2, false)
+            getString(R.string.region_china) -> view_pager.setCurrentItem(3, false)
+        }
         menuInflater.inflate(R.menu.search_view, menu)
         val searchMenuItem = menu?.findItem(R.id.search)
         val searchView = searchMenuItem?.actionView as SearchView
@@ -85,10 +91,10 @@ class LeaderboardsActivity : BaseNavigationDrawerActivity() {
 
         override fun getPageTitle(position: Int): CharSequence =
                 when (position) {
-                    0 -> "Americas"
-                    1 -> "Europe"
-                    2 -> "SE Asia"
-                    else -> "China"
+                    0 -> App.instance.getString(R.string.region_americas)
+                    1 -> App.instance.getString(R.string.region_europe)
+                    2 -> App.instance.getString(R.string.region_se_asia)
+                    else -> App.instance.getString(R.string.region_china)
                 }
     }
 }

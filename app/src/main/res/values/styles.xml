@@ -16,10 +16,14 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="android:windowAnimationStyle">@null</item>
         <item name="android:windowBackground">@color/background_general</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="android:textColor">@color/text_general</item>
+        <item name="android:textColorSecondary">@color/text_additional_info</item>
         <item name="android:editTextColor">@color/text_general</item>
         <item name="colorButtonNormal">@color/background_button</item>
     </style>
 
-    <style name="AlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert"/>
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:background">@color/background_general</item>
+    </style>
 </resources>
