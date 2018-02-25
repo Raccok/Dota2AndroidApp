@@ -67,18 +67,19 @@
     <string name="paragraph_about0">
         This app is being developed and maintained by a small group of amateur and professional
         developers. We came together through a post on
-        <a href="https://reddit.com/r/dota2/">/r/dota2</a>. You can follow the development and see
-        the whole source code
+        <a href="https://reddit.com/r/dota2/">/r/dota2</a>.
+        You can follow the development and see the whole source code
         <a href="https://github.com/Rhacco/DotaScoop/">here</a>.
     </string>
     <string name="paragraph_about1">
-        We started this app in the hopes of learning more about Android development. It has been
-        quite a journey already and we are always looking to learn more by implementing new things.
+        We started this project in the hopes of learning more about Android development and
+        providing the Dota 2 community with some convenient features that we had been missing
+        before. It has been quite a journey already and we are still looking to learn more by
+        implementing new things.
     </string>
     <string name="paragraph_about2">
-        The current state of the app is not the final result of this project. We are always looking
-        for feedback, especially related to the UI. If you have any suggestions or bug reports,
-        please let us know
+        The current state of the app is not the final result of this project. If you have any
+        suggestions or bug reports, please let us know
         <a href="https://github.com/Rhacco/DotaScoop/issues">here</a>
         by creating a new issue.
     </string>
