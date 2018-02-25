@@ -25,7 +25,7 @@
                           android:layout_marginLeft="10dp"
                           android:layout_marginStart="10dp"
                           android:gravity="center"
-                          android:textSize="22sp"/>
+                          android:textSize="@dimen/text_title"/>
             </LinearLayout>
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="match_parent"
@@ -33,39 +33,32 @@
                             android:layout_below="@id/header">
                 <TextView android:id="@+id/components"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:layout_marginTop="@dimen/margin_paragraph_smaller"
-                          android:textSize="@dimen/text_hero_item_info"/>
+                          android:layout_marginTop="@dimen/margin_paragraph_smaller"/>
                 <TextView android:id="@+id/cost"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/components"
-                          android:layout_marginTop="@dimen/margin_paragraph_smaller"
-                          android:textSize="@dimen/text_hero_item_info"/>
+                          android:layout_marginTop="@dimen/margin_paragraph_smaller"/>
                 <TextView android:id="@+id/attributes"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/cost"
-                          android:layout_marginTop="@dimen/margin_paragraph_large"
-                          android:textSize="@dimen/text_hero_item_info"/>
+                          android:layout_marginTop="@dimen/margin_paragraph_large"/>
                 <TextView android:id="@+id/mana_cost"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/attributes"
-                          android:layout_marginTop="@dimen/margin_paragraph_smaller"
-                          android:textSize="@dimen/text_hero_item_info"/>
+                          android:layout_marginTop="@dimen/margin_paragraph_smaller"/>
                 <TextView android:id="@+id/cooldown"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/mana_cost"
-                          android:layout_marginTop="@dimen/margin_paragraph_smaller"
-                          android:textSize="@dimen/text_hero_item_info"/>
+                          android:layout_marginTop="@dimen/margin_paragraph_smaller"/>
                 <TextView android:id="@+id/description"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/cooldown"
-                          android:layout_marginTop="@dimen/margin_paragraph_large"
-                          android:textSize="@dimen/text_hero_item_info"/>
+                          android:layout_marginTop="@dimen/margin_paragraph_large"/>
                 <TextView android:id="@+id/notes"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/description"
                           android:layout_marginTop="@dimen/margin_paragraph_large"
                           android:text="Notes"
-                          android:textSize="@dimen/text_hero_item_info"
                           tools:ignore="HardcodedText"/>
                 <ImageView android:id="@+id/info"
                            android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -81,7 +74,6 @@
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/notes"
                           android:layout_marginTop="@dimen/margin_paragraph_large"
-                          android:textSize="@dimen/text_hero_item_info"
                           android:textStyle="italic"/>
             </RelativeLayout>
         </RelativeLayout>

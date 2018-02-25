@@ -26,18 +26,18 @@ class HeroInfoActivity : BaseNavigationDrawerActivity() {
             portrait.setImageDrawable(ContextCompat.getDrawable(applicationContext, iconId))
         name.text = hero.localized_name
         basic_keywords.text = hero.primary_attr + " - " + hero.attack_type + " - " + hero.roles
-        str_and_str_per_lvl.text = hero.base_str.toString() + " + " +
+        strength.text = "Strength: " + hero.base_str + " + " +
                 DecimalFormat("0.0").format(hero.str_gain + 0.0001) + " per level"
-        agi_and_agi_per_lvl.text = hero.base_agi.toString() + " + " +
+        agility.text = "Agility: " + hero.base_agi + " + " +
                 DecimalFormat("0.0").format(hero.agi_gain + 0.0001) + " per level"
-        int_and_int_per_lvl.text = hero.base_int.toString() + " + " +
+        intelligence.text = "Intelligence: " + hero.base_int + " + " +
                 DecimalFormat("0.0").format(hero.int_gain + 0.0001) + " per level"
-        health.text = (hero.base_health + hero.base_str * 20).toString()
+        health.text = "Health: " + (hero.base_health + hero.base_str * 20)
         var armorVal = DecimalFormat("0.0").format(hero.base_armor + hero.base_agi / 6.0)
         if (armorVal == "-0.0")
             armorVal = "0.0"
-        armor.text = armorVal
-        mana.text = (hero.base_mana + hero.base_int * 12).toString()
+        armor.text = "Armor: " + armorVal
+        mana.text = "Mana: " + (hero.base_mana + hero.base_int * 12)
         var attackMin = hero.base_attack_min
         var attackMax = hero.base_attack_max
         when (hero.primary_attr) {

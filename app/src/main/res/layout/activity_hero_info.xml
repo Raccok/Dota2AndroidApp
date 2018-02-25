@@ -26,7 +26,7 @@
                           android:layout_marginLeft="10dp"
                           android:layout_marginStart="10dp"
                           android:gravity="center"
-                          android:textSize="22sp"/>
+                          android:textSize="@dimen/text_title_larger"/>
             </LinearLayout>
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="match_parent"
@@ -34,151 +34,75 @@
                             android:layout_below="@id/header">
                 <TextView android:id="@+id/basic_keywords"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:layout_marginTop="5dp"
-                          android:textSize="@dimen/text_hero_item_info"/>
+                          android:layout_marginTop="@dimen/margin_paragraph_smaller"/>
                 <TextView android:id="@+id/base_stats"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/basic_keywords"
                           android:layout_marginTop="@dimen/margin_paragraph_large"
                           android:text="Base Stats"
-                          android:textSize="@dimen/text_title_larger"
-                          android:textStyle="bold"
+                          android:textSize="@dimen/text_title"
                           tools:ignore="HardcodedText"/>
-                <TextView android:id="@+id/str_intro"
-                          android:layout_width="31dp" android:layout_height="wrap_content"
-                          android:layout_below="@id/base_stats"
-                          android:layout_marginTop="@dimen/margin_paragraph"
-                          android:text="Str:"
-                          android:textSize="@dimen/text_hero_item_info"
-                          tools:ignore="HardcodedText"/>
-                <TextView android:id="@+id/str_and_str_per_lvl"
-                          android:layout_width="122dp" android:layout_height="wrap_content"
-                          android:layout_below="@id/base_stats"
-                          android:layout_marginTop="@dimen/margin_paragraph"
-                          android:layout_toEndOf="@+id/str_intro"
-                          android:layout_toRightOf="@+id/str_intro"
-                          android:gravity="end"
-                          android:textSize="@dimen/text_hero_item_info"/>
-                <TextView android:id="@+id/agi_intro"
-                          android:layout_width="31dp" android:layout_height="wrap_content"
-                          android:layout_below="@id/str_intro"
-                          android:layout_marginTop="@dimen/margin_paragraph_small"
-                          android:text="Agi:"
-                          android:textSize="@dimen/text_hero_item_info"
-                          tools:ignore="HardcodedText"/>
-                <TextView android:id="@+id/agi_and_agi_per_lvl"
-                          android:layout_width="122dp" android:layout_height="wrap_content"
-                          android:layout_below="@id/str_and_str_per_lvl"
-                          android:layout_marginTop="@dimen/margin_paragraph_small"
-                          android:layout_toEndOf="@id/agi_intro"
-                          android:layout_toRightOf="@id/agi_intro"
-                          android:gravity="end"
-                          android:textSize="@dimen/text_hero_item_info"/>
-                <TextView android:id="@+id/int_intro"
-                          android:layout_width="31dp" android:layout_height="wrap_content"
-                          android:layout_below="@id/agi_intro"
-                          android:layout_marginTop="@dimen/margin_paragraph_small"
-                          android:text="Int:"
-                          android:textSize="@dimen/text_hero_item_info"
-                          tools:ignore="HardcodedText"/>
-                <TextView android:id="@+id/int_and_int_per_lvl"
-                          android:layout_width="122dp" android:layout_height="wrap_content"
-                          android:layout_below="@id/agi_and_agi_per_lvl"
-                          android:layout_marginTop="@dimen/margin_paragraph_small"
-                          android:layout_toEndOf="@id/int_intro"
-                          android:layout_toRightOf="@id/int_intro"
-                          android:gravity="end"
-                          android:textSize="@dimen/text_hero_item_info"/>
-                <TextView android:id="@+id/health_intro"
-                          android:layout_width="56dp" android:layout_height="wrap_content"
-                          android:layout_below="@id/base_stats"
-                          android:layout_marginLeft="25dp"
-                          android:layout_marginTop="@dimen/margin_paragraph"
-                          android:layout_toRightOf="@id/str_and_str_per_lvl"
-                          android:text="Health:"
-                          android:textSize="@dimen/text_hero_item_info"
-                          tools:ignore="HardcodedText,RtlHardcoded"/>
-                <TextView android:id="@+id/health"
+                <TextView android:id="@+id/strength"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/base_stats"
+                          android:layout_marginTop="@dimen/margin_paragraph"/>
+                <TextView android:id="@+id/agility"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/strength"
+                          android:layout_marginTop="@dimen/margin_paragraph_small"/>
+                <TextView android:id="@+id/intelligence"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/agility"
+                          android:layout_marginTop="@dimen/margin_paragraph_small"/>
+                <TextView android:id="@+id/health"
+                          android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_below="@id/intelligence"
                           android:layout_marginTop="@dimen/margin_paragraph"
-                          android:layout_toRightOf="@id/health_intro"
-                          android:textSize="@dimen/text_hero_item_info"
                           tools:ignore="RtlHardcoded"/>
-                <TextView android:id="@+id/armor_intro"
-                          android:layout_width="56dp" android:layout_height="wrap_content"
-                          android:layout_below="@id/health_intro"
-                          android:layout_marginLeft="25dp"
-                          android:layout_marginTop="@dimen/margin_paragraph_small"
-                          android:layout_toRightOf="@id/agi_and_agi_per_lvl"
-                          android:text="Armor:"
-                          android:textSize="@dimen/text_hero_item_info"
-                          tools:ignore="HardcodedText,RtlHardcoded"/>
                 <TextView android:id="@+id/armor"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/health"
                           android:layout_marginTop="@dimen/margin_paragraph_small"
-                          android:layout_toRightOf="@id/armor_intro"
-                          android:textSize="@dimen/text_hero_item_info"
                           tools:ignore="RtlHardcoded"/>
-                <TextView android:id="@+id/mana_intro"
-                          android:layout_width="56dp" android:layout_height="wrap_content"
-                          android:layout_below="@id/armor_intro"
-                          android:layout_marginLeft="25dp"
-                          android:layout_marginTop="@dimen/margin_paragraph_small"
-                          android:layout_toRightOf="@id/int_and_int_per_lvl"
-                          android:text="Mana:"
-                          android:textSize="@dimen/text_hero_item_info"
-                          tools:ignore="HardcodedText,RtlHardcoded"/>
                 <TextView android:id="@+id/mana"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@+id/armor"
                           android:layout_marginTop="@dimen/margin_paragraph_small"
-                          android:layout_toRightOf="@id/mana_intro"
-                          android:textSize="@dimen/text_hero_item_info"
                           tools:ignore="RtlHardcoded"/>
                 <TextView android:id="@+id/damage"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:layout_below="@id/int_and_int_per_lvl"
-                          android:layout_marginTop="@dimen/margin_paragraph"
-                          android:textSize="@dimen/text_hero_item_info"/>
+                          android:layout_below="@id/mana"
+                          android:layout_marginTop="@dimen/margin_paragraph"/>
                 <TextView android:id="@+id/attack_rate"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/damage"
-                          android:layout_marginTop="@dimen/margin_paragraph_small"
-                          android:textSize="@dimen/text_hero_item_info"/>
+                          android:layout_marginTop="@dimen/margin_paragraph_small"/>
                 <TextView android:id="@+id/attack_range"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/attack_rate"
-                          android:layout_marginTop="@dimen/margin_paragraph_small"
-                          android:textSize="@dimen/text_hero_item_info"/>
+                          android:layout_marginTop="@dimen/margin_paragraph_small"/>
                 <TextView android:id="@+id/projectile_speed"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/attack_range"
-                          android:layout_marginTop="@dimen/margin_paragraph_small"
-                          android:textSize="@dimen/text_hero_item_info"/>
+                          android:layout_marginTop="@dimen/margin_paragraph_small"/>
                 <TextView android:id="@+id/magic_resistance"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/projectile_speed"
-                          android:layout_marginTop="@dimen/margin_paragraph_small"
-                          android:textSize="@dimen/text_hero_item_info"/>
+                          android:layout_marginTop="@dimen/margin_paragraph_small"/>
                 <TextView android:id="@+id/movement_speed"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/magic_resistance"
-                          android:layout_marginTop="@dimen/margin_paragraph_small"
-                          android:textSize="@dimen/text_hero_item_info"/>
+                          android:layout_marginTop="@dimen/margin_paragraph_small"/>
                 <TextView android:id="@+id/turn_rate"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/movement_speed"
-                          android:layout_marginTop="@dimen/margin_paragraph_small"
-                          android:textSize="@dimen/text_hero_item_info"/>
+                          android:layout_marginTop="@dimen/margin_paragraph_small"/>
                 <TextView android:id="@+id/abilities_title"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/turn_rate"
                           android:layout_marginTop="@dimen/margin_paragraph_large"
                           android:text="Abilities"
-                          android:textSize="@dimen/text_title_larger"
-                          android:textStyle="bold"
+                          android:textSize="@dimen/text_title"
                           tools:ignore="HardcodedText"/>
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/abilities"
@@ -191,15 +115,13 @@
                           android:layout_below="@id/abilities"
                           android:layout_marginTop="@dimen/margin_paragraph_large"
                           android:text="Talents"
-                          android:textSize="@dimen/text_title_larger"
-                          android:textStyle="bold"
+                          android:textSize="@dimen/text_title"
                           tools:ignore="HardcodedText"/>
                 <TextView android:id="@+id/lvl_10_intro"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/talents_title"
                           android:layout_marginTop="@dimen/margin_paragraph_larger"
                           android:text="Level 10"
-                          android:textSize="@dimen/text_hero_item_info"
                           tools:ignore="HardcodedText"/>
                 <LinearLayout android:id="@+id/lvl_10"
                               android:layout_width="match_parent"
@@ -211,26 +133,22 @@
                               android:padding="8dp">
                     <TextView android:id="@+id/talent1"
                               android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:textSize="@dimen/text_hero_item_info"/>
+                              android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:layout_marginTop="@dimen/margin_paragraph_small"
                               android:text="or"
-                              android:textSize="@dimen/text_hero_info_smaller"
                               tools:ignore="HardcodedText"/>
                     <TextView android:id="@+id/talent0"
                               android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
-                              android:layout_marginTop="@dimen/margin_paragraph_small"
-                              android:textSize="@dimen/text_hero_item_info"/>
+                              android:layout_marginTop="@dimen/margin_paragraph_small"/>
                 </LinearLayout>
                 <TextView android:id="@+id/lvl_15_intro"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/lvl_10"
                           android:layout_marginTop="@dimen/margin_paragraph_larger"
                           android:text="Level 15"
-                          android:textSize="@dimen/text_hero_item_info"
                           tools:ignore="HardcodedText"/>
                 <LinearLayout android:id="@+id/lvl_15"
                               android:layout_width="match_parent"
@@ -242,26 +160,22 @@
                               android:padding="8dp">
                     <TextView android:id="@+id/talent3"
                               android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:textSize="@dimen/text_hero_item_info"/>
+                              android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:layout_marginTop="@dimen/margin_paragraph_small"
                               android:text="or"
-                              android:textSize="@dimen/text_hero_info_smaller"
                               tools:ignore="HardcodedText"/>
                     <TextView android:id="@+id/talent2"
                               android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
-                              android:layout_marginTop="@dimen/margin_paragraph_small"
-                              android:textSize="@dimen/text_hero_item_info"/>
+                              android:layout_marginTop="@dimen/margin_paragraph_small"/>
                 </LinearLayout>
                 <TextView android:id="@+id/lvl_20_intro"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/lvl_15"
                           android:layout_marginTop="@dimen/margin_paragraph_larger"
                           android:text="Level 20"
-                          android:textSize="@dimen/text_hero_item_info"
                           tools:ignore="HardcodedText"/>
                 <LinearLayout android:id="@+id/lvl_20"
                               android:layout_width="match_parent"
@@ -273,26 +187,22 @@
                               android:padding="8dp">
                     <TextView android:id="@+id/talent5"
                               android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:textSize="@dimen/text_hero_item_info"/>
+                              android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:layout_marginTop="@dimen/margin_paragraph_small"
                               android:text="or"
-                              android:textSize="@dimen/text_hero_info_smaller"
                               tools:ignore="HardcodedText"/>
                     <TextView android:id="@+id/talent4"
                               android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
-                              android:layout_marginTop="@dimen/margin_paragraph_small"
-                              android:textSize="@dimen/text_hero_item_info"/>
+                              android:layout_marginTop="@dimen/margin_paragraph_small"/>
                 </LinearLayout>
                 <TextView android:id="@+id/lvl_25_intro"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
                           android:layout_below="@id/lvl_20"
                           android:layout_marginTop="@dimen/margin_paragraph_larger"
                           android:text="Level 25"
-                          android:textSize="@dimen/text_hero_item_info"
                           tools:ignore="HardcodedText"/>
                 <LinearLayout android:layout_width="match_parent"
                               android:layout_height="wrap_content"
@@ -303,19 +213,16 @@
                               android:padding="8dp">
                     <TextView android:id="@+id/talent7"
                               android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:textSize="@dimen/text_hero_item_info"/>
+                              android:layout_height="wrap_content"/>
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:layout_marginTop="@dimen/margin_paragraph_small"
                               android:text="or"
-                              android:textSize="@dimen/text_hero_info_smaller"
                               tools:ignore="HardcodedText"/>
                     <TextView android:id="@+id/talent6"
                               android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
-                              android:layout_marginTop="@dimen/margin_paragraph_small"
-                              android:textSize="@dimen/text_hero_item_info"/>
+                              android:layout_marginTop="@dimen/margin_paragraph_small"/>
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>

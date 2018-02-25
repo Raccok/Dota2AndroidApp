@@ -16,5 +16,5 @@
               android:layout_centerVertical="true"
               android:layout_toEndOf="@id/portrait"
               android:layout_toRightOf="@id/portrait"
-              android:textSize="18sp"/>
+              android:textSize="@dimen/text_title_larger"/>
 </RelativeLayout>
