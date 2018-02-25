@@ -13,22 +13,14 @@ import github.com.rhacco.dotascoop.sources.databases.entities.*
 import github.com.rhacco.dotascoop.utilities.CustomTypeConverters
 import io.reactivex.Single
 
-@Database(entities = [HeroEntity::class, ItemEntity::class,
-    LeaderboardEntryAmericas::class, LeaderboardEntryEurope::class,
-    LeaderboardEntrySEAsia::class, LeaderboardEntryChina::class], version = 1)
+@Database(entities = [LeaderboardEntryAmericas::class, LeaderboardEntryEurope::class,
+    LeaderboardEntrySEAsia::class, LeaderboardEntryChina::class,
+    HeroEntity::class, ItemEntity::class], version = 1)
 @TypeConverters(CustomTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
+    abstract fun leaderboardsDao(): LeaderboardsDao
     abstract fun heroesDao(): HeroesDao
     abstract fun itemsDao(): ItemsDao
-    abstract fun leaderboardsDao(): LeaderboardsDao
-
-    fun getHeroes(): Single<List<HeroEntity>> = heroesDao().getHeroes()
-
-    fun getItems(): Single<List<ItemEntity>> = itemsDao().getItems()
-
-    fun storeHeroes(heroes: List<HeroEntity>) = heroesDao().storeHeroes(heroes)
-
-    fun storeItems(items: List<ItemEntity>) = itemsDao().storeItems(items)
 
     fun getLeaderboard(region: String): Single<List<LeaderboardsResponse.Entry>> =
             when (region) {
@@ -112,6 +104,14 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
     }
+
+    fun getHeroes(): Single<List<HeroEntity>> = heroesDao().getHeroes()
+
+    fun getItems(): Single<List<ItemEntity>> = itemsDao().getItems()
+
+    fun storeHeroes(heroes: List<HeroEntity>) = heroesDao().storeHeroes(heroes)
+
+    fun storeItems(items: List<ItemEntity>) = itemsDao().storeItems(items)
 
     private fun convert(leaderboard: List<LeaderboardEntryEntity>): List<LeaderboardsResponse.Entry> {
         val converted: MutableList<LeaderboardsResponse.Entry> = mutableListOf()

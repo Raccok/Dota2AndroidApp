@@ -19,12 +19,14 @@ class MainActivity : Activity() {
             when (App.sSharedPreferences.getStartScreen()) {
                 getString(R.string.activity_top_matches) ->
                     intent = Intent(this, TopMatchesActivity::class.java)
+                getString(R.string.activity_leaderboards) ->
+                    intent = Intent(this, LeaderboardsActivity::class.java)
                 getString(R.string.activity_heroes) ->
                     intent = Intent(this, HeroesActivity::class.java)
                 getString(R.string.activity_items) ->
                     intent = Intent(this, ItemsActivity::class.java)
-                getString(R.string.activity_leaderboards) ->
-                    intent = Intent(this, LeaderboardsActivity::class.java)
+                getString(R.string.activity_patches) ->
+                    intent = Intent(this, PatchesActivity::class.java)
                 getString(R.string.activity_settings) ->
                     intent = Intent(this, SettingsActivity::class.java)
                 else ->
