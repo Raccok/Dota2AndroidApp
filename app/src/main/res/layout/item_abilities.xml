@@ -3,7 +3,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_paragraph_larger">
+                android:layout_marginTop="@dimen/margin_paragraph">
     <RelativeLayout android:id="@+id/header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">

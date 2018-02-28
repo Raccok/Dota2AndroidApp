@@ -2,71 +2,45 @@ package github.com.rhacco.dotascoop.utilities
 
 import android.content.Context
 import android.preference.PreferenceManager
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
 
 class SharedPreferencesHelper(context: Context) {
     private val defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-    private val mSimpleDataFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH)
 
     fun getIsFirstAppStart() = defaultSharedPreferences.getBoolean(IS_FIRST_APP_START, true)
 
-    fun setIsFirstAppStart() = defaultSharedPreferences.edit().putBoolean(IS_FIRST_APP_START, false).apply()
+    fun setIsFirstAppStart() =
+            defaultSharedPreferences.edit().putBoolean(IS_FIRST_APP_START, false).apply()
 
     fun getStartScreen() = defaultSharedPreferences.getString("pref_start_screen", "")!!
 
     fun getExpandMatches() = defaultSharedPreferences.getBoolean("pref_expand_matches", false)
 
-    fun getDefaultLeaderboard() = defaultSharedPreferences.getString("pref_default_leaderboard", "")!!
+    fun getDefaultLeaderboard() =
+            defaultSharedPreferences.getString("pref_default_leaderboard", "")!!
 
-    fun getHeroesValid(): Boolean = !(dateNow().after(getDate(HEROES_VALID)))
+    fun getHeroesNeedUpdate(remoteLastUpdate: Float): Boolean =
+            remoteLastUpdate > defaultSharedPreferences.getLong(HEROES_LAST_UPDATE, 0)
 
-    fun setHeroesValid() {
-        val validDate = dateNow()
-        validDate.add(Calendar.DATE, 14)
-        defaultSharedPreferences.edit().putString(HEROES_VALID, validDate.time.toString()).apply()
-    }
+    fun setHeroesLastUpdate() = defaultSharedPreferences.edit()
+            .putLong(HEROES_LAST_UPDATE, currentUnixTimestamp()).apply()
 
-    fun getItemsValid(): Boolean = !(dateNow().after(getDate(ITEMS_VALID)))
+    fun getItemsNeedUpdate(remoteLastUpdate: Float): Boolean =
+            remoteLastUpdate > defaultSharedPreferences.getLong(ITEMS_LAST_UPDATE, 0)
 
-    fun setItemsValid() {
-        val validDate = dateNow()
-        validDate.add(Calendar.DATE, 14)
-        defaultSharedPreferences.edit().putString(ITEMS_VALID, validDate.time.toString()).apply()
-    }
+    fun setItemsLastUpdate() = defaultSharedPreferences.edit()
+            .putLong(ITEMS_LAST_UPDATE, currentUnixTimestamp()).apply()
 
-    fun getLeaderboardValid(region: String): Boolean =
-            !(dateNow().after(getDate(leaderboardValidDateKey(region))))
+    fun getLeaderboardNeedsUpdate(region: String, remoteLastUpdate: Float): Boolean =
+            remoteLastUpdate > defaultSharedPreferences.getLong(leaderboardLastUpdateKey(region), 0)
 
-    fun setLeaderboardValid(region: String) {
-        val validDate = dateNow()
-        validDate.add(Calendar.HOUR, 1)
-        defaultSharedPreferences.edit().putString(
-                leaderboardValidDateKey(region), validDate.time.toString()).apply()
-    }
+    fun setLeaderboardLastUpdate(region: String) = defaultSharedPreferences.edit()
+            .putLong(leaderboardLastUpdateKey(region), currentUnixTimestamp()).apply()
 
-    private fun leaderboardValidDateKey(region: String) = "leaderboard_" + region + "_valid"
-
-    private fun dateNow(): Calendar = Calendar.getInstance(Locale.ENGLISH)
-
-    private fun getDate(key: String): Calendar {
-        val dateString = defaultSharedPreferences.getString(key, "")
-        val date = dateNow()
-        try {
-            date.time = mSimpleDataFormat.parse(dateString)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-            val invalidDate = dateNow()
-            invalidDate.add(Calendar.YEAR, 100)
-            return invalidDate
-        }
-        return date
-    }
+    private fun leaderboardLastUpdateKey(region: String) = "leaderboard_" + region + "_last_update"
 
     companion object {
         private const val IS_FIRST_APP_START = "is_first_app_start"
-        private const val HEROES_VALID = "heroes_valid"
-        private const val ITEMS_VALID = "items_valid"
+        private const val HEROES_LAST_UPDATE = "heroes_last_update"
+        private const val ITEMS_LAST_UPDATE = "items_last_update"
     }
 }

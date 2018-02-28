@@ -29,7 +29,8 @@ private fun appHasPermission(context: Context, permission: String): Boolean =
         ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
 
 fun deviceIsOnline(): Boolean {
-    val connectivityMgr = App.instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+    val connectivityMgr =
+            App.instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
     val netInfo = connectivityMgr?.activeNetworkInfo
     val isOnline = netInfo != null && netInfo.isConnectedOrConnecting
     if (!isOnline)
@@ -56,3 +57,5 @@ private class URLSpanNoUnderline(url: String) : URLSpan(url) {
         ds.isUnderlineText = false
     }
 }
+
+fun currentUnixTimestamp(): Long = System.currentTimeMillis() / 1000

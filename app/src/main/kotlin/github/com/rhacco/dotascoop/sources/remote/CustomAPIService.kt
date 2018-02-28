@@ -1,5 +1,6 @@
 package github.com.rhacco.dotascoop.sources.remote
 
+import github.com.rhacco.dotascoop.api.LastUpdatesResponse
 import github.com.rhacco.dotascoop.api.LeaderboardsResponse
 import github.com.rhacco.dotascoop.api.TopMatchesResponse
 import github.com.rhacco.dotascoop.sources.databases.entities.HeroEntity
@@ -26,7 +27,11 @@ interface CustomAPIService {
     fun fetchItems(): Observable<List<ItemEntity>>
 
     @GET("Leaderboard")
-    fun fetchLeaderboard(@Query("region") region: String): Observable<List<LeaderboardsResponse.Entry>>
+    fun fetchLeaderboard(@Query("region") region: String):
+            Observable<List<LeaderboardsResponse.Entry>>
+
+    @GET("LastUpdates")
+    fun fetchLastUpdates(): Observable<LastUpdatesResponse>
 
     companion object {
         private val sService by lazy { create() }
@@ -39,12 +44,11 @@ interface CustomAPIService {
                 else
                     null
 
-        private fun create(): CustomAPIService {
-            val retrofit = Retrofit.Builder().addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl(BASE_URL)
-                    .build()
-            return retrofit.create(CustomAPIService::class.java)
-        }
+        private fun create(): CustomAPIService =
+                Retrofit.Builder().addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .baseUrl(BASE_URL)
+                        .build()
+                        .create(CustomAPIService::class.java)
     }
 }
