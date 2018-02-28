@@ -1,5 +1,6 @@
 package github.com.rhacco.dotascoop.sources.repos
 
+import github.com.rhacco.dotascoop.api.LastUpdatesResponse
 import github.com.rhacco.dotascoop.api.LeaderboardsResponse
 import github.com.rhacco.dotascoop.api.TopMatchesResponse
 import github.com.rhacco.dotascoop.sources.databases.entities.HeroEntity
@@ -52,6 +53,16 @@ object CustomAPIRemoteDataSource {
             Single.create(
                     { subscriber ->
                         CustomAPIService.get()?.fetchLeaderboard(region)?.subscribe(
+                                { result -> subscriber.onSuccess(result) },
+                                { error -> subscriber.onError(error) }
+                        )
+                    }
+            )
+
+    fun getLastUpdates(): Single<LastUpdatesResponse> =
+            Single.create(
+                    { subscriber ->
+                        CustomAPIService.get()?.fetchLastUpdates()?.subscribe(
                                 { result -> subscriber.onSuccess(result) },
                                 { error -> subscriber.onError(error) }
                         )
