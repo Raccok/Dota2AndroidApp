@@ -12,15 +12,15 @@ import github.com.rhacco.dotascoop.R
 import github.com.rhacco.dotascoop.activities.ItemInfoActivity
 import github.com.rhacco.dotascoop.sources.databases.entities.ItemEntity
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_heroes.*
+import kotlinx.android.synthetic.main.item_items.*
 
 class ItemsAdapter(private val mContext: Context) : RecyclerView.Adapter<ItemsViewHolder>() {
     private val mInflater: LayoutInflater = LayoutInflater.from(mContext)
     private var mItemsData: List<ItemEntity> = listOf()
     private var mShownItemsData: List<ItemEntity> = listOf()
 
-    fun update(heroes: List<ItemEntity>) {
-        mItemsData = heroes
+    fun update(items: List<ItemEntity>) {
+        mItemsData = items.filter { !it.dname.contains("recipe", true) }
         showAllEntries()
     }
 
