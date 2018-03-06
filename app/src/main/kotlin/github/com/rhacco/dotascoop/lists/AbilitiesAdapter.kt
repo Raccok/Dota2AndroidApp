@@ -14,7 +14,8 @@ import github.com.rhacco.dotascoop.sources.databases.entities.Ability
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_abilities.*
 
-class AbilitiesAdapter(private val mContext: Context) : RecyclerView.Adapter<AbilitiesViewHolder>() {
+class AbilitiesAdapter(private val mContext: Context) :
+        RecyclerView.Adapter<AbilitiesViewHolder>() {
     private val mInflater: LayoutInflater = LayoutInflater.from(mContext)
     private var mItemsData: List<Ability> = listOf()
 
@@ -64,7 +65,8 @@ class AbilitiesAdapter(private val mContext: Context) : RecyclerView.Adapter<Abi
                 ContextThemeWrapper(mContext, R.style.AlertDialogTheme)).create()
         alertDialog.setTitle(ability)
         alertDialog.setMessage(description)
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, App.instance.getString(R.string.dialog_ok),
+        alertDialog.setButton(
+                AlertDialog.BUTTON_NEUTRAL, App.instance.getString(R.string.dialog_ok),
                 { dialog, _ -> dialog.dismiss() })
         alertDialog.show()
     }

@@ -23,7 +23,8 @@ class ItemInfoActivity : BaseNavigationDrawerActivity() {
                 if (item.dname.contains("recipe", true))
                     resources.getIdentifier("item_portrait_horiz_recipe", "drawable", packageName)
                 else
-                    resources.getIdentifier("item_portrait_horiz_" + item.id, "drawable", packageName)
+                    resources.getIdentifier(
+                            "item_portrait_horiz_" + item.id, "drawable", packageName)
         if (iconId > 0)
             portrait.setImageDrawable(ContextCompat.getDrawable(applicationContext, iconId))
         name.text = item.dname

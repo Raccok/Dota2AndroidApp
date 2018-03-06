@@ -77,28 +77,32 @@ abstract class AppDatabase : RoomDatabase() {
             "americas" -> {
                 val converted: MutableList<LeaderboardEntryAmericas> = mutableListOf()
                 leaderboard.forEach {
-                    converted.add(LeaderboardEntryAmericas(it.rank, it.name, it.new_in_top_100, it.last_rank))
+                    converted.add(LeaderboardEntryAmericas(
+                            it.rank, it.name, it.new_in_top_100, it.last_rank))
                 }
                 leaderboardsDao().storeLeaderboardAmericas(converted)
             }
             "europe" -> {
                 val converted: MutableList<LeaderboardEntryEurope> = mutableListOf()
                 leaderboard.forEach {
-                    converted.add(LeaderboardEntryEurope(it.rank, it.name, it.new_in_top_100, it.last_rank))
+                    converted.add(LeaderboardEntryEurope(
+                            it.rank, it.name, it.new_in_top_100, it.last_rank))
                 }
                 leaderboardsDao().storeLeaderboardEurope(converted)
             }
             "se_asia" -> {
                 val converted: MutableList<LeaderboardEntrySEAsia> = mutableListOf()
                 leaderboard.forEach {
-                    converted.add(LeaderboardEntrySEAsia(it.rank, it.name, it.new_in_top_100, it.last_rank))
+                    converted.add(LeaderboardEntrySEAsia(
+                            it.rank, it.name, it.new_in_top_100, it.last_rank))
                 }
                 leaderboardsDao().storeLeaderboardSEAsia(converted)
             }
             "china" -> {
                 val converted: MutableList<LeaderboardEntryChina> = mutableListOf()
                 leaderboard.forEach {
-                    converted.add(LeaderboardEntryChina(it.rank, it.name, it.new_in_top_100, it.last_rank))
+                    converted.add(LeaderboardEntryChina(
+                            it.rank, it.name, it.new_in_top_100, it.last_rank))
                 }
                 leaderboardsDao().storeLeaderboardChina(converted)
             }
@@ -113,10 +117,12 @@ abstract class AppDatabase : RoomDatabase() {
 
     fun storeItems(items: List<ItemEntity>) = itemsDao().storeItems(items)
 
-    private fun convert(leaderboard: List<LeaderboardEntryEntity>): List<LeaderboardsResponse.Entry> {
+    private fun convert(leaderboard: List<LeaderboardEntryEntity>):
+            List<LeaderboardsResponse.Entry> {
         val converted: MutableList<LeaderboardsResponse.Entry> = mutableListOf()
         leaderboard.forEach {
-            converted.add(LeaderboardsResponse.Entry(it.rank, it.name, it.new_in_top_100, it.last_rank))
+            converted.add(LeaderboardsResponse.Entry(
+                    it.rank, it.name, it.new_in_top_100, it.last_rank))
         }
         return converted
     }

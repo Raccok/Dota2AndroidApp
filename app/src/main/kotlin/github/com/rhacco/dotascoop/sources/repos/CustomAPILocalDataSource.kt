@@ -63,8 +63,9 @@ object CustomAPILocalDataSource {
                         { result ->
                             CustomAPIRemoteDataSource.getLastUpdates().subscribe(
                                     { lastUpdates ->
-                                        if (!App.sSharedPreferences.getLeaderboardNeedsUpdate(region,
-                                                lastUpdates.leaderboards) && result.isNotEmpty())
+                                        if (!App.sSharedPreferences.getLeaderboardNeedsUpdate(
+                                                region, lastUpdates.leaderboards) &&
+                                                result.isNotEmpty())
                                             subscriber.onSuccess(result)
                                         else
                                             subscriber.onError(Exception())

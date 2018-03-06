@@ -16,7 +16,8 @@ import github.com.rhacco.dotascoop.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_top_matches.*
 
-class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<TopMatchesViewHolder>() {
+class TopMatchesAdapter(private val mContext: Context) :
+        RecyclerView.Adapter<TopMatchesViewHolder>() {
     private val mInflater: LayoutInflater = LayoutInflater.from(mContext)
     private var mItemsData: List<TopMatchesItemData> = listOf()
     private var mShownItemsData: List<TopMatchesItemData> = listOf()
@@ -82,7 +83,8 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
     override fun getItemCount(): Int = mShownItemsData.size
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TopMatchesViewHolder =
-            TopMatchesViewHolder(mInflater.inflate(R.layout.item_top_matches, parent, false), this, mContext)
+            TopMatchesViewHolder(
+                    mInflater.inflate(R.layout.item_top_matches, parent, false), this, mContext)
 
     override fun onBindViewHolder(holder: TopMatchesViewHolder, position: Int) {
         val itemData = mShownItemsData[position]
@@ -92,7 +94,8 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
         if (itemData.isTournamentMatch)
             holder.average_mmr?.visibility = View.GONE
         else {
-            holder.average_mmr?.text = App.instance.getString(R.string.average_mmr, itemData.averageMMR)
+            holder.average_mmr?.text =
+                    App.instance.getString(R.string.average_mmr, itemData.averageMMR)
             holder.average_mmr?.visibility = View.VISIBLE
         }
         bindPlayerName(holder.radiant_player0, itemData.players[0], itemData)
@@ -131,7 +134,8 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
 
     private fun bindRealtimeStats(holder: TopMatchesViewHolder, itemData: TopMatchesItemData) {
         if (itemData.heroIds.isNotEmpty()) {
-            val goldAdvantageThousands = Math.floor(Math.abs(itemData.goldAdvantage) / 1000.0).toInt()
+            val goldAdvantageThousands =
+                    Math.floor(Math.abs(itemData.goldAdvantage) / 1000.0).toInt()
             val goldAdvantageHundreds = Math.round(Math.abs(itemData.goldAdvantage) / 100.0) % 10
             holder.gold_advantage?.text = App.instance.getString(R.string.gold_advantage,
                     goldAdvantageThousands, goldAdvantageHundreds)
@@ -189,7 +193,8 @@ class TopMatchesAdapter(private val mContext: Context) : RecyclerView.Adapter<To
             textView?.visibility = View.GONE
     }
 
-    private fun bindHeroPortrait(imageView: ImageView?, playerIndex: Int, itemData: TopMatchesItemData) {
+    private fun bindHeroPortrait(
+            imageView: ImageView?, playerIndex: Int, itemData: TopMatchesItemData) {
         if (itemData.showAdditionalInfo && itemData.heroIds.size == 10) {
             val iconId = App.instance.resources.getIdentifier(
                     "hero_portrait_vert_" + itemData.heroIds[playerIndex],

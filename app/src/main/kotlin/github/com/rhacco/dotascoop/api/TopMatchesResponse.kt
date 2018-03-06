@@ -8,5 +8,6 @@ object TopMatchesResponse {
                      val radiant_score: Int, val dire_score: Int,
                      val players: List<Player>, val hero_ids: List<Int>?, val hero_names: String?)
 
-    data class Player(val current_steam_name: String, val official_name: String, val score_kda: String)
+    data class Player(val current_steam_name: String, val official_name: String,
+                      val score_kda: String)
 }

@@ -21,11 +21,7 @@ class LeaderboardsAdapter(context: Context) : RecyclerView.Adapter<LeaderboardsV
     private var mShownItemsData: List<LeaderboardsResponse.Entry> = listOf()
 
     fun update(leaderboard: List<LeaderboardsResponse.Entry>) {
-        mItemsData =
-                if (leaderboard.size > 2000)
-                    leaderboard.dropLast(leaderboard.size - 2000)
-                else
-                    leaderboard
+        mItemsData = leaderboard
         showAllEntries()
     }
 

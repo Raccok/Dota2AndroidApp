@@ -24,7 +24,7 @@ class CustomTypeConverters {
     }
 
     @TypeConverter
-    fun abilityListToString(abilities: List<Ability>): String {
+    fun abilitiesToString(abilities: List<Ability>): String {
         var string = ""
         abilities.forEach {
             string += it.dname + mDivider1 + it.desc + mDivider1 + it.behavior +
@@ -36,7 +36,7 @@ class CustomTypeConverters {
     }
 
     @TypeConverter
-    fun stringToAbilityList(string: String): List<Ability> {
+    fun stringToAbilities(string: String): List<Ability> {
         val abilities: MutableList<Ability> = mutableListOf()
         val entries = string.split(mDivider2)
         entries.forEach {
