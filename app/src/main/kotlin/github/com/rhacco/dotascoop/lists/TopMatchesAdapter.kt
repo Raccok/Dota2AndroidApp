@@ -229,7 +229,6 @@ class TopMatchesAdapter(private val mContext: Context) :
         else
             holder.post_match_info?.visibility = View.GONE
     }
-
 }
 
 data class TopMatchesItemData(
