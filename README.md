@@ -1,18 +1,14 @@
 # DotaScoop
 
-A community project aiming to provide convenient features and content to the Dota 2 community.
+A community project aiming to provide handy game data on Dota 2 for on the go.
 
 The first states of the app were developed using [this](https://www.raywenderlich.com/132381/kotlin-for-android-an-introduction) tutorial and modifying the example app provided by the tutorial.
 
-## Downloading and running the finished app (for any user)
+## Downloading and running the finished app (for users)
 
-The app is not yet available on the Play Store. However, you can still easily install the finished app (APK) on pretty much any Android device by following these steps:
+DotaScoop is now available on the Play Store:
 
-On your device, go to `Settings > Security > Unknown sources` and enable "Allow installation of apps from unknown sources". On Android 8 or higher, go to `Settings > Apps & notifications > Advanced > Special app access > Install unknown apps` and allow your device's browser (most likely Chrome) to install unknown apps. Then, in your device's browser, click the following link to download the latest version:
-
-https://sourceforge.net/projects/dotascoop/files/DotaScoop.apk/download
-
-Open the downloaded file and follow the installation instructions, then you should be able to use this app like any other. For security reasons, disable "Allow installation of apps from unknown sources" again.
+https://play.google.com/store/apps/details?id=github.com.rhacco.dotascoop
 
 ## Manually building and running the app (for developers)
 
