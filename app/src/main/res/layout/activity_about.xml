@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:padding="15dp">
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/title_about"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_about"
@@ -19,7 +19,7 @@
             android:id="@+id/paragraph0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/title"
+            android:layout_below="@id/title_about"
             android:layout_marginTop="@dimen/margin_paragraph"
             android:text="@string/paragraph_about0"/>
         <TextView
@@ -36,6 +36,21 @@
             android:layout_below="@id/paragraph1"
             android:layout_marginTop="@dimen/margin_paragraph"
             android:text="@string/paragraph_about2"/>
+        <TextView
+            android:id="@+id/title_disclaimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/paragraph2"
+            android:layout_marginTop="@dimen/margin_paragraph_large"
+            android:text="@string/title_disclaimer"
+            android:textSize="@dimen/text_title"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_disclaimer"
+            android:layout_marginTop="@dimen/margin_paragraph"
+            android:text="@string/disclaimer"/>
     </RelativeLayout>
     <include layout="@layout/navigation_drawer"/>
 </android.support.v4.widget.DrawerLayout>

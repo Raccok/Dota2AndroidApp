@@ -83,6 +83,12 @@
         <a href="https://github.com/Rhacco/DotaScoop/issues">here</a>
         by creating a new issue.
     </string>
+    <string name="title_disclaimer">Disclaimer</string>
+    <string name="disclaimer">
+        Dota 2 is a registered trademark of Valve Corporation. This app is not affiliated with Valve
+        Corporation in any way. All game images, names and other game data is property of Valve
+        Corporation.
+    </string>
 
     <string name="error_permission_network_state">
         App needs permission to access the current network state!
