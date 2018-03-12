@@ -6,6 +6,7 @@ import github.com.rhacco.dotascoop.api.TopMatchesResponse
 import github.com.rhacco.dotascoop.sources.databases.entities.HeroEntity
 import github.com.rhacco.dotascoop.sources.databases.entities.ItemEntity
 import github.com.rhacco.dotascoop.sources.remote.CustomAPIService
+import github.com.rhacco.dotascoop.utilities.deviceIsOnline
 import io.reactivex.Single
 
 object CustomAPIRemoteDataSource {
@@ -62,6 +63,10 @@ object CustomAPIRemoteDataSource {
     fun getLastUpdates(): Single<LastUpdatesResponse> =
             Single.create(
                     { subscriber ->
+                        if (!deviceIsOnline(false)) {
+                            subscriber.onError(Exception())
+                            return@create
+                        }
                         CustomAPIService.get()?.fetchLastUpdates()?.subscribe(
                                 { result -> subscriber.onSuccess(result) },
                                 { error -> subscriber.onError(error) }

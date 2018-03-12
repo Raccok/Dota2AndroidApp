@@ -28,12 +28,12 @@ fun checkPermissions(context: Context): Boolean {
 private fun appHasPermission(context: Context, permission: String): Boolean =
         ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
 
-fun deviceIsOnline(): Boolean {
+fun deviceIsOnline(showToast: Boolean = true): Boolean {
     val connectivityMgr =
             App.instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
     val netInfo = connectivityMgr?.activeNetworkInfo
     val isOnline = netInfo != null && netInfo.isConnectedOrConnecting
-    if (!isOnline)
+    if (!isOnline && showToast)
         Toaster.toastLong(R.string.error_no_internet)
     return isOnline
 }
