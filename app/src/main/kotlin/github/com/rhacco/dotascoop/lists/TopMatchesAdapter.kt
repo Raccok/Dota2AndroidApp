@@ -67,12 +67,16 @@ class TopMatchesAdapter(private val mContext: Context) :
     }
 
     fun switchShowAdditionalInfo(itemPosition: Int) {
+        if (mShownItemsData[itemPosition].isSeparator)
+            return
         mShownItemsData[itemPosition].showAdditionalInfo =
                 !mShownItemsData[itemPosition].showAdditionalInfo
         notifyItemChanged(itemPosition)
     }
 
     fun switchShowOfficialNames(itemPosition: Int) {
+        if (mShownItemsData[itemPosition].isSeparator)
+            return
         mShownItemsData[itemPosition].showOfficialNames =
                 !mShownItemsData[itemPosition].showOfficialNames
         notifyItemChanged(itemPosition)
@@ -88,6 +92,21 @@ class TopMatchesAdapter(private val mContext: Context) :
 
     override fun onBindViewHolder(holder: TopMatchesViewHolder, position: Int) {
         val itemData = mShownItemsData[position]
+        if (itemData.isSeparator) {
+            holder.separator.text = itemData.separatorText
+            holder.separator.visibility = View.VISIBLE
+            holder.header_realtime_stats.visibility = View.GONE
+            holder.header_teams.visibility = View.GONE
+            holder.players.visibility = View.GONE
+            holder.spectators.visibility = View.GONE
+            holder.spectate_command.visibility = View.GONE
+            holder.post_match_info.visibility = View.GONE
+            return
+        }
+        holder.separator.visibility = View.GONE
+        holder.header_realtime_stats.visibility = View.VISIBLE
+        holder.header_teams.visibility = View.VISIBLE
+        holder.players.visibility = View.VISIBLE
         bindRealtimeStats(holder, itemData)
         holder.team_radiant?.text = itemData.teamRadiant
         holder.team_dire?.text = itemData.teamDire
@@ -232,6 +251,7 @@ class TopMatchesAdapter(private val mContext: Context) :
 }
 
 data class TopMatchesItemData(
+        var isSeparator: Boolean = false, var separatorText: String = "",
         var serverId: Long = 0L, var matchId: Long = 0L, var isTournamentMatch: Boolean = false,
         var spectators: Int = -1,
         var teamRadiant: String = "", var teamDire: String = "", var averageMMR: Int = 0,

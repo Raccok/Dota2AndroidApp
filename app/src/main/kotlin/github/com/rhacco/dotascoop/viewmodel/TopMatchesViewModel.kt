@@ -21,7 +21,7 @@ class TopMatchesViewModel(application: Application) : AndroidViewModel(applicati
     fun getTopLiveMatches() {
         mDisposables.add(CustomAPIRepository.getTopLiveMatches()
                 .subscribe(
-                        { result -> mGetTopMatchesQuery.value = buildListItemsData(result) },
+                        { result -> mGetTopMatchesQuery.value = buildListItemsData(result, true) },
                         { error ->
                             Log.d(App.instance.getString(R.string.log_target_debug),
                                     "Failed to fetch top live matches: " + error)
@@ -32,7 +32,7 @@ class TopMatchesViewModel(application: Application) : AndroidViewModel(applicati
     fun getTopRecentMatches() {
         mDisposables.add(CustomAPIRepository.getTopRecentMatches()
                 .subscribe(
-                        { result -> mGetTopMatchesQuery.value = buildListItemsData(result) },
+                        { result -> mGetTopMatchesQuery.value = buildListItemsData(result, false) },
                         { error ->
                             Log.d(App.instance.getString(R.string.log_target_debug),
                                     "Failed to fetch top recent matches: " + error)
@@ -40,8 +40,9 @@ class TopMatchesViewModel(application: Application) : AndroidViewModel(applicati
                 ))
     }
 
-    private fun buildListItemsData(remoteResult: List<TopMatchesResponse.Match>):
+    private fun buildListItemsData(remoteResult: List<TopMatchesResponse.Match>, isLive: Boolean):
             List<TopMatchesItemData> {
+        var numTournamentMatches = 0
         val listItemsData: MutableList<TopMatchesItemData> = mutableListOf()
         remoteResult.forEach {
             val newItemData = TopMatchesItemData()
@@ -52,6 +53,7 @@ class TopMatchesViewModel(application: Application) : AndroidViewModel(applicati
             if (it.spectators != null)
                 newItemData.spectators = it.spectators
             if (it.is_tournament_match) {
+                ++numTournamentMatches
                 newItemData.teamRadiant = it.team_radiant!!
                 newItemData.teamDire = it.team_dire!!
             } else {
@@ -82,6 +84,16 @@ class TopMatchesViewModel(application: Application) : AndroidViewModel(applicati
                 newItemData.heroNames = it.hero_names
             newItemData.showAdditionalInfo = App.sSharedPreferences.getExpandMatches()
             listItemsData.add(newItemData)
+        }
+        if (isLive) {
+            if (numTournamentMatches > 0) {
+                listItemsData.add(0, TopMatchesItemData(
+                        isSeparator = true, separatorText = "Tournament Matches"))
+                listItemsData.add(numTournamentMatches + 1, TopMatchesItemData(
+                        isSeparator = true, separatorText = "Ranked Matches"))
+            } else
+                listItemsData.add(0, TopMatchesItemData(
+                        isSeparator = true, separatorText = "Ranked Matches"))
         }
         return listItemsData
     }
