@@ -1,3 +1,11 @@
+# *** IMPORTANT UPDATE 2023 :) ***
+
+This project is fully inactive. It used to be my first bigger community project that I really poured myself into, and within a couple of months, I made it onto the Google Play Store:
+
+https://apkcombo.com/dotascoop-handy-dota-2-data/github.com.rhacco.dotascoop/ (<- original description and screenshots here)
+
+It did not receive enough traction or feedback to keep up my motivation, so eventually and sadly, I was its only proud user on my own phone. Now it serves as a read-only archive for my portfolio, and maybe the APK from the link above still works (?), who knows!
+
 # DotaScoop
 
 A community project aiming to provide handy game data on Dota 2 for on the go.
